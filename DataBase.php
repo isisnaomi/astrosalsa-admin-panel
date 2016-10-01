@@ -47,8 +47,7 @@
 
       $isConnectionEstablished = mysql_select_db( $this->name, $this->connection );
 
-      if ( $isConnectionEstablished ) return true;
-      else return false;
+      return $isConnectionEstablished;
 
     }
 
