@@ -8,7 +8,7 @@ class Payment {
   private $amount;
   private $location;
 
-  public function __constructor($paymentId, $packageName, $date, $amount, $location) {
+  public function __constructor( $paymentId, $packageName, $date, $amount, $location ) {
     $this->paymentId = $paymentId;
     $this->packageName = $packageName;
     $this->date = $date;
@@ -35,10 +35,10 @@ class Payment {
   public function generateTicket() {
 
     $ticket = 'Astrosalsa \n' .
-      'Folio: ' . $this->paymentId . '\n' .
-      'Fecha: ' . $this->date . '\n' .
-      'Pago la cantidad: ' . $this->amount . '\n' .
-      'Para el paquete: ' . $this->packageName . '\n' .
+      "Folio: $this->paymentId\n" .
+      "Fecha: $this->date\n" .
+      "Pago la cantidad: $this->amount \n" .
+      "Para el paquete: $this->packageName\n" .
       $this->location;
 
     return $this->ticket;
@@ -46,5 +46,3 @@ class Payment {
   }
 
 }
-
-?>

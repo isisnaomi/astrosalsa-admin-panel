@@ -1,26 +1,20 @@
 <?php
 
-class Student{
+class Student {
   private $studentId;
   private $name;
 
-  public function __construct($studentId, $name){
+  public function __construct( $studentId, $name ) {
     $this->studentId = $studentId;
     $this->name = $name;
   }
-  
-  public function getStudentId(){
+
+  public function getStudentId() {
     return $this->studentId;
   }
 
-  public function getName(){
+  public function getName() {
     return $this->name;
   }
 
-
-
-
 }
-
-
-?>
