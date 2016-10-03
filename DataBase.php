@@ -8,6 +8,11 @@
     private $name;
 
     /**
+    * @var string
+    */
+    private $server;
+
+    /**
     * @var mysql_link_ID
     */
     private $connection;
@@ -27,6 +32,13 @@
     }
 
     /**
+    * @return string $this->name
+    */
+    public function getServer() {
+      return $this->server;
+    }
+
+    /**
     * @return string The most recent mysql error
     */
     public function getErrorMessage() {
@@ -42,8 +54,8 @@
 
       $isPasswordDefined = not is_null( $password );
 
-      if ( $isPasswordDefined ) $this->connection = mysql_connect( $serverName, $username, $password );
-      else $this->connection = mysql_connect( $server, $username );
+      if ( $isPasswordDefined ) $this->connection = mysql_connect( $this->server, $username, $password );
+      else $this->connection = mysql_connect( $this->server, $username );
 
       $isConnectionEstablished = mysql_select_db( $this->name, $this->connection );
 
