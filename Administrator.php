@@ -5,9 +5,12 @@ abstract class Administrator{
   private $database = new DataBase;
   private $viewNotifier = new ViewNotifier;
 
+  private $tableName;
+
+
 
   public function __construct(){
-
+    database->establishConnection;
   }
 
 
@@ -32,7 +35,13 @@ abstract class Administrator{
 
   }
 
-  abstract protected function addEntity($data);
+  //$data =array(requestType,row)
+  protected function addEntity($data){
+    $row = $data[1];
+
+    database->insertRow($tableName, $row);
+
+  }
   abstract protected function editEntity($filter);
   abstract protected function deleteEntity($filter);
   abstract protected function getEntity($filter);
