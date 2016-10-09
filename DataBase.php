@@ -20,8 +20,9 @@
     /**
     * @param string $name
     */
-    public function __construct( $name ) {
-      $this->name = $name;
+    public function __construct( $dataBaseName, $serverName = 'localhost' ) {
+      $this->name = $dataBaseName;
+      $this->server = $serverName;
     }
 
     /**
@@ -29,13 +30,6 @@
     */
     public function getName() {
       return $this->name;
-    }
-
-    /**
-    * @return string $this->name
-    */
-    public function getServer() {
-      return $this->server;
     }
 
     /**
@@ -50,9 +44,9 @@
     * @param  string  $username
     * @return string  $password
     */
-    public function establishConnection( $serverName, $username, $password = null ) {
+    public function connect( $username, $password = null ) {
 
-      $isPasswordDefined = not is_null( $password );
+      $isPasswordDefined = ! is_null( $password );
 
       if ( $isPasswordDefined ) $this->connection = mysql_connect( $this->server, $username, $password );
       else $this->connection = mysql_connect( $this->server, $username );
@@ -75,9 +69,9 @@
 
     /**
     * @param  string  $tableName
-    * @param  string  $attributes
+    * @param  string[]  $attributes
     * @param  string  $rowFilters
-    * @return [ 'success' => boolean, 'selectedRows' => [ attribute => attributeValue ][] ]
+    * @return ON FAIL: false, ON SUCCESS: [ attributeName => attributeValue ][]
     */
     public function selectRows( $tableName, $attributes, $rowFilters ) {
 
@@ -102,12 +96,13 @@
       if ( $areRowsFetched ) {
 
         $fetchedRows = $areRowsFetched;
-        $selectedRows;
+        $selectedRows = array();
+
         while ( $row = mysql_fetch_assoc( $fetchedRows ) ) array_push( $selectedRows, $row );
 
-        return [ 'success' => true, 'selectedRows' => $selectedRows ];
+        return $selectedRows;
 
-      } else return [ 'success' => false, 'selectedRows' => null ];
+      } else return false;
 
     }
 
