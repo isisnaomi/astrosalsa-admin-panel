@@ -2,7 +2,7 @@
 
 abstract class Administrator{
 
-  private $databaseManager = new DataBaseManager;
+  private $database = new DataBase;
   private $viewNotifier = new ViewNotifier;
 
 
@@ -10,25 +10,33 @@ abstract class Administrator{
 
   }
 
-  protected function receiveRequest($request){
+
+  public function receiveRequest($request){
+    $requestType=$request[0];
+
+    switch ($requestType) {
+      case 'addEntity' :
+          addEntity($request);
+          break ;
+      case 'editEntity' :
+          editEntity($request);
+          break ;
+      case 'deleteEntity' :
+          deleteEntity($request);
+          break ;
+      case 'getEntity' :
+          getEntity($request);
+          break ;
+ }
+
 
   }
 
-  protected function addEntity($data){
-
-  }
-  protected function editEntity($filter){
-
-  }
-  protected function deleteEntity($filter){
-
-  }
-  protected function getEntity($filter){
-
-  }
-  protected function notifyView(){
-
-  }
+  abstract protected function addEntity($data);
+  abstract protected function editEntity($filter);
+  abstract protected function deleteEntity($filter);
+  abstract protected function getEntity($filter);
+  abstract protected function notifyView();
 
 
 
