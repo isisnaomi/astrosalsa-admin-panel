@@ -1,18 +1,15 @@
 <?php
-class SubscriptionAdministrator extends Administrator{
+
+class SubscriptionAdministrator extends Administrator {
 
   private $location;
 
-  protected function getSubscriptionByStudentID($id){
-
-  }
-  protected function getSubscriptionByPackageID($id){
+  protected function getSubscriptionByStudentID( $id ) {
 
   }
 
+  protected function getSubscriptionByPackageID( $id ) {
 
-
-
+  }
 
 }
-?>

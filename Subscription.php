@@ -8,10 +8,12 @@ class Subscription {
   private $paymentDay;
 
   public function __construct( $studentId, $packageId, $classesRemaining, $paymentDay ) {
+
     $this->studentId = $studentId;
     $this->packageId = $packageId;
     $this->classesRemaining = $classesRemaining;
     $this->paymentDay = $paymentDay;
+
   }
 
   public function getStudentId() {

@@ -1,14 +1,9 @@
 <?php
-class PackagesAdministrator extends Administrator{
 
+class PackagesAdministrator extends Administrator {
 
-  protected function getPackageByID($id){
+  protected function getPackageByID( $id ) {
 
   }
 
-
-
-
-
 }
-?>

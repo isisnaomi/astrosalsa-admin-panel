@@ -1,16 +1,13 @@
 <?php
-class StudentsAdministrator extends Administrator{
 
-  protected function getStudentByName($name){
+class StudentsAdministrator extends Administrator {
 
-  }
-  protected function getStudentByID($id){
+  protected function getStudentByName( $name ) {
 
   }
 
+  protected function getStudentByID( $id ) {
 
-
-
+  }
 
 }
-?>
