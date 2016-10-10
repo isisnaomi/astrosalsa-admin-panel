@@ -3,49 +3,68 @@
 abstract class Administrator{
 
   private $database = new DataBase;
-  private $viewNotifier = new ViewNotifier;
   private static $databaseName
 
 
   public function __construct() {
-    database->establishConnection;
+
+
+  }
+
+  public function accessDatabase(){
+    $isAccessSucessful = database->connect();
+    return $isAccessSucessful;
   }
 
 
   public function assignTask ( $taskType, $taskData ) {
-
+    $report = new Report();
 
     switch ($taskType) {
-      case 'addEntity' :
-          addEntity( $taskData );
+      case 'add' :
+          $report = $this->add( $taskData );
           break;
-      case 'editEntity' :
-          editEntity( $taskData );
+      case 'edit' :
+          $report = $this->edit( $taskData );
           break;
-      case 'deleteEntity' :
-          deleteEntity( $taskData );
+      case 'delete' :
+          $report = $this->delete( $taskData );
           break;
-      case 'getEntity' :
-          getEntity( $taskData );
+      case 'getList' :
+          $report = $this->getList( $taskData );
           break;
 
     }
+    return $report;
 
   }
 
 
-  protected function add($taskData) {
+  protected function add( $taskData ) {
 
-    database->insertRow( $dataBaseName, $taskData );
+
+    $isTaskSucessful = database->insertRow( $dataBaseName, $taskData );
+
+    if ($isTaskSucessful){
+      $report = new Report( "data", null );
+
+    }
+    else{
+      $report = new Report( "error", ["errorDescription"=> "No se pudo agregar el elemento" ] );
+    }
+
 
   }
 
-  abstract protected function edit($filter);
-  abstract protected function delete($filter);
-  abstract protected function get($filter);
-  abstract protected function sendReport(){
+  protected function update( $taskData ){
 
-    print (json_encode($array));
   }
+  protected function delete( $taskData ){
+
+  }
+  protected function getList( $taskData ){
+
+  }
+
 
 }
