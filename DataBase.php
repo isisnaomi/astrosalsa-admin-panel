@@ -113,7 +113,7 @@
     */
     public function insertRow( $tableName, $row ) {
 
-      $query .= "INSERT INTO $tableName (";
+      $query = "INSERT INTO $tableName (";
       $indexAttributes = 0;
 
       foreach ( $row as $attribute => $attributeValue ) {
@@ -139,7 +139,7 @@
 
       $query .= ')';
 
-      $isRowInserted = mysql_query( $query, $this->conexion );
+      $isRowInserted = mysql_query( $query, $this->connection );
 
       return $isRowInserted;
 

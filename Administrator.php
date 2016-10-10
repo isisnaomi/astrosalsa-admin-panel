@@ -1,26 +1,27 @@
 <?php
-require 'Report.php';
-require 'Database.php';
 
 abstract class Administrator{
 
-  private $database = new DataBase;
-  private static $databaseName
+  private $database;
+  private static $tableName;
 
 
-  public function __construct() {
-
-
+  public function __construct( $tableName ) {
+    $this->tableName = $tableName;
   }
 
-  public function accessDatabase(){
-    $isAccessSucessful = database->connect();
+  public function accessDatabase() {
+
+    $this->database = new DataBase( 'astrosalsa' );
+    $isAccessSucessful = $this->database->connect( 'root' );
     return $isAccessSucessful;
+
   }
 
 
   public function assignTask ( $taskType, $taskData ) {
-    $report = new Report();
+
+    $report;
 
     switch ($taskType) {
       case 'add' :
@@ -44,7 +45,10 @@ abstract class Administrator{
 
   protected function add( $taskData ) {
 
-    $isTaskSucessful = database->insertRow( $dataBaseName, $taskData );
+    $this->accessDatabase();
+
+    $report;
+    $isTaskSucessful = $this->database->insertRow( $this->tableName, $taskData );
 
     if ($isTaskSucessful){
       $report = new Report( "data", null );
@@ -53,6 +57,8 @@ abstract class Administrator{
     else{
       $report = new Report( "error", ["errorDescription"=> "No se pudo agregar el elemento" ] );
     }
+
+    return $report;
 
 
   }
