@@ -4,45 +4,48 @@ abstract class Administrator{
 
   private $database = new DataBase;
   private $viewNotifier = new ViewNotifier;
+  private static $databaseName
 
-  private $tableName;
 
   public function __construct() {
     database->establishConnection;
   }
 
-  public function receiveRequest( $request ) {
 
-    $requestType = $request[0];
+  public function assignTask ( $taskType, $taskData ) {
 
-    switch ($requestType) {
+
+    switch ($taskType) {
       case 'addEntity' :
-          addEntity( $request );
+          addEntity( $taskData );
           break;
       case 'editEntity' :
-          editEntity( $request );
+          editEntity( $taskData );
           break;
       case 'deleteEntity' :
-          deleteEntity( $request );
+          deleteEntity( $taskData );
           break;
       case 'getEntity' :
-          getEntity( $request );
+          getEntity( $taskData );
           break;
 
     }
 
   }
 
-  protected function addEntity( $data ) {
 
-    $row = $data[1];
-    database->insertRow( $tableName, $row );
+  protected function add($taskData) {
+
+    database->insertRow( $dataBaseName, $taskData );
 
   }
 
-  abstract protected function editEntity($filter);
-  abstract protected function deleteEntity($filter);
-  abstract protected function getEntity($filter);
-  abstract protected function notifyView();
+  abstract protected function edit($filter);
+  abstract protected function delete($filter);
+  abstract protected function get($filter);
+  abstract protected function sendReport(){
+
+    print (json_encode($array));
+  }
 
 }
