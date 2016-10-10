@@ -1,4 +1,6 @@
 <?php
+require 'Report.php';
+require 'Database.php';
 
 abstract class Administrator{
 
@@ -41,7 +43,6 @@ abstract class Administrator{
 
 
   protected function add( $taskData ) {
-
 
     $isTaskSucessful = database->insertRow( $dataBaseName, $taskData );
 
