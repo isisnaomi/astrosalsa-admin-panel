@@ -18,4 +18,4 @@
     }
     ```
 1. Crear y utilizar la clase Request en la parte de Javascript.
-1. Modificar el manejor de el AjaxEvent:Success para ser consistente con la forma en que se manejan los otros eventos.
+1. Modificar el manejador de el AjaxEvent:Success para ser consistente con la forma en que se manejan los otros AjaxEvents
