@@ -17,3 +17,4 @@ if ( condition ) {
   // Do some other thing...
 }
 ```
+1. Crear y utilizar la clase Request en la parte de Javascript.
