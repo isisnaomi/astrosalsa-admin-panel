@@ -1,13 +1,17 @@
 <?php
 
-abstract class Administrator{
+require_once '../Domain/Database.php';
+require_once '../Domain/Report.php';
+
+abstract class Administrator {
 
   private $database;
   private static $tableName;
 
-
   public function __construct( $tableName ) {
+
     $this->tableName = $tableName;
+
   }
 
   public function accessDatabase() {
@@ -18,12 +22,12 @@ abstract class Administrator{
 
   }
 
-
   public function assignTask ( $taskType, $taskData ) {
 
     $report;
 
-    switch ($taskType) {
+    switch ( $taskType ) {
+
       case 'add' :
           $report = $this->add( $taskData );
           break;
@@ -38,40 +42,41 @@ abstract class Administrator{
           break;
 
     }
+
     return $report;
 
   }
-
 
   protected function add( $taskData ) {
 
     $this->accessDatabase();
 
-    $report;
     $isTaskSucessful = $this->database->insertRow( $this->tableName, $taskData );
 
-    if ($isTaskSucessful){
-      $report = new Report( "data", null );
+    if ( $isTaskSucessful ) {
 
-    }
-    else{
-      $report = new Report( "error", ["errorDescription"=> "No se pudo agregar el elemento" ] );
+      $report = new Report( 'data', null );
+
+    } else {
+
+      $report = new Report( 'error', ['errorDescription'=> 'No se pudo agregar el elemento'] );
+
     }
 
     return $report;
 
+  }
+
+  protected function update( $taskData ) {
 
   }
 
-  protected function update( $taskData ){
-
-  }
-  protected function delete( $taskData ){
-
-  }
-  protected function getList( $taskData ){
+  protected function delete( $taskData ) {
 
   }
 
+  protected function getList( $taskData ) {
+
+  }
 
 }

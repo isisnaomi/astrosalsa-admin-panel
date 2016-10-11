@@ -1,11 +1,12 @@
 <?php
 
-require 'Request.php';
-require 'Administrator.php';
-require 'StudentsAdministrator.php';
-require 'ReportSender.php';
-require 'Report.php';
-require 'Database.php';
+require_once '../Domain/Request.php';
+require_once '../Domain/Administrator.php';
+require_once '../Domain/StudentsAdministrator.php';
+require_once '../Domain/PackagesAdministrator.php';
+require_once '../Domain/SubscriptionsAdministrator.php';
+
+require_once '../Control/ReportSender.php';
 
 class requestReceiver {
 
@@ -21,22 +22,29 @@ class requestReceiver {
 
     if ( $isThereAValidRequest ) {
 
-      $admin;
+      $admininstrator;
       $report;
+
       $request = $isThereAValidRequest;
 
       switch ( $request->getTarget() ) {
 
         case 'studentsAdministrator':
-          $admin = new studentsAdministrator();
+          $administrator = new StudentsAdministrator();
+        break;
+
+        case 'packagesAdministrator':
+          $administrator = new PackagesAdministrator();
+        break;
+
+        case 'subscriptionsAdministrator':
+          $administrator = new SubscriptionsAdministrator();
         break;
 
       }
 
-      $report = $admin->assignTask( $request->getType(), $request->getData() );
-
+      $report = $administrator->assignTask( $request->getType(), $request->getData() );
       $reportSender = new ReportSender( $report );
-
       $reportSender->sendReport();
 
     }
@@ -78,13 +86,17 @@ class requestReceiver {
 
       return new Request( $requestData );
 
-    }
-
-    else return false;
+    } else return false;
 
   }
 
 }
 
-$requestReceiver = new RequestReceiver();
-$requestReceiver->delegateRequest();
+function Main() {
+
+  $requestReceiver = new RequestReceiver();
+  $requestReceiver->delegateRequest();
+
+}
+
+Main();

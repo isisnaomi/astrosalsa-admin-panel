@@ -1,8 +1,0 @@
-
-TODO:
-
------ Mover el código que convierte un array en un report (en Javascript) a una nueva clase
------ Los métodos del Administrador no retornen report, sino que se le soliciten con un método getReport();
----- Verificar nombres de variables
----- Poner llaves a las estructuras de control if-else
---- Aplicar estándar de Wordpress (sobretodo en espacios, identación): https://make.wordpress.org/core/handbook/best-practices/coding-standards/php/
