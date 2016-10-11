@@ -10,10 +10,12 @@
 1. Definir estándar para el manejo de estructuras de control de una sola línea
 1. Aplicar el siguiente estándar para la organización de if-elses:
 
-```Javascript
-if ( condition ) {
-  // Do something...
-} else {
-  // Do some other thing...
-}
-```
+    ```Javascript
+    if ( condition ) {
+      // Do something...
+    } else {
+      // Do some other thing...
+    }
+    ```
+1. Crear y utilizar la clase Request en la parte de Javascript.
+1. Modificar el manejador de el AjaxEvent:Success para ser consistente con la forma en que se manejan los otros AjaxEvents

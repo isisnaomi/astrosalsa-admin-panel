@@ -1,27 +1,51 @@
-	<?php
+<?php
+class Package {
 
-	class Package {
+	/**
+	* @var string
+	*/
+	private $packageID;
 
-		private $packageID;
-		private $classesIncluded;
-		private $price;
+	/**
+	* @var int
+	*/
+	private $classesIncluded;
 
-	   public function __construct( $packageID, $classesIncluded, $price ) {
-	   		$this->packageID = $packageID;
-	   		$this->classesIncluded = $classesIncluded;
-	   		$this->price = $price;
-	   }
+	/**
+	* @var float
+	*/
+	private $price;
 
-	   public function getPrice() {
-	       return $this->price;
-	   }
-
-	   public function getClassesIncluded() {
-	       return $this->classesIncluded;
-	   }
-
-	    public function getPackageID() {
-	       return $this->packageID;
-	   }
-
+	/**
+	* @param string packageID
+	* @param int classesIncluded
+	* @param float price
+	*/
+	public function __construct( $packageID, $classesIncluded, $price ) {
+		$this->packageID = $packageID;
+		$this->classesIncluded = $classesIncluded;
+		$this->price = $price;
 	}
+
+	/**
+	* @return float
+	*/
+	public function getPrice() {
+		return $this->price;
+	}
+
+	/**
+	* @return int
+	*/
+	public function getClassesIncluded() {
+		return $this->classesIncluded;
+	}
+
+	/**
+	* @return string
+	*/
+	public function getPackageID() {
+		return $this->packageID;
+	}
+
+}
