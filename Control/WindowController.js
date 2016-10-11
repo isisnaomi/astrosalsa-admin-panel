@@ -36,7 +36,11 @@ $(function() {
 
   }
 
-  var windowController = new WindowController();
-  windowController.turnOnEventListeners();
+  var Main = function() {
+    var windowController = new WindowController();
+    windowController.turnOnEventListeners();
+  }
+
+  Main();
 
 });
