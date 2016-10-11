@@ -17,6 +17,10 @@ abstract class Administrator {
   * @var string
   */
   private static $tableName;
+  /**
+  * @var Report
+  */
+  private $report;
 
   /**
   * @param string $tableName
@@ -40,7 +44,7 @@ abstract class Administrator {
 
   /**
   * @param  string  $taskType
-  * @param  string  $taskData
+  * @param  string[][]  $taskData
   * @return Report  $report
   */
   public function assignTask ( $taskType, $taskData ) {
@@ -64,7 +68,7 @@ abstract class Administrator {
 
     }
 
-    return $report;
+    $this->report = $report;
 
   }
 
@@ -106,14 +110,11 @@ abstract class Administrator {
   }
 
   /**
-  * @param string  $type
-  * @param array  $content
   * @return Report  $report
   */
-  protected function getReport( $type, $content ){
+  protected function getReport(){
 
-    $report = new Report ( $type, $content );
-    return $report;
+    return $this->report;
 
   }
 
