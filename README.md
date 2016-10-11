@@ -10,7 +10,7 @@
 1. Definir estándar para el manejo de estructuras de control de una sola línea
 1. Aplicar el siguiente estándar para la organización de if-elses:
 
-```
+```Javascript
 if ( condition ) {
   // Do something...
 } else {
