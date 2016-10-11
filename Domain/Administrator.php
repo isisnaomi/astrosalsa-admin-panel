@@ -80,11 +80,11 @@ abstract class Administrator {
 
     if ( $isTaskSucessful ) {
 
-      $report = new Report( 'data', null );
+      $report = $this->getReport( 'data', null );
 
     } else {
 
-      $report = new Report( 'error', ['errorDescription'=> 'No se pudo agregar el elemento'] );
+      $report = $this->getReport( 'error', ['errorDescription'=> 'No se pudo agregar el elemento'] );
 
     }
 
@@ -103,6 +103,18 @@ abstract class Administrator {
 
   protected function getList( $taskData ) {
     /* TODO */
+  }
+
+  /**
+  * @param string  $type
+  * @param array  $content
+  * @return Report  $report
+  */
+  protected function getReport( $type, $content ){
+
+    $report = new Report ( $type, $content );
+    return $report;
+
   }
 
 }
