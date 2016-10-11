@@ -8,13 +8,17 @@ $(function(){
     var _this = this;
     _this.reportInterpreter = new ReportInterpreter();
 
-    _this.sendRequest = function( data ) {
+    _this.sendRequest = function( request ) {
 
       var ajax = $.ajax({
         'url': '../Control/RequestReceiver.php',
         'dataType': 'JSON',
         'type': 'POST',
-        'data': data,
+        'data': {
+          'target' : request.getTarget(),
+          'type' : request.getType(),
+          'data' : request.getData()
+        },
 
         beforeSend: function() {
           console.log( 'About to send data through AJAX' );

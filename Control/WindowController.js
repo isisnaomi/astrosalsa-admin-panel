@@ -24,9 +24,10 @@ $(function() {
           'data' : {
             'name' : _this.domElements.$input.val()
           }
-        }
+        };
 
-        var report = _this.requestSender.sendRequest( data );
+        var request = new Request( data );
+        var report = _this.requestSender.sendRequest( request );
 
       });
 
