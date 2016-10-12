@@ -12,7 +12,7 @@ abstract class Administrator {
   /**
   * @var Database
   */
-  private $database;
+  protected $database;
   /**
   * @var string
   */
