@@ -205,7 +205,7 @@ class CommunicationHandler {
  */
 function Main() {
 
-  $requestReceiver = new RequestReceiver();
+  $requestReceiver = new CommunicationHandler();
 
 }
 
