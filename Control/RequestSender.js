@@ -26,7 +26,7 @@ $(function() {
 
       var ajax = $.ajax({
 
-        'url': '../Control/RequestReceiver.php',
+        'url': '../Control/CommunicationHandler.php',
         'dataType': 'JSON',
         'type': 'POST',
 
