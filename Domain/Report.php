@@ -3,20 +3,23 @@
 * Report
 * Includes type of report: data || error
 * and the content generated after a requested action
+* in php lenguage
 */
 class Report {
   /**
   * @var string
   */
   private $type;
+
   /**
-  * @var array
+  * @var string[][]
   */
   private $content;
 
+
   /**
   * @param string $type
-  * @param array $content
+  * @param string[][] $content
   */
   public function __construct( $type, $content ) {
 
@@ -26,16 +29,20 @@ class Report {
   }
 
   /**
-  * @return $this->type;
+  * @return string $this->type;
   */
   public function getType() {
+
     return $this->type;
+
   }
   /**
-  * @return $this->content;
+  * @return string[][] $this->content;
   */
   public function getContent() {
+
     return $this->content;
+
   }
 
 }
