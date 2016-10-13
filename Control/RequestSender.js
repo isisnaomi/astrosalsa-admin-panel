@@ -1,19 +1,35 @@
 
+/**
+* RequestSender
+* Class
+* Sends a Request to the domain and returns the Report.
+*/
 var RequestSender;
 
-$(function(){
+$(function() {
 
   RequestSender = function() {
 
     var _this = this;
+
+    /**
+     * @var ReportInterpreter
+     */
     _this.reportInterpreter = new ReportInterpreter();
 
+
+    /**
+     * @param Request request
+     * @return Report report
+     */
     _this.sendRequest = function( request ) {
 
       var ajax = $.ajax({
+
         'url': '../Control/RequestReceiver.php',
         'dataType': 'JSON',
         'type': 'POST',
+
         'data': {
           'target' : request.getTarget(),
           'type' : request.getType(),
@@ -29,20 +45,13 @@ $(function(){
         },
 
         error: function( xhr, statusText ) {
-          console.error( 'Communication error: ' + statusText );
+          console.error( 'Communication error: ' + statusText + ' - ' + xhr);
         },
 
-        complete: function( data ) {
-          console.log( 'The data we got: ' );
-          console.log( data );
-        }
       });
 
-      // SUCCESS FUNCTION CALLBACK
       var report = ajax.always(function( data ) {
 
-        console.log( 'The data we got: ' );
-        console.log( data );
         return _this.reportInterpreter.interpretArrayAsReport( data );
 
       });

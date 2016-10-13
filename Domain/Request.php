@@ -6,11 +6,14 @@
     private $type;
     private $data;
 
-    public function __construct( $data ) {
+    public function __construct( $propierties ) {
 
-      $this->target = $data['target'];
-      $this->type = $data['type'];
-      $this->data = $data['data'];
+      /* TODO: Check for valid $propierties */
+      /* TODO: $propierties is not a very good variable name */
+
+      $this->target = $propierties['target'];
+      $this->type = $propierties['type'];
+      $this->data = $propierties['data'];
 
     }
 
