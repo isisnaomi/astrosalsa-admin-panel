@@ -1,162 +1,206 @@
 <?php
 
-  class DataBase {
+/**
+* Database
+* Black box Class
+* Provides an interface for the access for a specified database.
+* Uses PHP 5 standard functions.
+*/
+class DataBase {
 
-    /**
-    * @var string
-    */
-    private $name;
+  /**
+  * @var string
+  */
+  private $databaseName;
 
-    /**
-    * @var string
-    */
-    private $server;
+  /**
+  * @var string
+  */
+  private $serverName;
 
-    /**
-    * @var mysql_link_ID
-    */
-    private $connection;
+  /**
+  * @var mysql_link_ID
+  */
+  private $connection;
 
-    /**
-    * @param string $name
-    */
-    public function __construct( $dataBaseName, $serverName = 'localhost' ) {
-      $this->name = $dataBaseName;
-      $this->server = $serverName;
+
+  /**
+  * @param string $databaseName
+  * @param string $serverName
+  */
+  public function __construct( $dataBaseName, $serverName = 'localhost' ) {
+
+    $this->name = $dataBaseName;
+    $this->server = $serverName;
+
+  }
+
+  /**
+  * @return string $this->name
+  */
+  public function getName() {
+
+    return $this->name;
+
+  }
+
+  /**
+  * @return string $lastDatabaseError
+  */
+  public function getErrorMessage() {
+
+    $lastDatabaseError = mysql_error( $this->connection );
+    return $lastDatabaseError;
+
+  }
+
+  /**
+  * @param  string  $username
+  * @param  string  $password = null
+  * @return string  $isConnectionEstablished
+  */
+  public function connect( $username, $password = null ) {
+
+    $isPasswordDefined = ! is_null( $password );
+
+    if ( $isPasswordDefined ) {
+
+      $this->connection = mysql_connect( $this->server, $username, $password );
+
+    } else {
+
+      $this->connection = mysql_connect( $this->server, $username );
+
     }
 
-    /**
-    * @return string $this->name
-    */
-    public function getName() {
-      return $this->name;
-    }
+    $isConnectionEstablished = mysql_select_db( $this->name, $this->connection );
 
-    /**
-    * @return string The most recent mysql error
-    */
-    public function getErrorMessage() {
-      return mysql_error( $this->connection );
-    }
+    return $isConnectionEstablished;
 
-    /**
-    * @param  string  $serverName
-    * @param  string  $username
-    * @return string  $password
-    */
-    public function connect( $username, $password = null ) {
+  }
 
-      $isPasswordDefined = ! is_null( $password );
+  /**
+  * @return boolean $isDisconnected
+  */
+  public function disconnect() {
 
-      if ( $isPasswordDefined ) $this->connection = mysql_connect( $this->server, $username, $password );
-      else $this->connection = mysql_connect( $this->server, $username );
+    $isDisconnected = mysql_close( $this->connection );
+    return $isDisconnected;
 
-      $isConnectionEstablished = mysql_select_db( $this->name, $this->connection );
+  }
 
-      return $isConnectionEstablished;
+  /**
+  * @param  string  $tableName
+  * @param  string[]  $attributes
+  * @param  string  $rowFilters
+  * @return ON SUCCESS: [ attributeName => attributeValue ][], ON FAIL: false
+  */
+  public function selectRows( $tableName, $attributes, $rowFilters ) {
 
-    }
+    $query = 'SELECT';
+    $query .= ' ';
 
-    /**
-    * @return boolean
-    */
-    public function disconnect() {
+    $indexAttributes = 0;
 
-      $isDisconnected = mysql_close( $this->connection );
-      return $isDisconnected;
+    foreach ( $attributes as $attribute ) {
 
-    }
+      if ( $indexAttributes > 0 ) {
 
-    /**
-    * @param  string  $tableName
-    * @param  string[]  $attributes
-    * @param  string  $rowFilters
-    * @return ON FAIL: false, ON SUCCESS: [ attributeName => attributeValue ][]
-    */
-    public function selectRows( $tableName, $attributes, $rowFilters ) {
-
-      $query = 'SELECT';
-      $query .= ' ';
-      $indexAttributes = 0;
-
-      foreach ( $attributes as $attribute ) {
-
-        if ( $indexAttributes > 0 ) $query .= ', ';
-
-        $query .= $attribute;
-        $indexAttributes++;
+        $query .= ', ';
 
       }
 
-      $query .= ' ';
-      $query .= "FROM $tableName WHERE $rowFilters";
-
-      $areRowsFetched = mysql_query( $query, $this->connection );
-
-      if ( $areRowsFetched ) {
-
-        $fetchedRows = $areRowsFetched;
-        $selectedRows = array();
-
-        while ( $row = mysql_fetch_assoc( $fetchedRows ) ) array_push( $selectedRows, $row );
-
-        return $selectedRows;
-
-      } else return false;
+      $query .= $attribute;
+      $indexAttributes++;
 
     }
 
-    /**
-    * @param  string  $tableName
-    * @param  [ attribute => attributeValue, ... ]  $row
-    * @return boolean
-    */
-    public function insertRow( $tableName, $row ) {
+    $query .= ' ';
+    $query .= "FROM $tableName WHERE $rowFilters";
 
-      $query = "INSERT INTO $tableName (";
-      $indexAttributes = 0;
+    $areRowsFetched = mysql_query( $query, $this->connection );
 
-      foreach ( $row as $attribute => $attributeValue ) {
+    if ( $areRowsFetched ) {
 
-        if ( $indexAttributes > 0 ) $query .= ', ';
+      $fetchedRows = $areRowsFetched;
+      $selectedRows = array();
 
-        $query .= $attribute;
-        $indexAttributes++;
+      while ( $row = mysql_fetch_assoc( $fetchedRows ) ) {
+
+        array_push( $selectedRows, $row );
 
       }
 
-      $query .= ') VALUES (';
-      $indexAttributesValues = 0;
+      return $selectedRows;
 
-      foreach ( $row as $attribute => $attributeValue ) {
+    } else {
 
-        if ( $indexAttributesValues > 0 ) $query .= ', ';
-
-        $query .= "'$attributeValue'";
-        $indexAttributesValues++;
-
-      }
-
-      $query .= ')';
-
-      $isRowInserted = mysql_query( $query, $this->connection );
-
-      return $isRowInserted;
-
-    }
-
-    /**
-    * @param  string  $tableName
-    * @param  string  $rowFilters
-    * @return boolean
-    */
-    public function deleteRow( $tableName, $rowFilters ) {
-
-      $query = "DELETE FROM $tableName WHERE $rowFilters";
-      $isRowDeleted = mysql_query( $query, $this->connection );
-
-      return $isRowDeleted;
+      return false;
 
     }
 
   }
+
+  /**
+  * @param  string  $tableName
+  * @param  [ attribute => attributeValue ][]  $row
+  * @return boolean $isRowInserted
+  */
+  public function insertRow( $tableName, $row ) {
+
+    $query = "INSERT INTO $tableName (";
+
+    $indexAttributes = 0;
+
+    foreach ( $row as $attribute => $attributeValue ) {
+
+      if ( $indexAttributes > 0 ) {
+
+        $query .= ', ';
+
+      }
+
+      $query .= $attribute;
+      $indexAttributes++;
+
+    }
+
+    $query .= ') VALUES (';
+    $indexAttributesValues = 0;
+
+    foreach ( $row as $attribute => $attributeValue ) {
+
+      if ( $indexAttributesValues > 0 ) {
+
+        $query .= ', ';
+
+      }
+
+      $query .= "'$attributeValue'";
+      $indexAttributesValues++;
+
+    }
+
+    $query .= ')';
+
+    $isRowInserted = mysql_query( $query, $this->connection );
+
+    return $isRowInserted;
+
+  }
+
+  /**
+  * @param  string  $tableName
+  * @param  string  $rowFilters
+  * @return boolean $isRowDeleted
+  */
+  public function deleteRow( $tableName, $rowFilters ) {
+
+    $query = "DELETE FROM $tableName WHERE $rowFilters";
+    $isRowDeleted = mysql_query( $query, $this->connection );
+
+    return $isRowDeleted;
+
+  }
+
+}
