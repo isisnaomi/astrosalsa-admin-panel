@@ -45,12 +45,12 @@ class DataBase {
   }
 
   /**
-  * @return string $lastDatabaseError
+  * @return string $lastDatabaseErrorMessage
   */
   public function getErrorMessage() {
 
-    $lastDatabaseError = mysql_error( $this->connection );
-    return $lastDatabaseError;
+    $lastDatabaseErrorMessage = mysql_error( $this->connection );
+    return $lastDatabaseErrorMessage;
 
   }
 
