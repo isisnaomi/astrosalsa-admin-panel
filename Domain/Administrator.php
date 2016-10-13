@@ -9,18 +9,22 @@ require_once '../Domain/Report.php';
 * Defines the behavior of all Administrators in Domain
 */
 abstract class Administrator {
+
   /**
   * @var Database
   */
   protected $database;
+
   /**
   * @var string
   */
   private static $tableName;
+
   /**
   * @var Report
   */
   private $report;
+
 
   /**
   * @param string $tableName
@@ -32,22 +36,11 @@ abstract class Administrator {
   }
 
   /**
-  * @return boolean  $isAccessSucessful
-  */
-  public function accessDatabase() {
-
-    $this->database = new DataBase( 'astrosalsa' );
-    $isAccessSucessful = $this->database->connect( 'root' );
-    return $isAccessSucessful;
-
-  }
-
-  /**
   * @param  string  $taskType
   * @param  string[][]  $taskData
   * @return Report  $report
   */
-  public function assignTask ( $taskType, $taskData ) {
+  public function doTask ( $taskType, $taskData ) {
 
     $report;
 
@@ -73,6 +66,15 @@ abstract class Administrator {
   }
 
   /**
+  * @return Report  $report
+  */
+  public function getReport(){
+
+    return $this->report;
+
+  }
+
+  /**
   * @param  string  $taskData
   * @return Report  $report
   */
@@ -84,11 +86,11 @@ abstract class Administrator {
 
     if ( $isTaskSucessful ) {
 
-      $report = $this->getReport( 'data', null );
+      $report = new Report( 'data', null );
 
     } else {
 
-      $report = $this->getReport( 'error', ['errorDescription'=> 'No se pudo agregar el elemento'] );
+      $report = new Report( 'error', ['errorDescription'=> 'No se pudo agregar el elemento'] );
 
     }
 
@@ -110,12 +112,15 @@ abstract class Administrator {
   }
 
   /**
-  * @return Report  $report
+  * @return boolean  $isAccessSucessful
   */
-  protected function getReport(){
+  protected function accessDatabase() {
 
-    return $this->report;
+    $this->database = new DataBase( 'astrosalsa' );
+    $isAccessSucessful = $this->database->connect( 'root' );
+    return $isAccessSucessful;
 
   }
+
 
 }
