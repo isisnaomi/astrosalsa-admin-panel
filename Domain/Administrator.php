@@ -38,7 +38,6 @@ abstract class Administrator {
   /**
   * @param  string  $taskType
   * @param  string[][]  $taskData
-  * @return Report  $report
   */
   public function doTask ( $taskType, $taskData ) {
 
@@ -86,11 +85,16 @@ abstract class Administrator {
 
     if ( $isTaskSucessful ) {
 
-      $report = new Report( 'data', null );
+      $reportType = 'data';
+      $reportContent = null;
+      $report = new Report( $reportType, $reportContent );
 
     } else {
 
-      $report = new Report( 'error', ['errorDescription'=> 'No se pudo agregar el elemento'] );
+      $reportType = 'error';
+      $errorDescription = 'No se pudo agregar el elemento';
+      $reportContent = [ 'errorDescription'=> $errorDescription ];
+      $report = new Report( $reportType, $reportContent );
 
     }
 
@@ -100,15 +104,21 @@ abstract class Administrator {
 
 
   protected function update( $taskData ) {
+
     /* TODO */
+
   }
 
   protected function delete( $taskData ) {
+
     /* TODO */
+
   }
 
   protected function getList( $taskData ) {
+
     /* TODO */
+
   }
 
   /**
