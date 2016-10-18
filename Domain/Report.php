@@ -1,4 +1,5 @@
 <?php
+
 /**
 * Report
 * Includes type of report: data || error
@@ -6,6 +7,7 @@
 * in php lenguage
 */
 class Report {
+
   /**
   * @var string
   */
@@ -36,6 +38,7 @@ class Report {
     return $this->type;
 
   }
+
   /**
   * @return string[][] $this->content;
   */

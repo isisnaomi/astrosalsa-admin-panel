@@ -1,5 +1,9 @@
 <?php
 
+/**
+* Class Payment
+* Contains information of a payment
+*/
 class Payment {
 
   /**
@@ -62,6 +66,7 @@ class Payment {
     return $this->date;
 
   }
+
   /**
   * @return float $this->amount
   */

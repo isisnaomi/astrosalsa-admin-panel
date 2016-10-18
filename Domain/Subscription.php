@@ -1,9 +1,11 @@
 <?php
+
 /**
 * Subscription
 * Contains the information of a Subscription
 */
 class Subscription {
+
   /**
   * @var int
   */
@@ -23,6 +25,7 @@ class Subscription {
   * @var int
   */
   private $paymentDay;
+
 
   /**
   * @param int $studentId

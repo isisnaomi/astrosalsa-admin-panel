@@ -1,4 +1,5 @@
 <?php
+
 /**
 * ClassPackagesAdministrator
 * Administrates de class packages

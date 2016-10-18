@@ -87,7 +87,7 @@ class CommunicationHandler {
 
     } else {
 
-      die( 'No valid request.' );
+      die( 'There is no valid request.' );
 
       /* Do nothing? */
       /* TODO: Throw exception if there's no valid request? */

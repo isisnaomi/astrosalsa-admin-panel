@@ -1,9 +1,11 @@
 <?php
+
 /**
 * Student
 * Contains the information of a student
 */
 class Student {
+
   /**
   * @var int
   */

@@ -7,7 +7,7 @@ $(function() {
   * Controls user-window interaction.
   * Access a RequestSender to ask the domain
   * for adding, updating or getting data when
-  * view requires it.
+  * view asks for it.
   */
   var WindowController = function() {
 

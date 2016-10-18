@@ -1,9 +1,11 @@
 <?php
+
 /**
 * SubscriptionAdministrator
 * Administrates the subscriptions
 */
 class SubscriptionAdministrator extends Administrator {
+
   /**
   * @var string
   */
