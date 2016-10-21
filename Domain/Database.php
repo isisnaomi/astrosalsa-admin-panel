@@ -2,7 +2,7 @@
 
 /**
 * Database
-* Black box Class
+* Blackbox Class
 * Provides an interface for the access for a specified database.
 * Uses PHP 5 standard functions.
 */
@@ -100,6 +100,9 @@ class DataBase {
     $query = 'SELECT';
     $query .= ' ';
 
+    # query at this point:
+    # 'SELECT '
+
     $indexAttributes = 0;
 
     foreach ( $attributes as $attribute ) {
@@ -117,6 +120,9 @@ class DataBase {
 
     $query .= ' ';
     $query .= "FROM $tableName WHERE $rowFilters";
+
+    # query at this point:
+    # 'SELECT attr1, ..., attrn FROM tableName WHERE filters'
 
     $areRowsFetched = mysql_query( $query, $this->connection );
 
@@ -168,6 +174,9 @@ class DataBase {
     $query .= ') VALUES (';
     $indexAttributesValues = 0;
 
+    # query at this point:
+    # 'INSERT INTO tableName ( attr1, ..., attrn ) VALUES ('
+
     foreach ( $row as $attribute => $attributeValue ) {
 
       if ( $indexAttributesValues > 0 ) {
@@ -182,6 +191,9 @@ class DataBase {
     }
 
     $query .= ')';
+
+    # query at this point:
+    # 'INSERT INTO tableName ( attr1, ..., attrn ) VALUES ( val1, ..., valn )'
 
     $isRowInserted = mysql_query( $query, $this->connection );
 
