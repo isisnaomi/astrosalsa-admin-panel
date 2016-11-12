@@ -3,7 +3,7 @@
 require_once '../Domain/Request.php';
 require_once '../Domain/Administrator.php';
 require_once '../Domain/StudentsAdministrator.php';
-require_once '../Domain/PackagesAdministrator.php';
+require_once '../Domain/ClassPackagesAdministrator.php';
 require_once '../Domain/SubscriptionsAdministrator.php';
 
 require_once '../Control/ReportSender.php';
@@ -145,7 +145,7 @@ class CommunicationHandler {
   /**
   * Procedure
   * Asks the $this->watchingAdministrator for its Report,
-  * and sents it back to the petitioner.
+  * and sends it back to the petitioner.
   */
   public function sendReport() {
 
@@ -177,7 +177,7 @@ class CommunicationHandler {
   }
 
   /**
-  * Converts an assoiative array into a Request
+  * Converts an associative array into a Request
   * @param string[][] $requestAsArray
   * @return Request $request;
   */

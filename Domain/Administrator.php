@@ -5,7 +5,7 @@ require_once '../Domain/Report.php';
 
 /**
 * Administrator
-* Absctract class
+* Abstract class
 * Defines the behavior of all Administrators in Domain
 */
 abstract class Administrator {
