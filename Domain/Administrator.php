@@ -67,30 +67,31 @@ abstract class Administrator {
   */
   protected function add( $taskData ) {
 
-    $reportContent = null;
-    $errorDescription = "No se pudo agregar el elemento";
-
     $this->accessDatabase();
-
     $isTaskSuccessful = $this->database->insertRow( $this->tableName, $taskData );
 
-    $report = $this->writeReport( $isTaskSuccessful , $reportContent, $errorDescription );
-
-    return $report;
+    return $this->writeReport( $isTaskSuccessful);
 
   }
 
 
   protected function update( $taskData ) {
 
-    /* TODO */
+    $this->accessDatabase();
+    $attributes = $taskData['attributes'];
+    $rowFilters = $taskData['rowFilters'];
+    $isTaskSuccessful = $this->database->updateRow( $this->tableName, $attributes, $rowFilters );
+
+    return $this->writeReport( $isTaskSuccessful);
 
   }
 
   protected function delete( $taskData ) {
 
-    /* TODO */
+    $this->accessDatabase();
+    $isTaskSuccessful = $this->database->deleteRow( $this->tableName, $taskData );
 
+    return $this->writeReport( $isTaskSuccessful);
   }
 
   protected function getList( $taskData ) {
@@ -98,40 +99,16 @@ abstract class Administrator {
     $this->accessDatabase();
     $isTaskSuccessful = $this->database->selectRows( $this->tableName, $taskData );
 
-    if ( $isTaskSuccessful ) {
-
-      $reportContent = $isTaskSuccessful;
-      $isTaskSuccessful = true;
-
-      return $this->writeReport( $isTaskSuccessful , $reportContent );
-
-    } else {
-
-      $isTaskSuccessful = false;
-      $errorDescription = $this->database->getErrorMessage();
-
-      return $this->writeReport( $isTaskSuccessful , $errorDescription );
-
-    }
+    return $this->writeReport( $isTaskSuccessful);
 
   }
 
-  /**
-  * @return boolean  $isAccessSuccessful
-  */
-  protected function accessDatabase() {
-
-    $this->database = new DataBase( 'astrosalsa' );
-    $isAccessSuccessful = $this->database->connect( 'root' );
-    return $isAccessSuccessful;
-
-  }
-
-  protected function writeReport( $isTaskSuccessful, $reportContent ) {
+  protected function writeReport( $isTaskSuccessful) {
 
     if ( $isTaskSuccessful ) {
 
       $reportType = 'data';
+      $reportContent = $isTaskSuccessful;
       $report = new Report( $reportType, $reportContent );
 
     } else {
@@ -143,6 +120,17 @@ abstract class Administrator {
     }
 
     return $report;
+
+  }
+
+  /**
+  * @return boolean  $isAccessSuccessful
+  */
+  protected function accessDatabase() {
+
+    $this->database = new DataBase( 'astrosalsa' );
+    $isAccessSuccessful = $this->database->connect( 'root' );
+    return $isAccessSuccessful;
 
   }
 
