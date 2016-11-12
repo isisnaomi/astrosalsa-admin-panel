@@ -18,12 +18,7 @@ abstract class Administrator {
   /**
   * @var string
   */
-  private static $tableName;
-
-  /**
-  * @var Report
-  */
-  private $report;
+  private $tableName; /* was static */
 
 
   /**
@@ -36,20 +31,21 @@ abstract class Administrator {
   }
 
   /**
-  * @param  string  $taskType
-  * @param  string[][]  $taskData
-  */
+   * @param $taskType
+   * @param $taskData
+   * @return null|Report|void
+   */
   public function doTask ( $taskType, $taskData ) {
 
-    $report;
+    $report = null;
 
     switch ( $taskType ) {
 
       case 'add' :
           $report = $this->add( $taskData );
           break;
-      case 'edit' :
-          $report = $this->edit( $taskData );
+      case 'update' :
+          $report = $this->update( $taskData );
           break;
       case 'delete' :
           $report = $this->delete( $taskData );
@@ -60,18 +56,10 @@ abstract class Administrator {
 
     }
 
-    $this->report = $report;
+    return $report;
 
   }
 
-  /**
-  * @return Report  $report
-  */
-  public function getReport(){
-
-    return $this->report;
-
-  }
 
   /**
   * @param  string  $taskData
@@ -84,9 +72,9 @@ abstract class Administrator {
 
     $this->accessDatabase();
 
-    $isTaskSucessful = $this->database->insertRow( $this->tableName, $taskData );
+    $isTaskSuccessful = $this->database->insertRow( $this->tableName, $taskData );
 
-    $report = writeReport( $isTaskSucessful , $reportContent, $errorDescription );
+    $report = $this->writeReport( $isTaskSuccessful , $reportContent, $errorDescription );
 
     return $report;
 
@@ -107,33 +95,41 @@ abstract class Administrator {
 
   protected function getList( $taskData ) {
 
-    $reportContent = null;
-    $errorDescription = "No se pudo recuperar la lista";
-
     $this->accessDatabase();
+    $isTaskSuccessful = $this->database->selectRows( $this->tableName, $taskData );
 
-    $isTaskSucessful = $this->database->selectRows( $this->tableName, $taskData );
+    if ( $isTaskSuccessful ) {
 
-    $report = writeReport( $isTaskSucessful , $reportContent, $errorDescription );
+      $reportContent = $isTaskSuccessful;
+      $isTaskSuccessful = true;
 
-    return $report;
+      return $this->writeReport( $isTaskSuccessful , $reportContent );
+
+    } else {
+
+      $isTaskSuccessful = false;
+      $errorDescription = $this->database->getErrorMessage();
+
+      return $this->writeReport( $isTaskSuccessful , $errorDescription );
+
+    }
 
   }
 
   /**
-  * @return boolean  $isAccessSucessful
+  * @return boolean  $isAccessSuccessful
   */
   protected function accessDatabase() {
 
     $this->database = new DataBase( 'astrosalsa' );
-    $isAccessSucessful = $this->database->connect( 'root' );
-    return $isAccessSucessful;
+    $isAccessSuccessful = $this->database->connect( 'root' );
+    return $isAccessSuccessful;
 
   }
 
-  protected function writeReport( $isTaskSucessful ,$reportContent, $errorDescription ){
+  protected function writeReport( $isTaskSuccessful, $reportContent ) {
 
-    if ( $isTaskSucessful ) {
+    if ( $isTaskSuccessful ) {
 
       $reportType = 'data';
       $report = new Report( $reportType, $reportContent );
@@ -141,7 +137,7 @@ abstract class Administrator {
     } else {
 
       $reportType = 'error';
-      $reportContent = [ 'errorDescription'=> $errorDescription ];
+      $reportContent = [ 'errorDescription'=> $reportContent ];
       $report = new Report( $reportType, $reportContent );
 
     }

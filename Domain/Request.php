@@ -3,7 +3,7 @@
 /**
 * Request
 * Includes the target, the type and data of the request
-* in php lenguage
+* in php language.
 */
 class Request {
   
@@ -24,16 +24,17 @@ class Request {
 
 
   /**
-  * @param string[][] $data
-  */
-  public function __construct( $propierties ) {
+   * Request constructor.
+   * @param $properties
+   */
+  public function __construct( $properties ) {
 
-    /* TODO: Check for valid $propierties */
-    /* TODO: $propierties is not a very good variable name */
+    /* TODO: Check for valid $properties */
+    /* TODO: $properties is not a very good variable name */
 
-    $this->target = $propierties['target'];
-    $this->type = $propierties['type'];
-    $this->data = $propierties['data'];
+    $this->target = $properties['target'];
+    $this->type = $properties['type'];
+    $this->data = $properties['data'];
 
   }
 

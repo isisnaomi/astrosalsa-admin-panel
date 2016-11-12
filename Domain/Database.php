@@ -1,33 +1,34 @@
 <?php
 
 /**
-* Database
-* Black box Class
-* Provides an interface for the access for a specified database.
-* Uses PHP 5 standard functions.
-*/
+ * Database
+ * Black box Class
+ * Provides an interface for the access for a specified database.
+ * Uses PHP 5 standard functions.
+ */
 class DataBase {
 
   /**
-  * @var string
-  */
+   * @var
+   */
   private $databaseName;
 
   /**
-  * @var string
-  */
+   * @var
+   */
   private $serverName;
 
   /**
-  * @var mysql_link_ID
-  */
+   * @var
+   */
   private $connection;
 
 
   /**
-  * @param string $databaseName
-  * @param string $serverName
-  */
+   * DataBase constructor.
+   * @param $dataBaseName
+   * @param string $serverName
+   */
   public function __construct( $dataBaseName, $serverName = 'localhost' ) {
 
     $this->name = $dataBaseName;
@@ -90,12 +91,13 @@ class DataBase {
   }
 
   /**
-  * @param  string  $tableName
-  * @param  string[]  $attributes
-  * @param  string  $rowFilters
-  * @return ON SUCCESS: [ attributeName => attributeValue ][], ON FAIL: false
-  */
-  public function selectRows( $tableName, $attributes, $rowFilters ) {
+   * @param  string $tableName
+   * @param  string[] $attributes
+   * @param  string $rowFilters
+   * @return array|bool
+   * ] | false
+   */
+  public function selectRows( $tableName, $attributes, $rowFilters = null ) {
 
     $query = 'SELECT';
     $query .= ' ';
@@ -152,10 +154,10 @@ class DataBase {
   }
 
   /**
-  * @param  string  $tableName
-  * @param  [ attribute => attributeValue ][]  $row
-  * @return boolean $isRowInserted
-  */
+   * @param  string  $tableName
+   * @param  [ attribute => attributeValue ][]  $row
+   * @return boolean $isRowInserted
+   */
   public function insertRow( $tableName, $row ) {
 
     $query = "INSERT INTO $tableName (";
@@ -195,21 +197,23 @@ class DataBase {
 
     $isRowInserted = mysql_query( $query, $this->connection );
 
-    return $isRowInserted;
+    if ( $isRowInserted ) return true;
+    else return false;
 
   }
 
   /**
-  * @param  string  $tableName
-  * @param  string  $rowFilters
-  * @return boolean $isRowDeleted
-  */
+   * @param  string  $tableName
+   * @param  string  $rowFilters
+   * @return boolean $isRowDeleted
+   */
   public function deleteRow( $tableName, $rowFilters ) {
 
     $query = "DELETE FROM $tableName WHERE $rowFilters";
     $isRowDeleted = mysql_query( $query, $this->connection );
 
-    return $isRowDeleted;
+    if ( $isRowDeleted ) return true;
+    else return false;
 
   }
 

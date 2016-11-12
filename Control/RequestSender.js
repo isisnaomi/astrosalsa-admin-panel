@@ -48,6 +48,10 @@ $(function() {
           console.error( 'Communication error: ' + statusText + ' - ' + xhr);
         },
 
+        complete: function ( response ) {
+          console.log( response );
+        }
+
       });
 
       var report = ajax.always(function( data ) {

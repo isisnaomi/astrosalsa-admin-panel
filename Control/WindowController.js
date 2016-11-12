@@ -37,10 +37,11 @@ $(function() {
         var data = {
 
           'target' : 'studentsAdministrator',
-          'type' : 'add',
+          'type' : 'getList',
 
           'data' : {
-            'name' : _this.domElements.$input.val()
+            '*': '*'
+            //'name' : _this.domElements.$input.val()
           }
 
         };
@@ -64,7 +65,7 @@ $(function() {
     var windowController = new WindowController();
     windowController.turnOnEventListeners();
 
-  }
+  };
 
   Main();
 

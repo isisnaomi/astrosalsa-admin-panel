@@ -4,7 +4,7 @@
 * Report
 * Includes type of report: data || error
 * and the content generated after a requested action
-* in php lenguage
+* in php language.
 */
 class Report {
 
@@ -49,5 +49,3 @@ class Report {
   }
 
 }
-
- ?>

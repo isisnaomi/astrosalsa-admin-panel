@@ -1,44 +1,50 @@
 <?php
 
 /**
-* Class Payment
-* Contains information of a payment
-*/
+ * Class Payment
+ * Contains information of a payment
+ */
 class Payment {
 
   /**
-  * @var int
-  */
+   * @var string
+   */
+  private $ticket;
+
+  /**
+   * @var int
+   */
   private $paymentId;
 
   /**
-  * @var string
-  */
+   * @var string
+   */
   private $packageName;
 
   /**
-  * @var Date
-  */
+   * TODO: Define var type
+   * @var
+   */
   private $date;
 
   /**
-  * @var float
-  */
+   * @var float
+   */
   private $amount;
 
   /**
-  * @var String
-  */
+   * @var String
+   */
   private $location;
 
 
   /**
-	* @param int paymentId
-	* @param string packageName
-  * @param Date date
-	* @param float amount
-  * @param string location
-	*/
+	 * @param {int} paymentId
+	 * @param {string} packageName
+   * @param {Date} date
+	 * @param {float} amount
+   * @param {string} location
+	 */
   public function __constructor( $paymentId, $packageName, $date, $amount, $location ) {
 
     $this->paymentId = $paymentId;
@@ -50,8 +56,8 @@ class Payment {
   }
 
   /**
-  * @return int $this->paymentId
-  */
+   * @return int $this->paymentId
+   */
   public function getPaymentId() {
 
     return $this->paymentId;
@@ -59,8 +65,8 @@ class Payment {
   }
 
   /**
-  * @return Date $this->date
-  */
+   * @return Date $this->date
+   */
   public function getDate() {
 
     return $this->date;
@@ -68,8 +74,8 @@ class Payment {
   }
 
   /**
-  * @return float $this->amount
-  */
+   * @return float $this->amount
+   */
   public function getAmount() {
 
     return $this->amount;
@@ -77,8 +83,8 @@ class Payment {
   }
 
   /**
-  * @return int $this->location
-  */
+   * @return int $this->location
+   */
   public function getLocation() {
 
     return $this->location;
@@ -86,11 +92,11 @@ class Payment {
   }
 
   /**
-  * @return String[] $this->ticket
-  */
+   * @return String[] $this->ticket
+   */
   public function generateTicket() {
 
-    $ticket = 'Astrosalsa \n' .
+    $this->ticket = 'Astrosalsa \n' .
       "Folio: $this->paymentId\n" .
       "Fecha: $this->date\n" .
       "Pago la cantidad: $this->amount \n" .

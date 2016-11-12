@@ -8,7 +8,7 @@
     <input type='text' placeholder='Student name'>
     <input type='button' value='add student'>
 
-    <script src='/jquery.min.js'></script>
+    <script src='http://localhost/libs/jquery.min.js'></script>
     <script src='../Domain/Request.js'></script>
     <script src='../Domain/Report.js'></script>
     <script src='../Control/RequestSender.js'></script>

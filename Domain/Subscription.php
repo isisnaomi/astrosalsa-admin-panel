@@ -28,11 +28,12 @@ class Subscription {
 
 
   /**
-  * @param int $studentId
-  * @param int $packageId
-  * @param int $classRemaining
-  * @param int $paymentDay
-  */
+   * Subscription constructor.
+   * @param $studentId
+   * @param $packageId
+   * @param $classesRemaining
+   * @param $paymentDay
+   */
   public function __construct( $studentId, $packageId, $classesRemaining, $paymentDay ) {
 
     $this->studentId = $studentId;
@@ -47,7 +48,7 @@ class Subscription {
 	*/
   public function getStudentId() {
 
-    return $this->$studentId;
+    return $this->studentId;
 
   }
 
@@ -56,7 +57,7 @@ class Subscription {
 	*/
   public function getPackageId() {
 
-    return $this->$packageId;
+    return $this->packageId;
 
   }
 
@@ -74,7 +75,7 @@ class Subscription {
 	*/
   public function getPaymentDay() {
 
-    return $this->$paymentDay;
+    return $this->paymentDay;
 
   }
 

@@ -6,8 +6,6 @@ require_once '../Domain/StudentsAdministrator.php';
 require_once '../Domain/ClassPackagesAdministrator.php';
 require_once '../Domain/SubscriptionsAdministrator.php';
 
-require_once '../Control/ReportSender.php';
-
 /**
 * CommunicationHandler
 * Class
@@ -37,16 +35,17 @@ class CommunicationHandler {
     /* $this->isRequestValid(); */
 
     $this->delegateRequest();
-    $this->sendReport();
 
   }
 
-  /**
-  * Procedure
-  * Looks for request as parameters in the given method.
-  * If there are enough parameters to proceed check if they're valid.
-  * If all of them are valid saves them as a Request in $this->request.
-  */
+    /**
+     * Procedure
+     * Looks for request as parameters in the given method.
+     * If there are enough parameters to proceed check if they're valid.
+     * If all of them are valid saves them as a Request in $this->request.
+     *
+     * @param $method
+     */
   private function lookForARequest( $method ) {
 
     /* TODO: Validate method parameter */
@@ -124,7 +123,7 @@ class CommunicationHandler {
         break;
 
       case 'packagesAdministrator' :
-        $this->administratorWatching = new PackagesAdministrator();
+        $this->administratorWatching = new ClassPackagesAdministrator();
         break;
 
       case 'subscriptionsAdministrator' :
@@ -138,18 +137,20 @@ class CommunicationHandler {
     $requestType = $this->request->getType();
     $requestData = $this->request->getData();
 
-    $this->administratorWatching->doTask( $requestType, $requestData );
+    $report = $this->administratorWatching->doTask( $requestType, $requestData );
+    $this->sendReport( $report );
 
   }
 
   /**
-  * Procedure
-  * Asks the $this->watchingAdministrator for its Report,
-  * and sends it back to the petitioner.
-  */
-  public function sendReport() {
+   * Procedure
+   * Asks the $this->watchingAdministrator for its Report,
+   * and sends it back to the petitioner.
+   *
+   * @param $report
+   */
+  public function sendReport( $report ) {
 
-    $report = $this->administratorWatching->getReport();
     $reportAsArray = $this->convertReportToArray( $report );
 
     $reportAsJsonEncodedArray = json_encode( $reportAsArray );
@@ -185,13 +186,13 @@ class CommunicationHandler {
 
     /* TODO: Check for valid $array */
 
-    $requestPropierties = [
+    $requestProperties = [
       'target' => $requestAsArray['target'],
       'type' => $requestAsArray['type'],
       'data' => $requestAsArray['data']
     ];
 
-    $request = new Request( $requestPropierties );
+    $request = new Request( $requestProperties );
     return $request;
 
   }
@@ -205,7 +206,7 @@ class CommunicationHandler {
  */
 function Main() {
 
-  $requestReceiver = new CommunicationHandler();
+  new CommunicationHandler();
 
 }
 

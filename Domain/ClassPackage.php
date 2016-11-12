@@ -57,7 +57,7 @@ class ClassPackage {
 	*/
 	public function getPackageId() {
 
-		return $this->packageID;
+		return $this->packageId;
 
 	}
 
