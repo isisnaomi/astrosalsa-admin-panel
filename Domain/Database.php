@@ -116,7 +116,17 @@ class DataBase {
     }
 
     $query .= ' ';
-    $query .= "FROM $tableName WHERE $rowFilters";
+
+
+    if( $rowFilters === null ){
+
+      $query .= "FROM $tableName";
+
+    } else {
+
+      $query .= "FROM $tableName WHERE $rowFilters";
+
+    }
 
     $areRowsFetched = mysql_query( $query, $this->connection );
 
