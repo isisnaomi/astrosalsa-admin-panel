@@ -79,24 +79,14 @@ abstract class Administrator {
   */
   protected function add( $taskData ) {
 
+    $reportContent = null;
+    $errorDescription = "No se pudo agregar el elemento";
+
     $this->accessDatabase();
 
     $isTaskSucessful = $this->database->insertRow( $this->tableName, $taskData );
 
-    if ( $isTaskSucessful ) {
-
-      $reportType = 'data';
-      $reportContent = null;
-      $report = new Report( $reportType, $reportContent );
-
-    } else {
-
-      $reportType = 'error';
-      $errorDescription = 'No se pudo agregar el elemento';
-      $reportContent = [ 'errorDescription'=> $errorDescription ];
-      $report = new Report( $reportType, $reportContent );
-
-    }
+    $report = writeReport( $isTaskSucessful , $reportContent, $errorDescription );
 
     return $report;
 
@@ -117,7 +107,16 @@ abstract class Administrator {
 
   protected function getList( $taskData ) {
 
-    /* TODO */
+    $reportContent = null;
+    $errorDescription = "No se pudo recuperar la lista";
+
+    $this->accessDatabase();
+
+    $isTaskSucessful = $this->database->selectRows( $this->tableName, $taskData );
+
+    $report = writeReport( $isTaskSucessful , $reportContent, $errorDescription );
+
+    return $report;
 
   }
 
@@ -132,5 +131,23 @@ abstract class Administrator {
 
   }
 
+  protected function writeReport( $isTaskSucessful ,$reportContent, $errorDescription ){
+
+    if ( $isTaskSucessful ) {
+
+      $reportType = 'data';
+      $report = new Report( $reportType, $reportContent );
+
+    } else {
+
+      $reportType = 'error';
+      $reportContent = [ 'errorDescription'=> $errorDescription ];
+      $report = new Report( $reportType, $reportContent );
+
+    }
+
+    return $report;
+
+  }
 
 }
