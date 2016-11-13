@@ -22,21 +22,21 @@ class DataTranslator{
   }
 
   /**
-  * Converts an assoiative array into a Request
+  * Converts an associative array into a Request
   * @param string[][] $requestAsArray
   * @return Request $request;
   */
-  public static translateRequest( $requestAsArray ) {
+  public static function translateRequest ( $requestAsArray ) {
 
     /* TODO: Check for valid $array */
 
-    $requestPropierties = [
+    $requestProperties = [
       'target' => $requestAsArray['target'],
       'type' => $requestAsArray['type'],
       'data' => $requestAsArray['data']
     ];
 
-    $request = new Request( $requestPropierties );
+    $request = new Request( $requestProperties );
     return $request;
 
   }

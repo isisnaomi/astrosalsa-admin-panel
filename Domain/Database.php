@@ -11,12 +11,12 @@ class DataBase {
   /**
    * @var
    */
-  private $databaseName;
+  private $name;
 
   /**
    * @var
    */
-  private $serverName;
+  private $server;
 
   /**
    * @var
@@ -214,6 +214,13 @@ class DataBase {
 
     if ( $isRowDeleted ) return true;
     else return false;
+
+  }
+
+  /**
+   *
+   */
+  public function updateRow( $tableName, $attributes, $rowFilters ) {
 
   }
 

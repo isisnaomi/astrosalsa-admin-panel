@@ -103,7 +103,7 @@ abstract class Administrator {
 
   }
 
-  protected function writeReport( $isTaskSuccessful) {
+  protected function writeReport( $isTaskSuccessful ) {
 
     if ( $isTaskSuccessful ) {
 
@@ -114,7 +114,8 @@ abstract class Administrator {
     } else {
 
       $reportType = 'error';
-      $reportContent = [ 'errorDescription'=> $reportContent ];
+      $errorDescription = $this->database->getErrorMessage();
+      $reportContent = [ 'errorDescription' => $errorDescription ];
       $report = new Report( $reportType, $reportContent );
 
     }
