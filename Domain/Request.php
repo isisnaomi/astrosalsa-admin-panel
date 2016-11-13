@@ -1,25 +1,25 @@
 <?php
 
 /**
-* Request
-* Includes the target, the type and data of the request
-* in php language.
-*/
+ * Request
+ * Includes the target, the type and data of the request
+ * in php language.
+ */
 class Request {
   
   /**
-  * @var string
-  */
+   * @var string
+   */
   private $target;
 
   /**
-  * @var string
-  */
+   * @var string
+   */
   private $type;
 
   /**
-  * @var string[][]
-  */
+   * @var string[][]
+   */
   private $data;
 
 
@@ -39,8 +39,8 @@ class Request {
   }
 
   /**
-  * @return string $this->target
-  */
+   * @return string $this->target
+   */
   public function getTarget() {
 
     return $this->target;
@@ -48,8 +48,8 @@ class Request {
   }
 
   /**
-  * @return string $this->type
-  */
+   * @return string $this->type
+   */
   public function getType() {
 
     return $this->type;
@@ -57,8 +57,8 @@ class Request {
   }
 
   /**
-  * @return string[][] $this->data
-  */
+   * @return string[][] $this->data
+   */
   public function getData() {
 
     return $this->data;

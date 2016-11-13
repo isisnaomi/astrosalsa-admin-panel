@@ -1,26 +1,26 @@
 <?php
 
 /**
-* Student
-* Contains the information of a student
-*/
+ * Student
+ * Contains the information of a student
+ */
 class Student {
 
   /**
-  * @var int
-  */
+   * @var int
+   */
   private $studentId;
 
   /**
-  * @var string
-  */
+   * @var string
+   */
   private $name;
 
 
   /**
-  * @param int $studentId
-  * @param string $name
-  */
+   * @param int $studentId
+   * @param string $name
+   */
   public function __construct( $studentId, $name ) {
 
     $this->studentId = $studentId;
@@ -29,8 +29,8 @@ class Student {
   }
 
   /**
-  * @return int $this->studentId
-  */
+   * @return int $this->studentId
+   */
   public function getStudentId() {
 
     return $this->studentId;
@@ -38,8 +38,8 @@ class Student {
   }
 
   /**
-  * @return string $this->name
-  */
+   * @return string $this->name
+   */
   public function getName() {
 
     return $this->name;
