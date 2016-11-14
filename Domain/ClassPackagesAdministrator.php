@@ -10,8 +10,14 @@ class ClassPackagesAdministrator extends Administrator {
     parent::__construct( 'classPackages' );
   }
 
-  protected function getPackageByID( $id ) {
-    /* TODO */
+  protected function getPackageByID( $taskData ) {
+    $this->accessDatabase();
+    $attributes = "*";
+    $rowFilters = "id=".$taskData['id'];
+
+    $isTaskSuccessful = $this->database->selectRows( $this->tableName, $attributes, $rowFilters );
+
+    return $this->writeReport( $isTaskSuccessful );
   }
 
 }

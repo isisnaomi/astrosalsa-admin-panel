@@ -59,6 +59,9 @@ abstract class Administrator {
       case 'getStudentByID' :
           $report = $this->getStudentByID( $taskData );
           break;
+      case 'getPackageByID' :
+          $report = $this->getPackageByID( $taskData );
+          break;
 
     }
 
