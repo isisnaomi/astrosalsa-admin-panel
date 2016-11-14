@@ -53,6 +53,12 @@ abstract class Administrator {
       case 'getList' :
           $report = $this->getList( $taskData );
           break;
+      case 'getStudentByName' :
+          $report = $this->getStudentByName( $taskData );
+          break;
+      case 'getStudentByID' :
+          $report = $this->getStudentByID( $taskData );
+          break;
 
     }
 
