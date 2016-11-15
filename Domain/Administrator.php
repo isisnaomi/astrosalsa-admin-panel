@@ -67,7 +67,7 @@ abstract class Administrator {
           break;
       case 'getSubscriptionByStudentID' :
           $report = $this->getSubscriptionByStudentID( $taskData );
-          break;      
+          break;
 
     }
 
@@ -89,7 +89,10 @@ abstract class Administrator {
 
   }
 
-
+  /**
+  * @param  string  $taskData
+  * @return Report  $report
+  */
   protected function update( $taskData ) {
 
     $this->accessDatabase();
@@ -101,6 +104,10 @@ abstract class Administrator {
 
   }
 
+  /**
+  * @param  string  $taskData
+  * @return Report  $report
+  */
   protected function delete( $taskData ) {
 
     $this->accessDatabase();
@@ -109,6 +116,10 @@ abstract class Administrator {
     return $this->writeReport( $isTaskSuccessful);
   }
 
+  /**
+  * @param  string  $taskData
+  * @return Report  $report
+  */
   protected function getList( $taskData ) {
 
     $this->accessDatabase();
@@ -118,6 +129,10 @@ abstract class Administrator {
 
   }
 
+  /**
+  * @param  string  $taskData
+  * @return Report  $report
+  */
   protected function writeReport( $isTaskSuccessful ) {
 
     if ( $isTaskSuccessful ) {
