@@ -53,6 +53,21 @@ abstract class Administrator {
       case 'getList' :
           $report = $this->getList( $taskData );
           break;
+      case 'getStudentByName' :
+          $report = $this->getStudentByName( $taskData );
+          break;
+      case 'getStudentByID' :
+          $report = $this->getStudentByID( $taskData );
+          break;
+      case 'getPackageByID' :
+          $report = $this->getPackageByID( $taskData );
+          break;
+      case 'getSubscriptionByPackageID' :
+          $report = $this->getSubscriptionByPackageID( $taskData );
+          break;
+      case 'getSubscriptionByStudentID' :
+          $report = $this->getSubscriptionByStudentID( $taskData );
+          break;      
 
     }
 
@@ -103,7 +118,7 @@ abstract class Administrator {
 
   }
 
-  protected function writeReport( $isTaskSuccessful) {
+  protected function writeReport( $isTaskSuccessful ) {
 
     if ( $isTaskSuccessful ) {
 
@@ -114,7 +129,8 @@ abstract class Administrator {
     } else {
 
       $reportType = 'error';
-      $reportContent = [ 'errorDescription'=> $reportContent ];
+      $errorDescription = $this->database->getErrorMessage();
+      $reportContent = [ 'errorDescription' => $errorDescription ];
       $report = new Report( $reportType, $reportContent );
 
     }
