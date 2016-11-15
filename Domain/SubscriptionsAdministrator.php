@@ -15,12 +15,24 @@ class SubscriptionsAdministrator extends Administrator {
     parent::__construct( 'classPackages' );
   }
 
-  protected function getSubscriptionByStudentID( $id ) {
-    /* TODO */
+  protected function getSubscriptionByStudentID( $taskData ) {
+    $this->accessDatabase();
+    $attributes = "*";
+    $rowFilters = "studentId=".$taskData['studentId'];
+
+    $isTaskSuccessful = $this->database->selectRows( $this->tableName, $attributes, $rowFilters );
+
+    return $this->writeReport( $isTaskSuccessful );
   }
 
-  protected function getSubscriptionByPackageID( $id ) {
-    /* TODO */
+  protected function getSubscriptionByPackageID( $taskData ) {
+    $this->accessDatabase();
+    $attributes = "*";
+    $rowFilters = "packageId=".$taskData['packageId'];
+
+    $isTaskSuccessful = $this->database->selectRows( $this->tableName, $attributes, $rowFilters );
+
+    return $this->writeReport( $isTaskSuccessful );
   }
 
 }

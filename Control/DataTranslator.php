@@ -1,6 +1,8 @@
 <?php
 
 
+require_once '../Domain/Request.php';
+
 class DataTranslator{
 	
   /**

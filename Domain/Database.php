@@ -1,5 +1,7 @@
 <?php
 
+require_once '../Domain/QueryGenerator.php';
+
 /**
  * Database
  * Black box Class
@@ -99,36 +101,7 @@ class DataBase {
    */
   public function selectRows( $tableName, $attributes, $rowFilters = null ) {
 
-    $query = 'SELECT';
-    $query .= ' ';
-
-    $indexAttributes = 0;
-
-    foreach ( $attributes as $attribute ) {
-
-      if ( $indexAttributes > 0 ) {
-
-        $query .= ', ';
-
-      }
-
-      $query .= $attribute;
-      $indexAttributes++;
-
-    }
-
-    $query .= ' ';
-
-
-    if( $rowFilters === null ){
-
-      $query .= "FROM $tableName";
-
-    } else {
-
-      $query .= "FROM $tableName WHERE $rowFilters";
-
-    }
+  	$query = QueryGenerator::generateSelectRowsQuery( $tableName, $attributes, $rowFilters );
 
     $areRowsFetched = mysql_query( $query, $this->connection );
 
@@ -160,40 +133,7 @@ class DataBase {
    */
   public function insertRow( $tableName, $row ) {
 
-    $query = "INSERT INTO $tableName (";
-
-    $indexAttributes = 0;
-
-    foreach ( $row as $attribute => $attributeValue ) {
-
-      if ( $indexAttributes > 0 ) {
-
-        $query .= ', ';
-
-      }
-
-      $query .= $attribute;
-      $indexAttributes++;
-
-    }
-
-    $query .= ') VALUES (';
-    $indexAttributesValues = 0;
-
-    foreach ( $row as $attribute => $attributeValue ) {
-
-      if ( $indexAttributesValues > 0 ) {
-
-        $query .= ', ';
-
-      }
-
-      $query .= "'$attributeValue'";
-      $indexAttributesValues++;
-
-    }
-
-    $query .= ')';
+    $query = QueryGenerator::generateInsertRowQuery( $tableName, $row );
 
     $isRowInserted = mysql_query( $query, $this->connection );
 
@@ -209,7 +149,8 @@ class DataBase {
    */
   public function deleteRow( $tableName, $rowFilters ) {
 
-    $query = "DELETE FROM $tableName WHERE $rowFilters";
+    $query = QueryGenerator::generateDeleteRowQuery( $tableName, $rowFilters );
+
     $isRowDeleted = mysql_query( $query, $this->connection );
 
     if ( $isRowDeleted ) return true;
