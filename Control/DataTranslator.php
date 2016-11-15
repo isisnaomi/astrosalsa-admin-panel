@@ -1,15 +1,15 @@
 <?php
 
-
 require_once '../Domain/Request.php';
 
 class DataTranslator{
 	
   /**
-  * Converts a Report into an associative array
-  * @param Report $report
-  * @return string[][] $reportAsArray
-  */
+   * Converts a Report into an associative array.
+   *
+   * @param Report $report
+   * @return string[][] $reportAsArray
+   */
   public static function translateReport( $report ) {
 
     /* TODO: Check for valid $report */
@@ -24,10 +24,11 @@ class DataTranslator{
   }
 
   /**
-  * Converts an associative array into a Request
-  * @param string[][] $requestAsArray
-  * @return Request $request;
-  */
+   * Converts an associative array into a Request.
+   *
+   * @param string[][] $requestAsArray
+   * @return Request $request;
+   */
   public static function translateRequest ( $requestAsArray ) {
 
     /* TODO: Check for valid $array */

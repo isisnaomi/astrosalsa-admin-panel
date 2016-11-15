@@ -159,25 +159,14 @@ class DataBase {
   }
 
   /**
-   *
+   * @param string $tableName
+   * @param string[] $attributes
+   * @param string $rowFilters
+   * @return bool
    */
   public function updateRow( $tableName, $attributes, $rowFilters ) {
 
-    $query = "UPDATE $tableName SET ";
-
-    $indexAttributes = 0;
-
-    foreach ( $attributes as $attribute => $attributeValue ) {
-
-      if ( $indexAttributes > 0 )
-        $query .= ', ';
-
-      $query .= "$attribute='$attributeValue'";
-
-      $indexAttributes++;
-    }
-
-    $query .= " WHERE $rowFilters";
+    $query = QueryGenerator::generateUpdateRowQuery( $tableName, $attributes, $rowFilters );
 
     $isRowUpdated = mysql_query( $query );
 

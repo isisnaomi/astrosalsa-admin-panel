@@ -2,7 +2,7 @@
 
 /**
  * QueryGenerator
- * Generates querys about a specific action.
+ * Generates queries about a specific action.
  * Provides a static interface. 
  * Does not require instantiation.
  * Uses PHP 5 standard functions.
@@ -110,5 +110,33 @@ class QueryGenerator {
     return $query;
 
   }
+
+  /**
+   * @param string $tableName
+   * @param string[] $attributes
+   * @param string $rowFilters
+   * @return string
+   */
+  public static function generateUpdateRowQuery( $tableName, $attributes, $rowFilters ) {
+
+    $query = "UPDATE $tableName SET ";
+
+    $indexAttributes = 0;
+
+    foreach ( $attributes as $attribute => $attributeValue ) {
+
+      if ( $indexAttributes > 0 )
+        $query .= ', ';
+
+      $query .= "$attribute='$attributeValue'";
+
+      $indexAttributes++;
+    }
+
+    $query .= " WHERE $rowFilters";
+
+    return $query;
+  }
+
 
 }
