@@ -222,6 +222,30 @@ class DataBase {
    */
   public function updateRow( $tableName, $attributes, $rowFilters ) {
 
+    $query = "UPDATE $tableName SET ";
+
+    $indexAttributes = 0;
+
+    foreach ( $attributes as $attribute => $attributeValue ) {
+
+      if ( $indexAttributes > 0 )
+        $query .= ', ';
+
+      $query .= "$attribute='$attributeValue'";
+
+      $indexAttributes++;
+    }
+
+    $query .= " WHERE $rowFilters";
+
+    $isRowUpdated = mysql_query( $query );
+
+    if ( $isRowUpdated ) {
+      return true;
+    } else {
+      return false;
+    }
+
   }
 
 }
