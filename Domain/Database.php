@@ -18,6 +18,11 @@ class DataBase {
   /**
    * @var
    */
+  private $tableName;
+
+  /**
+   * @var
+   */
   private $server;
 
   /**
@@ -28,12 +33,15 @@ class DataBase {
 
   /**
    * DataBase constructor.
+   *
    * @param $dataBaseName
+   * @param $tableName
    * @param string $serverName
    */
-  public function __construct( $dataBaseName, $serverName = 'localhost' ) {
+  public function __construct( $dataBaseName, $tableName, $serverName = 'localhost' ) {
 
     $this->name = $dataBaseName;
+    $this->tableName = $tableName;
     $this->server = $serverName;
 
   }
@@ -93,15 +101,14 @@ class DataBase {
   }
 
   /**
-   * @param  string $tableName
    * @param  string[] $attributes
    * @param  string $rowFilters
    * @return array|bool
    * ] | false
    */
-  public function selectRows( $tableName, $attributes, $rowFilters = null ) {
+  public function selectRows( $attributes, $rowFilters = null ) {
 
-  	$query = QueryGenerator::generateSelectRowsQuery( $tableName, $attributes, $rowFilters );
+  	$query = QueryGenerator::generateSelectRowsQuery( $this->tableName, $attributes, $rowFilters );
 
     $areRowsFetched = mysql_query( $query, $this->connection );
 
@@ -127,13 +134,12 @@ class DataBase {
   }
 
   /**
-   * @param  string  $tableName
    * @param  [ attribute => attributeValue ][]  $row
-   * @return boolean $isRowInserted
+   * @return bool $isRowInserted
    */
-  public function insertRow( $tableName, $row ) {
+  public function insertRow( $row ) {
 
-    $query = QueryGenerator::generateInsertRowQuery( $tableName, $row );
+    $query = QueryGenerator::generateInsertRowQuery( $this->tableName, $row );
 
     $isRowInserted = mysql_query( $query, $this->connection );
 
@@ -143,13 +149,12 @@ class DataBase {
   }
 
   /**
-   * @param  string  $tableName
    * @param  string  $rowFilters
    * @return boolean $isRowDeleted
    */
-  public function deleteRow( $tableName, $rowFilters ) {
+  public function deleteRow( $rowFilters ) {
 
-    $query = QueryGenerator::generateDeleteRowQuery( $tableName, $rowFilters );
+    $query = QueryGenerator::generateDeleteRowQuery( $this->tableName, $rowFilters );
 
     $isRowDeleted = mysql_query( $query, $this->connection );
 
@@ -159,14 +164,13 @@ class DataBase {
   }
 
   /**
-   * @param string $tableName
    * @param string[] $attributes
    * @param string $rowFilters
    * @return bool
    */
-  public function updateRow( $tableName, $attributes, $rowFilters ) {
+  public function updateRow( $attributes, $rowFilters ) {
 
-    $query = QueryGenerator::generateUpdateRowQuery( $tableName, $attributes, $rowFilters );
+    $query = QueryGenerator::generateUpdateRowQuery( $this->tableName, $attributes, $rowFilters );
 
     $isRowUpdated = mysql_query( $query );
 

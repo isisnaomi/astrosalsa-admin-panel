@@ -3,20 +3,19 @@
 require_once '../Domain/Request.php';
 require_once '../Domain/Administrator.php';
 require_once '../Domain/StudentsAdministrator.php';
-require_once '../Domain/PackagesAdministrator.php';
+require_once '../Domain/ClassPackagesAdministrator.php';
 require_once '../Domain/SubscriptionsAdministrator.php';
 
-require_once '../Control/ReportSender.php';
-require_once '../Control/DataTrasnlator.php';
+require_once '../Control/DataTranslator.php';
 
 /**
-* CommunicationHandler
-* Class
-* 1. Filters incoming data and converts it into a Request.
-* 2. Delegates the generated Request to its target (an Administrator).
-* 3. Asks the target Administrator for its Report,
-*    then sends it to the petitioner.
-*/
+ * CommunicationHandler
+ * Class
+ * 1. Filters incoming data and converts it into a Request.
+ * 2. Delegates the generated Request to its target (an Administrator).
+ * 3. Asks the target Administrator for its Report,
+ *    then sends it to the petitioner.
+ */
 class CommunicationHandler {
 
   /**
@@ -37,17 +36,19 @@ class CommunicationHandler {
     /* TODO: Awaiting implementation of isRequestValid() */
     /* $this->isRequestValid(); */
 
-    $this->delegateRequest();
-    $this->sendReport();
+    $report = $this->delegateRequest();
+    $this->sendReport( $report );
 
   }
 
   /**
-  * Procedure
-  * Looks for request as parameters in the given method.
-  * If there are enough parameters to proceed check if they're valid.
-  * If all of them are valid saves them as a Request in $this->request.
-  */
+   * Procedure
+   * Looks for request as parameters in the given method.
+   * If there are enough parameters to proceed check if they're valid.
+   * If all of them are valid saves them as a Request in $this->request.
+   *
+   * @param $method
+   */
   private function lookForARequest( $method ) {
 
     /* TODO: Validate method parameter */
@@ -82,7 +83,7 @@ class CommunicationHandler {
         'data' => $method['data']
       ];
 
-      $request = DataTrasnlator::translateReport( $requestAsArray );
+      $request = DataTranslator::translateReport( $requestAsArray );
 
       $this->request = $request;
 
@@ -98,13 +99,13 @@ class CommunicationHandler {
   }
 
   /**
-  * Procedure
-  * lookForARequest() checks if parameters are valid (are defined and have value),
-  * this function will check if the value is of the expected type and will
-  * try to filter malicious data.
-  * Each Administrator should check if the received request matches
-  * their business rules.
-  */
+   * Procedure
+   * lookForARequest() checks if parameters are valid (are defined and have value),
+   * this function will check if the value is of the expected type and will
+   * try to filter malicious data.
+   * Each Administrator should check if the received request matches
+   * their business rules.
+   */
   private function isRequestValid() {
 
     /* TODO */
@@ -125,7 +126,7 @@ class CommunicationHandler {
         break;
 
       case 'packagesAdministrator' :
-        $this->administratorWatching = new PackagesAdministrator();
+        $this->administratorWatching = new ClassPackagesAdministrator();
         break;
 
       case 'subscriptionsAdministrator' :
@@ -139,20 +140,20 @@ class CommunicationHandler {
     $requestType = $this->request->getType();
     $requestData = $this->request->getData();
 
-    $this->administratorWatching->doTask( $requestType, $requestData );
+    return $this->administratorWatching->doTask( $requestType, $requestData );
 
   }
 
   /**
-  * Procedure
-  * Asks the $this->watchingAdministrator for its Report,
-  * and sents it back to the petitioner.
-  */
-  public function sendReport() {
+   * Procedure
+   * Asks the $this->watchingAdministrator for its Report,
+   * and sends it back to the petitioner.
+   *
+   * @param $report
+   */
+  public function sendReport( $report ) {
 
-    $report = $this->administratorWatching->getReport();
-    $reportAsArray = DataTrasnlator::translateRequest( $report );
-
+    $reportAsArray = DataTranslator::translateRequest( $report );
     $reportAsJsonEncodedArray = json_encode( $reportAsArray );
 
     print ( $reportAsJsonEncodedArray );
@@ -162,13 +163,12 @@ class CommunicationHandler {
 }
 
 
-
 /**
  * Main procedure in PHP code
  */
 function Main() {
 
-  $requestReceiver = new CommunicationHandler();
+  new CommunicationHandler();
 
 }
 

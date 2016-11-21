@@ -18,7 +18,7 @@ abstract class Administrator {
   /**
   * @var string
   */
-  private $tableName; /* was static */
+  protected $tableName; /* was static */
 
 
   /**
@@ -83,7 +83,7 @@ abstract class Administrator {
   protected function add( $taskData ) {
 
     $this->accessDatabase();
-    $isTaskSuccessful = $this->database->insertRow( $this->tableName, $taskData );
+    $isTaskSuccessful = $this->database->insertRow( $taskData );
 
     return $this->writeReport( $isTaskSuccessful);
 
@@ -98,7 +98,7 @@ abstract class Administrator {
     $this->accessDatabase();
     $attributes = $taskData['attributes'];
     $rowFilters = $taskData['rowFilters'];
-    $isTaskSuccessful = $this->database->updateRow( $this->tableName, $attributes, $rowFilters );
+    $isTaskSuccessful = $this->database->updateRow( $attributes, $rowFilters );
 
     return $this->writeReport( $isTaskSuccessful);
 
@@ -111,34 +111,34 @@ abstract class Administrator {
   protected function delete( $taskData ) {
 
     $this->accessDatabase();
-    $isTaskSuccessful = $this->database->deleteRow( $this->tableName, $taskData );
+    $isTaskSuccessful = $this->database->deleteRow( $taskData );
 
     return $this->writeReport( $isTaskSuccessful);
   }
 
   /**
-  * @param  string  $taskData
+  * @param  string[] $taskData
   * @return Report  $report
   */
   protected function getList( $taskData ) {
 
     $this->accessDatabase();
-    $isTaskSuccessful = $this->database->selectRows( $this->tableName, $taskData );
+    $databaseResponse = $this->database->selectRows( $taskData );
 
-    return $this->writeReport( $isTaskSuccessful);
+    return $this->writeReport( $databaseResponse );
 
   }
 
   /**
-  * @param  string  $taskData
-  * @return Report  $report
-  */
-  protected function writeReport( $isTaskSuccessful ) {
+   * @param mixed  $databaseResponse
+   * @return Report $report
+   */
+  protected function writeReport( $databaseResponse ) {
 
-    if ( $isTaskSuccessful ) {
+    if ( $databaseResponse ) {
 
       $reportType = 'data';
-      $reportContent = $isTaskSuccessful;
+      $reportContent = $databaseResponse;
       $report = new Report( $reportType, $reportContent );
 
     } else {
@@ -159,7 +159,7 @@ abstract class Administrator {
   */
   protected function accessDatabase() {
 
-    $this->database = new DataBase( 'astrosalsa' );
+    $this->database = new DataBase( 'astrosalsa', $this->tableName );
     $isAccessSuccessful = $this->database->connect( 'root' );
     return $isAccessSuccessful;
 

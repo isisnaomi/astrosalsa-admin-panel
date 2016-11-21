@@ -14,20 +14,20 @@ class StudentsAdministrator extends Administrator {
 
   protected function getStudentByName( $taskData ) {
     $this->accessDatabase();
-    $attributes = "*";
+    $attributes = ["*" => "*"];
     $rowFilters = "name=".$taskData['name'];
 
-    $isTaskSuccessful = $this->database->selectRows( $this->tableName, $attributes, $rowFilters );
+    $isTaskSuccessful = $this->database->selectRows( $attributes, $rowFilters );
 
     return $this->writeReport( $isTaskSuccessful );
   }
 
   protected function getStudentByID( $taskData ) {
     $this->accessDatabase();
-    $attributes = "*";
+    $attributes = ["*" => "*"];
     $rowFilters = "id=".$taskData['id'];
 
-    $isTaskSuccessful = $this->database->selectRows( $this->tableName, $attributes, $rowFilters );
+    $isTaskSuccessful = $this->database->selectRows( $attributes, $rowFilters );
 
     return $this->writeReport( $isTaskSuccessful );
 
