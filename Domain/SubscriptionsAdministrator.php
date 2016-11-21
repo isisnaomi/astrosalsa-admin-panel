@@ -9,28 +9,31 @@ class SubscriptionsAdministrator extends Administrator {
   /**
   * @var string
   */
-  private $location;
+  private $academiesLocations;
 
   public function __construct() {
+
     parent::__construct( 'classPackages' );
+    $this->academiesLocations = array();
+
   }
 
   protected function getSubscriptionByStudentID( $taskData ) {
     $this->accessDatabase();
-    $attributes = "*";
+    $attributes = ["*"];
     $rowFilters = "studentId=".$taskData['studentId'];
 
-    $isTaskSuccessful = $this->database->selectRows( $this->tableName, $attributes, $rowFilters );
+    $isTaskSuccessful = $this->database->selectRows( $attributes, $rowFilters );
 
     return $this->writeReport( $isTaskSuccessful );
   }
 
   protected function getSubscriptionByPackageID( $taskData ) {
     $this->accessDatabase();
-    $attributes = "*";
+    $attributes = ["*"];
     $rowFilters = "packageId=".$taskData['packageId'];
 
-    $isTaskSuccessful = $this->database->selectRows( $this->tableName, $attributes, $rowFilters );
+    $isTaskSuccessful = $this->database->selectRows( $attributes, $rowFilters );
 
     return $this->writeReport( $isTaskSuccessful );
   }

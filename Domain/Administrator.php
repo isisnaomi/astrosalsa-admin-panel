@@ -1,6 +1,6 @@
 <?php
 
-require_once '../Domain/Database.php';
+require_once '../Domain/DatabaseAccessor.php';
 require_once '../Domain/Report.php';
 
 /**
