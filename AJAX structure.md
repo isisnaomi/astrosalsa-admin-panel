@@ -1,15 +1,17 @@
 # WEB SERVICES #
 
-$.ajax({
-  method: "POST",
-  url: "../control/conmmunicationhandler.php",
-  dataType: "json",
-  data: {
-    target: " "
-    type: " "
-    data: {" ", " ", ... , " "} | " "
-    }
-});
+##Estructura general##
+
+    $.ajax({
+      method: "POST",
+      url: "../control/conmmunicationhandler.php",
+      dataType: "json",
+      data: {
+        target: " "
+        type: " "
+        data: {" ", " ", ... , " "} | " "
+        }
+      });
 
 ## Valores permitidos en la request ##
 
@@ -50,6 +52,3 @@ $.ajax({
 
     * type: "getSubscriptionByStudentID"
           * data: "studentId"
-
-
-      
