@@ -1,14 +1,14 @@
 <?php
 
 /**
-* SubscriptionAdministrator
-* Administrates the subscriptions
-*/
+ * SubscriptionAdministrator
+ * Administrates the subscriptions
+ */
 class SubscriptionsAdministrator extends Administrator {
 
   /**
-  * @var string
-  */
+   * @var string
+   */
   private $academiesLocations;
 
   public function __construct() {
