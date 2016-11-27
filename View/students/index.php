@@ -41,7 +41,7 @@
             $('#dtStudents').DataTable(
               {
                 "processing": true,
-                "ajax": "/dataGetter.php/?data=students",
+                "ajax": "../dataGetter.php/?data=students",
                 "columns": [
                     {data: 'IdStudent'},
                     {data: 'Name'},

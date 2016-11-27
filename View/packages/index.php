@@ -42,7 +42,7 @@
             $('#dtStudents').DataTable(
               {
                 "processing": true,
-                "ajax": "/dataGetter.php/?data=packages",
+                "ajax": "../dataGetter.php/?data=packages",
                 "columns": [
                     {data: 'IdPackage'},
                     {data: 'ClassesIncluded'},
