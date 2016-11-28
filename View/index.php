@@ -4,7 +4,7 @@ $auth = new AdminAuthenticator();
 $error = '';
 
 if($admin->existSession){
-  header("location: profile.php");
+  header("location: dashboard.php");
 }
 if(isset($_POST['submit']))
 {
@@ -13,7 +13,7 @@ if(isset($_POST['submit']))
  $upass = md5($upass);
 
  if($auth->authenticate( $uname, $upass )){
-   header("location: profile.php"); // Redirecting To Other Page
+   header("location: dashboard.php"); // Redirecting To Other Page
  }
 
 
