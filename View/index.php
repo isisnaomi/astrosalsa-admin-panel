@@ -15,6 +15,10 @@ if(isset($_POST['submit']))
  if($auth->authenticate( $uname, $upass )){
    header("location: dashboard.php"); // Redirecting To Other Page
  }
+ else{
+   $error= "Invalid username or password, please verify and try again";
+   echo "<script type='text/javascript'>alert('$error');</script>";
+ }
 
 
 
