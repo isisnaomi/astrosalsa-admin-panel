@@ -11,9 +11,9 @@ require_once '../Domain/Report.php';
 abstract class Administrator {
 
   /**
-  * @var Database
+  * @var DatabaseAccessor
   */
-  protected $database;
+  protected $databaseAccessor;
 
   /**
   * @var string
@@ -33,7 +33,7 @@ abstract class Administrator {
   /**
    * @param $taskType
    * @param $taskData
-   * @return null|Report|void
+   * @return Report
    */
   public function doTask ( $taskType, $taskData ) {
 
@@ -83,8 +83,9 @@ abstract class Administrator {
   protected function add( $taskData ) {
 
     $this->accessDatabase();
-    $isTaskSuccessful = $this->database->insertRow( $taskData );
-    $taskType = 'add '.tableName;
+    $isTaskSuccessful = $this->databaseAccessor->insertRow( $taskData );
+
+    $stamp = 'add' . $this->tableName;
 
     return $this->writeReport( $isTaskSuccessful, $stamp );
 
@@ -99,8 +100,9 @@ abstract class Administrator {
     $this->accessDatabase();
     $attributes = $taskData['attributes'];
     $rowFilters = $taskData['rowFilters'];
-    $isTaskSuccessful = $this->database->updateRow( $attributes, $rowFilters );
-    $taskType = 'update '.tableName;
+    $isTaskSuccessful = $this->databaseAccessor->updateRow( $attributes, $rowFilters );
+
+    $stamp = 'update' . $this->tableName;
 
     return $this->writeReport( $isTaskSuccessful, $stamp );
 
@@ -113,8 +115,9 @@ abstract class Administrator {
   protected function delete( $taskData ) {
 
     $this->accessDatabase();
-    $isTaskSuccessful = $this->database->deleteRow( $taskData );
-    $taskType = 'delete '.tableName;
+    $isTaskSuccessful = $this->databaseAccessor->deleteRow( $taskData );
+
+    $stamp = 'delete ' . $this->tableName;
 
     return $this->writeReport( $isTaskSuccessful, $stamp );
   }
@@ -126,15 +129,17 @@ abstract class Administrator {
   protected function getList( $taskData ) {
 
     $this->accessDatabase();
-    $databaseResponse = $this->database->selectRows( $taskData );
-    $taskType = 'getList '.tableName;
+    $databaseResponse = $this->databaseAccessor->selectRows( $taskData );
+
+    $stamp = 'getList ' . $this->tableName;
 
     return $this->writeReport( $databaseResponse, $stamp );
 
   }
 
   /**
-   * @param mixed  $databaseResponse
+   * @param mixed $databaseResponse
+   * @param $stamp
    * @return Report $report
    */
   protected function writeReport( $databaseResponse, $stamp ) {
@@ -148,7 +153,7 @@ abstract class Administrator {
     } else {
 
       $reportType = 'error';
-      $errorDescription = $this->database->getErrorMessage();
+      $errorDescription = $this->databaseAccessor->getErrorMessage();
       $reportContent = [ 'errorDescription' => $errorDescription ];
       $report = new Report( $reportType, $reportContent, $stamp );
 
@@ -163,8 +168,8 @@ abstract class Administrator {
   */
   protected function accessDatabase() {
 
-    $this->database = new DataBase( 'astrosalsa', $this->tableName );
-    $isAccessSuccessful = $this->database->connect( 'root' );
+    $this->databaseAccessor = new DatabaseAccessor( 'astrosalsa', $this->tableName );
+    $isAccessSuccessful = $this->databaseAccessor->connect( 'root' );
     return $isAccessSuccessful;
 
   }

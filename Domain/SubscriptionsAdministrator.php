@@ -23,7 +23,7 @@ class SubscriptionsAdministrator extends Administrator {
     $attributes = ["*"];
     $rowFilters = "studentId=".$taskData['studentId'];
 
-    $isTaskSuccessful = $this->database->selectRows( $attributes, $rowFilters );
+    $isTaskSuccessful = $this->databaseAccessor->selectRows( $attributes, $rowFilters );
 
     return $this->writeReport( $isTaskSuccessful );
   }
@@ -33,7 +33,7 @@ class SubscriptionsAdministrator extends Administrator {
     $attributes = ["*"];
     $rowFilters = "packageId=".$taskData['packageId'];
 
-    $isTaskSuccessful = $this->database->selectRows( $attributes, $rowFilters );
+    $isTaskSuccessful = $this->databaseAccessor->selectRows( $attributes, $rowFilters );
 
     return $this->writeReport( $isTaskSuccessful );
   }

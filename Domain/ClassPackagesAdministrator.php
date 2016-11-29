@@ -15,7 +15,7 @@ class ClassPackagesAdministrator extends Administrator {
     $attributes = "*";
     $rowFilters = "id=".$taskData['id'];
 
-    $isTaskSuccessful = $this->database->selectRows( $this->tableName, $attributes, $rowFilters );
+    $isTaskSuccessful = $this->databaseAccessor->selectRows( $this->tableName, $attributes, $rowFilters );
 
     return $this->writeReport( $isTaskSuccessful );
   }

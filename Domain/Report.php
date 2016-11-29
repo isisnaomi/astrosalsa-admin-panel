@@ -25,9 +25,10 @@ class Report {
 
 
   /**
-  * @param string $type
-  * @param string[][] $content
-  */
+   * @param string $type
+   * @param string[][] $content
+   * @param $stamp
+   */
   public function __construct( $type, $content, $stamp ) {
 
     $this->type = $type;

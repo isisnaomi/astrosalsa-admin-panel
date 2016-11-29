@@ -8,7 +8,7 @@ require_once '../Domain/QueryGenerator.php';
  * Provides an interface for the access for a specified database.
  * Uses PHP 5 standard functions.
  */
-class DataBase {
+class DatabaseAccessor {
 
   /**
    * @var
