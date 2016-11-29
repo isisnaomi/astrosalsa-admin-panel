@@ -3,7 +3,7 @@
 require_once '../Domain/Request.php';
 
 class DataTranslator{
-	
+
   /**
    * Converts a Report into an associative array.
    *
@@ -16,7 +16,8 @@ class DataTranslator{
 
     $array = [
       'type' => $report->getType(),
-      'content' => $report->getContent()
+      'content' => $report->getContent(),
+			'stamp' => $report->getStamp()
     ];
 
     return $array;

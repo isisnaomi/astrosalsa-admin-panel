@@ -156,6 +156,8 @@ class CommunicationHandler {
 
     $reportAsArray = DataTranslator::translateRequest( $report );
     $reportAsJsonEncodedArray = json_encode( $reportAsArray );
+    
+    ActivityLogger::logActivity( $reportAsArray );
 
     print ( $reportAsJsonEncodedArray );
 

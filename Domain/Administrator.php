@@ -84,8 +84,9 @@ abstract class Administrator {
 
     $this->accessDatabase();
     $isTaskSuccessful = $this->database->insertRow( $taskData );
+    $taskType = 'add '.tableName;
 
-    return $this->writeReport( $isTaskSuccessful);
+    return $this->writeReport( $isTaskSuccessful, $stamp );
 
   }
 
@@ -99,8 +100,9 @@ abstract class Administrator {
     $attributes = $taskData['attributes'];
     $rowFilters = $taskData['rowFilters'];
     $isTaskSuccessful = $this->database->updateRow( $attributes, $rowFilters );
+    $taskType = 'update '.tableName;
 
-    return $this->writeReport( $isTaskSuccessful);
+    return $this->writeReport( $isTaskSuccessful, $stamp );
 
   }
 
@@ -112,8 +114,9 @@ abstract class Administrator {
 
     $this->accessDatabase();
     $isTaskSuccessful = $this->database->deleteRow( $taskData );
+    $taskType = 'delete '.tableName;
 
-    return $this->writeReport( $isTaskSuccessful);
+    return $this->writeReport( $isTaskSuccessful, $stamp );
   }
 
   /**
@@ -124,8 +127,9 @@ abstract class Administrator {
 
     $this->accessDatabase();
     $databaseResponse = $this->database->selectRows( $taskData );
+    $taskType = 'getList '.tableName;
 
-    return $this->writeReport( $databaseResponse );
+    return $this->writeReport( $databaseResponse, $stamp );
 
   }
 
@@ -133,20 +137,20 @@ abstract class Administrator {
    * @param mixed  $databaseResponse
    * @return Report $report
    */
-  protected function writeReport( $databaseResponse ) {
+  protected function writeReport( $databaseResponse, $stamp ) {
 
     if ( $databaseResponse ) {
 
       $reportType = 'data';
       $reportContent = $databaseResponse;
-      $report = new Report( $reportType, $reportContent );
+      $report = new Report( $reportType, $reportContent, $stamp );
 
     } else {
 
       $reportType = 'error';
       $errorDescription = $this->database->getErrorMessage();
       $reportContent = [ 'errorDescription' => $errorDescription ];
-      $report = new Report( $reportType, $reportContent );
+      $report = new Report( $reportType, $reportContent, $stamp );
 
     }
 
