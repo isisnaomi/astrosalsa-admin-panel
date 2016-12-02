@@ -20,4 +20,8 @@ class ClassPackagesAdministrator extends Administrator {
     return $this->writeReport( $isTaskSuccessful );
   }
 
+    protected  function logActivity( $stamp ){
+
+    }
+
 }

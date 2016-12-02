@@ -12,7 +12,7 @@ class ActivityLogger {
   /**
    * @var DatabaseAccessor
    */
-  private $databaseAccessor;
+  private static $databaseAccessor;
 
 
   /**
@@ -25,32 +25,31 @@ class ActivityLogger {
   /**
    * @return string
    */
-  private function accessDatabase() {
-    $tableName = 'activityLog';
+  private static function accessDatabase( $tableName ) {
 
-    $this->databaseAccessor = new DatabaseAccessor( 'astrosalsa', $tableName );
-    $isAccessSuccessful = $this->databaseAccessor->connect( 'root' );
-    return $isAccessSuccessful;
+      self::$databaseAccessor = new DatabaseAccessor( 'astrosalsa', $tableName );
+      $isAccessSuccessful = self::$databaseAccessor->connect( 'root' );
+
+      return $isAccessSuccessful;
   }
 
   /**
    * Procedure
    * @param $activityReport
    */
-  public function logActivity ( $activityReport ) {
+  public static function logActivity ( $tableName, $activityReport ) {
 
-    $activityType = $activityReport['type'];
+      self::accessDatabase( $tableName );
+      self::$databaseAccessor->insertRow( $activityReport );
 
-    if ( $activityType == 'data' ) {
+  }
 
-      $this->accessDatabase();
-      $this->databaseAccessor->insertRow( $activityReport );
+  public  static function getActivityLog ( $tableName, $attributes ){
+      self::accessDatabase( $tableName );
+      $isAccessSuccessful = self::$databaseAccessor->selectRows( $attributes );
 
-    } else {
+      return $isAccessSuccessful;
 
-      die( $activityType );
-
-    }
 
   }
 

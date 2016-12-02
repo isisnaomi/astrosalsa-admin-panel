@@ -17,7 +17,6 @@ class DataTranslator{
     $array = [
       'type' => $report->getType(),
       'content' => $report->getContent(),
-			'stamp' => $report->getStamp()
     ];
 
     return $array;

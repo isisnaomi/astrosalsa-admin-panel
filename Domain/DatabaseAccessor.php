@@ -182,4 +182,9 @@ class DatabaseAccessor {
 
   }
 
+  public function getLastInsertedId(){
+      $lastId = mysql_insert_id();
+      return $lastId;
+  }
+
 }

@@ -2,6 +2,7 @@
 
 require_once '../Domain/DatabaseAccessor.php';
 require_once '../Domain/Report.php';
+require_once '../Control/ActivityLogger.php';
 
 /**
 * Administrator
@@ -68,6 +69,20 @@ abstract class Administrator {
       case 'getSubscriptionByStudentID' :
           $report = $this->getSubscriptionByStudentID( $taskData );
           break;
+        case 'getAssistanceLog' :
+            $report = $this->getAssistanceLog( $taskData );
+            break;
+        case 'getPaymentLog' :
+            $report = $this->getPaymentLog( $taskData );
+            break;
+        case 'checkIn' :
+            $report = $this->decrementClassesRemaining( $taskData );
+            break;
+
+        case 'payment' :
+            $report = $this->renewSubscription( $taskData );
+            break;
+
 
     }
 
@@ -84,8 +99,7 @@ abstract class Administrator {
 
     $this->accessDatabase();
     $isTaskSuccessful = $this->databaseAccessor->insertRow( $taskData );
-
-    $stamp = 'add' . $this->tableName;
+    $stamp = 'add ' . $this->tableName;
 
     return $this->writeReport( $isTaskSuccessful, $stamp );
 
@@ -101,8 +115,7 @@ abstract class Administrator {
     $attributes = $taskData['attributes'];
     $rowFilters = $taskData['rowFilters'];
     $isTaskSuccessful = $this->databaseAccessor->updateRow( $attributes, $rowFilters );
-
-    $stamp = 'update' . $this->tableName;
+    $stamp = 'update ' . $this->tableName;
 
     return $this->writeReport( $isTaskSuccessful, $stamp );
 
@@ -116,7 +129,6 @@ abstract class Administrator {
 
     $this->accessDatabase();
     $isTaskSuccessful = $this->databaseAccessor->deleteRow( $taskData );
-
     $stamp = 'delete ' . $this->tableName;
 
     return $this->writeReport( $isTaskSuccessful, $stamp );
@@ -130,8 +142,7 @@ abstract class Administrator {
 
     $this->accessDatabase();
     $databaseResponse = $this->databaseAccessor->selectRows( $taskData );
-
-    $stamp = 'getList ' . $this->tableName;
+    $stamp = 'get ' . $this->tableName;
 
     return $this->writeReport( $databaseResponse, $stamp );
 
@@ -139,7 +150,6 @@ abstract class Administrator {
 
   /**
    * @param mixed $databaseResponse
-   * @param $stamp
    * @return Report $report
    */
   protected function writeReport( $databaseResponse, $stamp ) {
@@ -148,20 +158,24 @@ abstract class Administrator {
 
       $reportType = 'data';
       $reportContent = $databaseResponse;
-      $report = new Report( $reportType, $reportContent, $stamp );
+      $report = new Report( $reportType, $reportContent );
+      $this->logActivity( $stamp );
 
     } else {
 
       $reportType = 'error';
       $errorDescription = $this->databaseAccessor->getErrorMessage();
       $reportContent = [ 'errorDescription' => $errorDescription ];
-      $report = new Report( $reportType, $reportContent, $stamp );
+      $report = new Report( $reportType, $reportContent );
 
     }
 
     return $report;
 
   }
+
+  protected abstract function logActivity( $stamp );
+
 
   /**
   * @return boolean  $isAccessSuccessful
