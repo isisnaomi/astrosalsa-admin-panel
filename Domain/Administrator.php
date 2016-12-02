@@ -1,6 +1,7 @@
 <?php
 
 require_once '../Domain/DatabaseAccessor.php';
+require_once '../Domain/SubscriptionsAdministrator.php';
 require_once '../Domain/Report.php';
 require_once '../Control/ActivityLogger.php';
 
@@ -69,19 +70,18 @@ abstract class Administrator {
       case 'getSubscriptionByStudentID' :
           $report = $this->getSubscriptionByStudentID( $taskData );
           break;
-        case 'getAssistanceLog' :
-            $report = $this->getAssistanceLog( $taskData );
-            break;
-        case 'getPaymentLog' :
-            $report = $this->getPaymentLog( $taskData );
-            break;
-        case 'checkIn' :
-            $report = $this->decrementClassesRemaining( $taskData );
-            break;
-
-        case 'payment' :
-            $report = $this->renewSubscription( $taskData );
-            break;
+      case 'getAssistanceLog' :
+          $report = $this->getAssistanceLog( $taskData );
+          break;
+      case 'getPaymentLog' :
+          $report = $this->getPaymentLog( $taskData );
+          break;
+      case 'checkIn' :
+          $report = $this->decrementClassesRemaining( $taskData );
+          break;
+      case 'payment' :
+          $report = $this->renewSubscription( $taskData );
+          break;
 
 
     }
@@ -150,6 +150,7 @@ abstract class Administrator {
 
   /**
    * @param mixed $databaseResponse
+   * @param $stamp
    * @return Report $report
    */
   protected function writeReport( $databaseResponse, $stamp ) {
@@ -183,9 +184,12 @@ abstract class Administrator {
   protected function accessDatabase() {
 
     $this->databaseAccessor = new DatabaseAccessor( 'astrosalsa', $this->tableName );
-    $isAccessSuccessful = $this->databaseAccessor->connect( 'root' );
+    $isAccessSuccessful = $this->databaseAccessor->connect( 'root', 'root' );
     return $isAccessSuccessful;
 
   }
 
 }
+
+$admin = new SubscriptionsAdministrator();
+$admin->doTask( 'checkIn', array( 'id' => '1' ) );

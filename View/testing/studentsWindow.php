@@ -8,12 +8,48 @@
     <input type='text' placeholder='Student name'>
     <input type='button' value='add student'>
 
-    <!--<script src='http://localhost/libs/jquery.min.js'></script>-->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
-    <script src='../../Domain/Request.js'></script>
-    <script src='../../Domain/Report.js'></script>
-    <script src='../../Control/RequestSender.js'></script>
-    <script src='../../Control/ReportInterpreter.js'></script>
-    <script src='../../Control/WindowController.js'></script>
+    <script src='http://localhost/libs/jquery.min.js'></script>
+
+    <script>
+      $(function() {
+
+        $('input:button').on('click', function() {
+
+          $.ajax({
+            data : {
+
+              'target' : 'studentsAdministrator',
+              'type' : 'add',
+
+              'data' : {
+                'name' : $('input:text').val()
+              }
+
+            },
+            type: 'POST',
+            dataType: 'JSON',
+            url: '../../Control/CommunicationHandler.php',
+            beforeSend: function() {
+              console.log('BeforeSend');
+            },
+            success: function( response ) {
+              console.log('Ajax call successful');
+              console.log( response.data );
+            },
+            error: function( xhr, statusText ) {
+              console.error( 'Communication error: ' + statusText + ' - ' + xhr);
+
+            },
+            complete: function( response ) {
+              console.log( 'Ajax request completed.' );
+              console.log( response );
+            }
+          });
+
+        });
+
+      });
+    </script>
+
   </body>
 </html>

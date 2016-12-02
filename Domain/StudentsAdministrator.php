@@ -37,10 +37,10 @@ class StudentsAdministrator extends Administrator {
   }
 
   protected function logStudentInscription(){
-      $tableName = 'studentAssistanceLog';
+      $tableName = 'studentInscriptionLog';
       $activity = [
           'studentId' => $this->databaseAccessor->getLastInsertedId(),
-          'date' => date('Y/m/d H:i:s')
+          'date' => date('Y/m/d')
       ];
 
       ActivityLogger::logActivity ( $tableName, $activity );

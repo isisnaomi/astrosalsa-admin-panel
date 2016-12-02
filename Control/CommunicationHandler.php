@@ -84,7 +84,7 @@ class CommunicationHandler {
         'data' => $method['data']
       ];
 
-      $request = DataTranslator::translateReport( $requestAsArray );
+      $request = DataTranslator::translateRequest( $requestAsArray );
 
       $this->request = $request;
 

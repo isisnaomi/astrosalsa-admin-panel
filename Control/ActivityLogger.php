@@ -23,18 +23,20 @@ class ActivityLogger {
   }
 
   /**
+   * @param $tableName
    * @return string
    */
   private static function accessDatabase( $tableName ) {
 
       self::$databaseAccessor = new DatabaseAccessor( 'astrosalsa', $tableName );
-      $isAccessSuccessful = self::$databaseAccessor->connect( 'root' );
+      $isAccessSuccessful = self::$databaseAccessor->connect( 'root', 'root' );
 
       return $isAccessSuccessful;
   }
 
   /**
    * Procedure
+   * @param $tableName
    * @param $activityReport
    */
   public static function logActivity ( $tableName, $activityReport ) {

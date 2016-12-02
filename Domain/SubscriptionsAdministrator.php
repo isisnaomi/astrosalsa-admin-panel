@@ -41,62 +41,64 @@ class SubscriptionsAdministrator extends Administrator {
   }
 
 
-  protected function decrementClassesRemaining( $taskData ){
+  protected function decrementClassesRemaining( $taskData ) {
+
       $stamp = 'decrement '. $this->tableName;
+      $isTaskSuccessful = true;
       return $this->writeReport( $isTaskSuccessful, $stamp );
 
   }
 
   protected function renewSubscription( $taskData ){
       $stamp = 'renew'. $this->tableName;
+      $isTaskSuccessful = true;
       return $this->writeReport( $isTaskSuccessful, $stamp );
 
   }
 
 
-  protected  function logActivity( $stamp ){
+  protected  function logActivity( $stamp ) {
 
-        if( $stamp === 'decrement subscription'){
+        if ( $stamp === 'decrement subscription') {
             $this->logAssistance();
-        }
-        if( $stamp === 'renew subscription'){
+        } else if ( $stamp === 'renew subscription') {
             $this->logRenewSubscription();
         }
+
+  }
+
+  protected function logAssistance() {
+      $tableName = 'assistanceLog';
+      $activity = [
+          'studentId' => 1,
+          'date' => date('Y/m/d'),
+          'time' => date('H:i:s')
+      ];
+
+      ActivityLogger::logActivity ( $tableName, $activity );
+  }
+
+  protected function logRenewSubscription() {
+      $tableName = 'paymentLog';
+      $activity = [
+          'studentId' => $this->databaseAccessor->getLastInsertedId(),
+          'date' => date('Y/m/d H:i:s')
+      ];
+
+      ActivityLogger::logActivity ( $tableName, $activity );
 
 
   }
 
-    protected function logAssistance(){
-        $tableName = 'assistanceLog';
-        $activity = [
-            'studentId' => $this->databaseAccessor->getLastInsertedId(),
-            'date' => date('Y/m/d H:i:s')
-        ];
+  protected function getAssistanceLog( $taskData ){
+      $tableName = 'assistanceLog';
 
-        ActivityLogger::logActivity ( $tableName, $activity );
-    }
+  }
+  protected function getPaymentLog( $taskData ){
+      $tableName = 'paymentLog';
 
-    protected function logRenewSubscription(){
-        $tableName = 'paymentLog';
-        $activity = [
-            'studentId' => $this->databaseAccessor->getLastInsertedId(),
-            'date' => date('Y/m/d H:i:s')
-        ];
+      ActivityLogger::getActivityLog( $tableName, $taskData );
 
-        ActivityLogger::logActivity ( $tableName, $activity );
-
-
-    }
-
-    protected function getAssistanceLog( $taskData ){
-        $tableName = 'assistanceLog';
-
-    }
-    protected function getPaymentLog( $taskData ){
-        $tableName = 'paymentLog';
-
-        ActivityLogger::getActivityLog( $tableName, $taskData );
-
-    }
+  }
 
 }

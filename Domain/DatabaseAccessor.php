@@ -38,7 +38,7 @@ class DatabaseAccessor {
    * @param $tableName
    * @param string $serverName
    */
-  public function __construct( $dataBaseName, $tableName, $serverName = 'localhost' ) {
+  public function __construct( $dataBaseName, $tableName, $serverName = '127.0.0.1:8889' ) {
 
     $this->name = $dataBaseName;
     $this->tableName = $tableName;
@@ -84,7 +84,12 @@ class DatabaseAccessor {
 
     }
 
-    $isConnectionEstablished = mysql_select_db( $this->name, $this->connection );
+    if ( $this->connection ) {
+      mysql_select_db( $this->name, $this->connection );
+      $isConnectionEstablished = true;
+    } else {
+      $isConnectionEstablished = false;
+    }
 
     return $isConnectionEstablished;
 

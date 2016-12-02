@@ -19,14 +19,14 @@ $(function() {
 
 
     /**
-     * @param Request request
      * @return Report report
+     * @param request
      */
     _this.sendRequest = function( request ) {
 
       var ajax = $.ajax({
 
-        'url': '../Control/CommunicationHandler.php',
+        'url': '../../Control/CommunicationHandler.php',
         'dataType': 'JSON',
         'type': 'POST',
 
