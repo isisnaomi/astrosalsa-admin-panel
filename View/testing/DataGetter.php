@@ -11,6 +11,10 @@ switch($requestedData){
       sendPackagesData();
   break;
 
+    case 'assistance':
+      sendAssistanceData();
+  break;
+
 }
 
 function sendStudentsData(){
@@ -29,6 +33,8 @@ function sendStudentsData(){
   echo json_encode($data);
 
 }
+
+
 
 function sendPackagesData(){
   $data = [
