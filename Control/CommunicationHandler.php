@@ -7,6 +7,7 @@ require_once '../Domain/ClassPackagesAdministrator.php';
 require_once '../Domain/SubscriptionsAdministrator.php';
 
 require_once '../Control/DataTranslator.php';
+require_once '../Control/ActivityLogger.php';
 
 /**
  * CommunicationHandler
@@ -155,6 +156,8 @@ class CommunicationHandler {
 
     $reportAsArray = DataTranslator::translateRequest( $report );
     $reportAsJsonEncodedArray = json_encode( $reportAsArray );
+    
+    ActivityLogger::logActivity( $reportAsArray );
 
     print ( $reportAsJsonEncodedArray );
 

@@ -1,0 +1,38 @@
+.top-bar {
+  position: fixed;
+  z-index: 2;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  padding-left: 220px;
+  padding-right: 20px;
+  
+  text-align: right;
+  line-height: 40px;
+  font-size: 14px;
+
+  box-shadow: 0 -10px 20px #222;
+  background-color: white;
+}
+
+.top-bar .toggle-menu-button {
+  float: left;
+  margin: 10px 0 0 40px;
+
+  width: 20px;
+  height: 20px;
+
+  background-color: transparent;
+  background-image: url(../icons/options.svg);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 100% 100%;
+
+  cursor: pointer;
+}
+
+.top-bar span,
+.top-bar a {
+  margin-right: 20px;
+}

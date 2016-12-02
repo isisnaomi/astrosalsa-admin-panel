@@ -18,15 +18,22 @@ class Report {
   */
   private $content;
 
+  /**
+  * @var string
+  */
+  private $stamp;
+
 
   /**
-  * @param string $type
-  * @param string[][] $content
-  */
-  public function __construct( $type, $content ) {
+   * @param string $type
+   * @param string[][] $content
+   * @param $stamp
+   */
+  public function __construct( $type, $content, $stamp ) {
 
     $this->type = $type;
     $this->content = $content;
+    $this->stamp = $stamp;
 
   }
 
@@ -47,5 +54,15 @@ class Report {
     return $this->content;
 
   }
+
+  /**
+  * @return string $this->stamp;
+  */
+  public function getStamp() {
+
+    return $this->stamp;
+
+  }
+
 
 }

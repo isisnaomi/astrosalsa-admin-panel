@@ -10,7 +10,7 @@
 
     <!-- DataTables JavaScript -->
     <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
-    <link href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css" type="text/css"></link>
+    <script src="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css"></script>
 
     </head>
 
@@ -18,15 +18,14 @@
     </div>
     <div class="row panel panel-default">
         <div class="panel-heading">
-            Lista de paquetes
+            Lista de alumnos
         </div>
         <div class="panel-body">
         <table id="dtStudents" class="table display" cellspacing="0" width="100%">
             <thead>
                 <tr>
                 <th>ID</th>
-                <th>Clases incluidas</th>
-                <th>Precio</th>
+                <th>Nombre</th>
                 <th>Editar</th>
                 <th>Eliminar</th>
                 </tr>
@@ -42,16 +41,15 @@
             $('#dtStudents').DataTable(
               {
                 "processing": true,
-                "ajax": "/dataGetter.php/?data=packages",
+                "ajax": "../dataGetter.php/?data=students",
                 "columns": [
-                    {data: 'IdPackage'},
-                    {data: 'ClassesIncluded'},
-                    {data: 'Price'},
+                    {data: 'IdStudent'},
+                    {data: 'Name'},
                 ],
                 "columnDefs":
                 [
                     {
-                        "targets": 3,
+                        "targets": 2,
                         "searchable": false,
                         "data": null,
                         "defaultContent": "<button action='edit' type='button' class='btn btn-success btn-xs' title='Editar dispositivo'>" +
@@ -59,7 +57,7 @@
                             "</button>"
                     },
                     {
-                        "targets": 4,
+                        "targets": 3,
                         "searchable": false,
                         "data": null,
                         "defaultContent": "<button action='delete' type='button' class='btn btn-danger btn-xs' " +

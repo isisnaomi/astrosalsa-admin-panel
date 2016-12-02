@@ -17,7 +17,7 @@ class StudentsAdministrator extends Administrator {
     $attributes = ["*" => "*"];
     $rowFilters = "name=".$taskData['name'];
 
-    $isTaskSuccessful = $this->database->selectRows( $attributes, $rowFilters );
+    $isTaskSuccessful = $this->databaseAccessor->selectRows( $attributes, $rowFilters );
 
     return $this->writeReport( $isTaskSuccessful );
   }
@@ -27,7 +27,7 @@ class StudentsAdministrator extends Administrator {
     $attributes = ["*" => "*"];
     $rowFilters = "id=".$taskData['id'];
 
-    $isTaskSuccessful = $this->database->selectRows( $attributes, $rowFilters );
+    $isTaskSuccessful = $this->databaseAccessor->selectRows( $attributes, $rowFilters );
 
     return $this->writeReport( $isTaskSuccessful );
 

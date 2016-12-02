@@ -1,0 +1,117 @@
+
+.check-in-window {
+  display: none;
+
+  position: fixed;
+  z-index: 4;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+  padding-top: 140px;
+  padding-left: 240px;
+
+  background-color: tomato;
+  opacity: 0.98;
+}
+
+.check-in-window .logo {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 220px;
+  height: 100px;
+
+  background-color: transparent;
+  background-image: url('../icons/astro-logo.svg');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 160px auto;
+}
+
+.check-in-window h1 {
+  margin-bottom: 20px;
+  font-size: 3.5em;
+  color: white;
+}
+
+#check-in-form input[type="password"] {
+  width: 550px;
+  outline: 0;
+  border: 0;
+  margin-bottom: 20px;
+  padding: 4px 10px;
+  font-size: 42px;
+  color: #3c3c7c;
+}
+
+.identified-student {
+  position: relative;
+  width: 550px;
+  height: 200px;
+  background-color: white;
+}
+
+.identified-student .photo {
+  float: left;
+  width: 160px;
+  height: 160px;
+  margin: 20px 0 0 20px;
+}
+
+.identified-student .data {
+  float: left;
+  margin-left: 40px;
+  padding: 40px 40px 0 0;
+}
+
+.identified-student .name {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 2.5em;
+}
+
+.identified-student .classes-left {
+  font-size: 2em;
+  color: #3c3c7c;
+}
+
+.identified-student .confirmation-buttons {
+  position: absolute;
+  bottom: 10px;
+  right: 20px;
+}
+
+.identified-student .confirmation-buttons div {
+  display: inline-block;
+  width: 38px;
+  height: 38px;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 100% 100%;
+  cursor: pointer;
+}
+
+.confirm {
+  background-image: url(../icons/confirm.svg);
+}
+
+.cancel {
+  background-image: url(../icons/cancel.svg);
+}
+
+.close {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  width: 24px;
+  height: 24px;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 100% 100%;
+  background-image: url(../icons/close.svg);
+  cursor: pointer;
+}

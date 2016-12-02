@@ -1,0 +1,11 @@
+
+.main-container {
+  margin-left: 220px;
+  padding: 80px 40px 40px;
+}
+
+.main-container .section-title {
+  margin-bottom: 40px;
+  letter-spacing: 1px;
+  color: #333;
+}
