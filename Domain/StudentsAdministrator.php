@@ -47,7 +47,7 @@ class StudentsAdministrator extends Administrator {
 
   }
 
-  protected  function logActivity( $report, $stamp ){
+  protected  function logActivity( $activityData, $stamp ){
 
       if( $stamp === 'add students'){
 

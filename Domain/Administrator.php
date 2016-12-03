@@ -193,5 +193,5 @@ abstract class Administrator {
 }
 
 $admin = new SubscriptionsAdministrator();
-$admin->doTask( 'payment', array( 'studentId' => '1', 'packageId'=> '1' ) );
+$admin->doTask( 'payment', array( 'studentId' => '1', 'packageId'=> '2' ) );
 
