@@ -71,26 +71,30 @@ class SubscriptionsAdministrator extends Administrator {
       ];
       $rowFilters = 'studentId = '. $studentId;
       $isTaskSuccessful = $this->databaseAccessor->updateRow( $attributes, $rowFilters );
+      $isTaskSuccessful = [
+          'studentId' => $studentId,
+          'packageId' => $taskData['packageId']
+      ];
       $stamp = 'renew '. $this->tableName;
       return $this->writeReport( $isTaskSuccessful, $stamp );
 
   }
 
 
-  protected  function logActivity( $report, $stamp ) {
+  protected  function logActivity( $activityData, $stamp ) {
 
         if ( $stamp === 'decrement subscriptions') {
-            $this->logAssistance( $report );
+            $this->logAssistance( $$activityData );
         } else if ( $stamp === 'renew subscriptions') {
-            $this->logRenewSubscription( $report );
+            $this->logRenewSubscription( $activityData );
         }
 
   }
 
-  protected function logAssistance( $report ) {
+  protected function logAssistance( $activityData ) {
       $tableName = 'assistanceLog';
       $activity = [
-          'studentId' => $report,
+          'studentId' => $activityData,
           'date' => date('Y/m/d'),
           'time' => date('H:i:s')
       ];
@@ -98,12 +102,12 @@ class SubscriptionsAdministrator extends Administrator {
       ActivityLogger::logActivity ( $tableName, $activity );
   }
 
-  protected function logRenewSubscription( $report ) {
+  protected function logRenewSubscription( $activityData ) {
       $tableName = 'paymentLog';
       echo('logrenewsubscription');
       $activity = [
-          'studentId' => $report,
-          'packageId' => '1',
+          'studentId' => $activityData['studentId'],
+          'packageId' => $activityData['packageId'],
           'date' => date('Y/m/d')
       ];
 

@@ -191,7 +191,3 @@ abstract class Administrator {
   }
 
 }
-
-$admin = new StudentsAdministrator();
-$admin->doTask( 'getList', array( '*' => '*' ) );
-
