@@ -5,20 +5,24 @@
   <meta charset='utf-8'>
   <title>Dashboard</title>
 
-  <?php require "php-segments/stylesheet-links.php"; ?>
-
-  <link rel='stylesheet' href='assets/css/check-in.css' />
-  <link rel='stylesheet' href='assets/css/dashboard.css' />
+  <!-- Stylesheet links -->
+  <?php include 'layout/layout-stylesheets-links.php'; ?>
+  <link rel='stylesheet' href='assets/stylesheets/dashboard/styles.css' />
+  <link rel='stylesheet' href='assets/stylesheets/dashboard/check-in.css' />
 
 </head>
 <body>
 
-  <?php include "php-segments/check-in-window.php"; ?>
+  <!-- CheckIn window -->
+  <?php include 'segments/check-in-window.php'; ?>
 
-  <?php include "php-segments/sidebar.php"; ?>
+  <!-- Sidebar -->
+  <?php include 'layout/sidebar.php'; ?>
 
-  <?php include "php-segments/top-bar.php"; ?>
+  <!-- Topbar -->
+  <?php include 'layout/top-bar.php'; ?>
 
+  <!-- Dashboard view -->
   <div class='dashboard main-container'>
 
     <h1 class='section-title'>Dashboard</h1>
@@ -41,7 +45,17 @@
 
   </div>
 
-  <?php include "php-segments/script-links.php"; ?>
+  <!-- Libs -->
+  <script src='http://localhost/libs/jquery.min.js'></script>
+
+  <!-- Sidebar script -->
+  <script>
+    $(function() {
+      $('.main-menu')
+        .find('li.dashboard')
+        .addClass('active');
+    });
+  </script>
 
 </body>
 </html>

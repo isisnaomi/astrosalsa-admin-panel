@@ -154,7 +154,7 @@ class CommunicationHandler {
    */
   public function sendReport( $report ) {
 
-    $reportAsArray = DataTranslator::translateRequest( $report );
+    $reportAsArray = DataTranslator::translateReport( $report );
     $reportAsJsonEncodedArray = json_encode( $reportAsArray );
     
 

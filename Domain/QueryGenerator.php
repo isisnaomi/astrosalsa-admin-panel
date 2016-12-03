@@ -134,7 +134,6 @@ class QueryGenerator {
     }
 
     $query .= " WHERE $rowFilters";
-    echo ($query);
     return $query;
   }
 
