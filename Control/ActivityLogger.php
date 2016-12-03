@@ -46,9 +46,12 @@ class ActivityLogger {
 
   }
 
-  public  static function getActivityLog ( $tableName, $attributes ){
+  public  static function getActivityLog ( $tableName, $logFilter ){
+      $attributes = ["*" => "*"];
+      $rowFilter= 'date BETWEEN '.$logFilter['initDate'].' AND '.$logFilter['finalDate'];
+
       self::accessDatabase( $tableName );
-      $isAccessSuccessful = self::$databaseAccessor->selectRows( $attributes );
+      $isAccessSuccessful = self::$databaseAccessor->selectRows( $attributes, $rowFilter );
 
       return $isAccessSuccessful;
 

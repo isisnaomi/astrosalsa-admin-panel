@@ -113,13 +113,14 @@ class SubscriptionsAdministrator extends Administrator {
   }
 
   protected function getAssistanceLog( $taskData ){
+
       $tableName = 'assistanceLog';
       ActivityLogger::getActivityLog( $tableName, $taskData );
 
   }
   protected function getPaymentLog( $taskData ){
-      $tableName = 'paymentLog';
 
+      $tableName = 'paymentLog';
       ActivityLogger::getActivityLog( $tableName, $taskData );
 
   }
