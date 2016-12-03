@@ -7,7 +7,7 @@ switch($requestedData){
       sendStudentsData();
   break;
 
-  case 'packages':
+  case 'payments':
       sendPackagesData();
   break;
 

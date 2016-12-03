@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Reporte de asistencia</title>
+    <title>Compra de paquetes</title>
 
     <link rel='stylesheet' href='../assets/css/normalize.css'/>
     <link rel='stylesheet' href='../assets/css/login.css'/>
@@ -31,14 +31,15 @@
     </div>
     <div class="row panel panel-default">
         <div class="panel-heading">
-            Lista de asistencia
+            Lista de pagos
         </div>
         <div class="panel-body">
-            <table id="dtAssistance" class="table display" cellspacing="0" width="100%">
+            <table id="dtPayments" class="table display" cellspacing="0" width="100%">
                 <thead>
                 <tr>
                     <th>Fecha</th>
                     <th>Alumno</th>
+                    <th>Paquete</th>
                 </tr>
                 </thead>
             </table>
@@ -55,7 +56,7 @@
         $("#dateDe").datepicker();
         $("#dateHasta").datepicker();
 
-        var table = $('#dtAssistance').DataTable({
+        var table = $('#dtPayments').DataTable({
 
             "processing": true,
 
@@ -65,10 +66,11 @@
                 "dataType": "json",
                 "data": {
                     target: "SuscriptionAdministrator",
-                    type: "getAssistanceLog",
+                    type: "getPaymentLog",
                     data: {
                         "initDate": initDate,
-                        "finalDate": finalDate
+                        "finalDate": finalDate,
+
                     }
                 }
             },
@@ -76,6 +78,7 @@
             "columns": [
                 {data: "DateTime"},
                 {data: "Name"},
+                {data: "Package"}
             ],
             "order": [0, "des"],
             "lengthMenu": [[5, 10, 20, -1], [5, 10, 20, 'All']],
@@ -83,39 +86,35 @@
         });
 
         var refreshGraphic = function () {
-            var allDates = table.columns(0).data().toArray();
+            var allPackages = table.columns(2).data().toArray();
 
-            var datesForTheGraph = [];
-            var assistance = [];
+            var packagesForTheGraph = [];
+            var packageCount = [];
             var commonIndex = 0;
 
-            $.each( allDates[0], function ( index, date ) {
+            $.each( allPackages[0], function ( index, package ) {
 
-                var matchIndex = $.inArray( date, datesForTheGraph ); //Return -1 when doesnt find coincidences
+                var matchIndex = $.inArray( package, packagesForTheGraph ); //Return -1 when doesnt find coincidences
 
                 if ( matchIndex > -1 ) {
 
-                    assistance[ matchIndex ]++;
+                    packageCount[ matchIndex ]++;
 
                 }
 
                 else {
 
-                    datesForTheGraph[ commonIndex ] = date;
-                    assistance[ commonIndex ] = 1;
+                    packagesForTheGraph[ commonIndex ] = package;
+                    packageCount[ commonIndex ] = 1;
                     commonIndex++;
 
                 }
-
             });
-
-            datesForTheGraph.reverse();
-
             var data = [
                 {
-                    x: datesForTheGraph,
-                    y: assistance,
-                    type: ['bar', 'scatter'],
+                    x: packagesForTheGraph,
+                    y: packageCount,
+                    type: 'bar',
                     marker: {
                         color: 'rgb(76, 175, 80)'
                     }
@@ -123,7 +122,7 @@
             ];
 
             Plotly.newPlot('bar-table', data);
-        };
+        }
 
 
         var initDate = '6/2/2016';
@@ -135,7 +134,7 @@
             table.ajax.reload();
             refreshGraphic;
         });
-        $('#dtAssistance').on('draw.dt length.dt processing.dt', refreshGraphic);
+        $('#dtPayments').on('draw.dt length.dt processing.dt', refreshGraphic);
     });
 
 </script>

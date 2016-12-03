@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Reporte de asistencia</title>
+    <title>Inscripciones de alumnos</title>
 
     <link rel='stylesheet' href='../assets/css/normalize.css'/>
     <link rel='stylesheet' href='../assets/css/login.css'/>
@@ -16,7 +16,11 @@
     <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
     <link href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+    <!-- Plotly graphics -->
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+    <!-- DatePicker -->
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 </head>
@@ -31,10 +35,10 @@
     </div>
     <div class="row panel panel-default">
         <div class="panel-heading">
-            Lista de asistencia
+            Lista de pagos
         </div>
         <div class="panel-body">
-            <table id="dtAssistance" class="table display" cellspacing="0" width="100%">
+            <table id="dtInscriptions" class="table display" cellspacing="0" width="100%">
                 <thead>
                 <tr>
                     <th>Fecha</th>
@@ -55,7 +59,7 @@
         $("#dateDe").datepicker();
         $("#dateHasta").datepicker();
 
-        var table = $('#dtAssistance').DataTable({
+        var table = $('#dtInscriptions').DataTable({
 
             "processing": true,
 
@@ -64,8 +68,8 @@
                 "url": "../testing/LogGetter.php", //cambiar por CommunicationHandler
                 "dataType": "json",
                 "data": {
-                    target: "SuscriptionAdministrator",
-                    type: "getAssistanceLog",
+                    target: "StudentAdministrator",
+                    type: "getInscriptionLog",
                     data: {
                         "initDate": initDate,
                         "finalDate": finalDate
@@ -75,7 +79,7 @@
 
             "columns": [
                 {data: "DateTime"},
-                {data: "Name"},
+                {data: "Name"}
             ],
             "order": [0, "des"],
             "lengthMenu": [[5, 10, 20, -1], [5, 10, 20, 'All']],
@@ -123,7 +127,7 @@
             ];
 
             Plotly.newPlot('bar-table', data);
-        };
+        }
 
 
         var initDate = '6/2/2016';
@@ -135,7 +139,8 @@
             table.ajax.reload();
             refreshGraphic;
         });
-        $('#dtAssistance').on('draw.dt length.dt processing.dt', refreshGraphic);
+        $('#dtInscriptions').on('draw.dt length.dt processing.dt', refreshGraphic);
+
     });
 
 </script>
