@@ -1,5 +1,8 @@
 <?php
 require_once '../Domain/Administrator.php';
+require_once '../Domain/ClassPackagesAdministrator.php';
+require_once '../Domain/Report.php';
+require_once '../Control/DataTranslator.php';
 /**
  * SubscriptionAdministrator
  * Administrates the subscriptions
@@ -13,7 +16,7 @@ class SubscriptionsAdministrator extends Administrator {
 
   public function __construct() {
 
-    parent::__construct( 'classPackages' );
+    parent::__construct( 'subscriptions' );
     $this->academiesLocations = array();
 
   }
@@ -43,34 +46,51 @@ class SubscriptionsAdministrator extends Administrator {
 
   protected function decrementClassesRemaining( $taskData ) {
 
+      $this->accessDatabase();
+      $attributes = [
+          'classesRemaining' => 'classesRemaining-1'
+      ];
+      $rowFilters = 'studentId = '. $taskData['id'];
+      $isTaskSuccessful = $this->databaseAccessor->updateRow( $attributes, $rowFilters );
       $stamp = 'decrement '. $this->tableName;
-      $isTaskSuccessful = true;
       return $this->writeReport( $isTaskSuccessful, $stamp );
 
   }
 
   protected function renewSubscription( $taskData ){
-      $stamp = 'renew'. $this->tableName;
-      $isTaskSuccessful = true;
+      $packageId = [
+          'id' => $taskData['packageId']
+      ];
+      $studentId = $taskData['studentId'];
+      $packageAdmin = new ClassPackagesAdministrator();
+      $packageReport = DataTranslator::translateReport( $packageAdmin->getPackageByID( $packageId ) );
+      $packageClasses = $packageReport['content'];
+      $this->accessDatabase();
+      $attributes = [
+          'classesRemaining' => $packageClasses
+      ];
+      $rowFilters = 'studentId = '. $studentId;
+      $isTaskSuccessful = $this->databaseAccessor->updateRow( $attributes, $rowFilters );
+      $stamp = 'renew '. $this->tableName;
       return $this->writeReport( $isTaskSuccessful, $stamp );
 
   }
 
 
-  protected  function logActivity( $stamp ) {
+  protected  function logActivity( $report, $stamp ) {
 
-        if ( $stamp === 'decrement subscription') {
-            $this->logAssistance();
-        } else if ( $stamp === 'renew subscription') {
-            $this->logRenewSubscription();
+        if ( $stamp === 'decrement subscriptions') {
+            $this->logAssistance( $report );
+        } else if ( $stamp === 'renew subscriptions') {
+            $this->logRenewSubscription( $report );
         }
 
   }
 
-  protected function logAssistance() {
+  protected function logAssistance( $report ) {
       $tableName = 'assistanceLog';
       $activity = [
-          'studentId' => 1,
+          'studentId' => $report,
           'date' => date('Y/m/d'),
           'time' => date('H:i:s')
       ];
@@ -78,11 +98,13 @@ class SubscriptionsAdministrator extends Administrator {
       ActivityLogger::logActivity ( $tableName, $activity );
   }
 
-  protected function logRenewSubscription() {
+  protected function logRenewSubscription( $report ) {
       $tableName = 'paymentLog';
+      echo('logrenewsubscription');
       $activity = [
-          'studentId' => $this->databaseAccessor->getLastInsertedId(),
-          'date' => date('Y/m/d H:i:s')
+          'studentId' => $report,
+          'packageId' => '1',
+          'date' => date('Y/m/d')
       ];
 
       ActivityLogger::logActivity ( $tableName, $activity );
@@ -91,12 +113,14 @@ class SubscriptionsAdministrator extends Administrator {
   }
 
   protected function getAssistanceLog( $taskData ){
+
       $tableName = 'assistanceLog';
+      ActivityLogger::getActivityLog( $tableName, $taskData );
 
   }
   protected function getPaymentLog( $taskData ){
-      $tableName = 'paymentLog';
 
+      $tableName = 'paymentLog';
       ActivityLogger::getActivityLog( $tableName, $taskData );
 
   }
