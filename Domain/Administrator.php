@@ -2,6 +2,7 @@
 
 require_once '../Domain/DatabaseAccessor.php';
 require_once '../Domain/SubscriptionsAdministrator.php';
+require_once '../Domain/StudentsAdministrator.php';
 require_once '../Domain/Report.php';
 require_once '../Control/ActivityLogger.php';
 
@@ -160,7 +161,7 @@ abstract class Administrator {
       $reportType = 'data';
       $reportContent = $databaseResponse;
       $report = new Report( $reportType, $reportContent );
-      $this->logActivity( $stamp );
+      $this->logActivity( $reportContent, $stamp );
 
     } else {
 
@@ -175,7 +176,7 @@ abstract class Administrator {
 
   }
 
-  protected abstract function logActivity( $stamp );
+  protected abstract function logActivity( $report, $stamp );
 
 
   /**
@@ -192,4 +193,5 @@ abstract class Administrator {
 }
 
 $admin = new SubscriptionsAdministrator();
-$admin->doTask( 'checkIn', array( 'id' => '1' ) );
+$admin->doTask( 'payment', array( 'studentId' => '1', 'packageId'=> '1' ) );
+

@@ -180,7 +180,7 @@ class DatabaseAccessor {
     $isRowUpdated = mysql_query( $query );
 
     if ( $isRowUpdated ) {
-      return true;
+      return $isRowUpdated; //true removed
     } else {
       return false;
     }

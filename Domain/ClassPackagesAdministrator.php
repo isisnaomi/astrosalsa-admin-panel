@@ -7,20 +7,22 @@
 class ClassPackagesAdministrator extends Administrator {
 
   public function __construct() {
-    parent::__construct( 'classPackages' );
+    parent::__construct( 'packages' );
   }
 
-  protected function getPackageByID( $taskData ) {
+  public function getPackageByID( $taskData ) {
     $this->accessDatabase();
-    $attributes = "*";
+    $attributes = ["*" => "*"];
     $rowFilters = "id=".$taskData['id'];
 
-    $isTaskSuccessful = $this->databaseAccessor->selectRows( $this->tableName, $attributes, $rowFilters );
+    $isTaskSuccessful = $this->databaseAccessor->selectRows( $attributes, $rowFilters );
+    $stamp = 'get '. $this->tableName;
+    $isTaskSuccessful = $isTaskSuccessful[0]['classesIncluded'];
 
-    return $this->writeReport( $isTaskSuccessful );
+    return $this->writeReport( $isTaskSuccessful, $stamp );
   }
 
-    protected  function logActivity( $stamp ){
+    protected  function logActivity( $report, $stamp ){
 
     }
 

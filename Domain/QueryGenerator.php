@@ -128,13 +128,13 @@ class QueryGenerator {
       if ( $indexAttributes > 0 )
         $query .= ', ';
 
-      $query .= "$attribute='$attributeValue'";
+      $query .= "$attribute=$attributeValue"; //'' removed//
 
       $indexAttributes++;
     }
 
     $query .= " WHERE $rowFilters";
-
+    echo ($query);
     return $query;
   }
 

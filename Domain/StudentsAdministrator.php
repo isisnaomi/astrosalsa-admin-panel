@@ -47,7 +47,7 @@ class StudentsAdministrator extends Administrator {
 
   }
 
-  protected  function logActivity( $stamp ){
+  protected  function logActivity( $report, $stamp ){
 
       if( $stamp === 'add students'){
 
@@ -55,4 +55,11 @@ class StudentsAdministrator extends Administrator {
 
       }
   }
+
+  protected function getInscriptionsLog( $taskData ){
+      $tableName = 'studentInscriptionLog';
+
+      ActivityLogger::getActivityLog( $tableName, $taskData );
+
+    }
 }
