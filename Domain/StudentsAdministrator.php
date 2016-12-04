@@ -6,12 +6,15 @@ require_once '../Domain/Administrator.php';
 */
 class StudentsAdministrator extends Administrator {
 
+
   public function __construct() {
 
     parent::__construct( 'students' );
 
   }
   protected function doSpecificTask( $taskType, $taskData ){
+
+    $report = null;
     switch ( $taskType ) {
       case 'getStudentByName' :
         $report = $this->getStudentByName( $taskData );
@@ -28,41 +31,59 @@ class StudentsAdministrator extends Administrator {
   }
 
   public function getStudentByName( $taskData ) {
+
       $this->accessDatabase();
       $rowFilters = "name=".$taskData['name'];
-      $isTaskSuccessful = $this->databaseAccessor->selectRows( null, $rowFilters );
-      $stamp = 'get ' . $this->tableName;
+      $databaseResponse = $this->databaseAccessor->selectRows( null, $rowFilters );
+      $administratorResponse = $databaseResponse;
+      $taskType = 'get ' . $this->tableName;
 
-      return $this->writeReport( $isTaskSuccessful, $stamp );
+      $report = $this->writeReport( $administratorResponse, $taskType );
+      return $report;
   }
 
   public function getStudentByID( $taskData ) {
 
       $this->accessDatabase();
-      $rowFilters = "id=".$taskData['id'];
+      $rowFilters = "id=".$taskData[ 'id' ];
 
-      $isTaskSuccessful = $this->databaseAccessor->selectRows( $attributes, $rowFilters );
-      $stamp = 'get ' . $this->tableName;
-      $isTaskSuccessful = $isTaskSuccessful[0];
+      $databaseResponse = $this->databaseAccessor->selectRows( null, $rowFilters );
 
-      return $this->writeReport( $isTaskSuccessful, $stamp );
+      $taskType = 'get ' . $this->tableName;
+      $administratorResponse = $databaseResponse;
+
+      if( $databaseResponse ){
+
+          $administratorResponse = $databaseResponse[ self::UNIQUE ];
+
+      }
+
+      return $this->writeReport( $administratorResponse, $taskType );
+
+
   }
 
   protected function getInscriptionsLog( $taskData ){
 
     $tableName = 'studentInscriptionLog';
-    $databaseResponse = ActivityLogger::getActivityLog( $tableName, $taskData );
-    $stamp = 'get '. $this->tableName;
+    $loggerResponse = ActivityLogger::getActivityLog( $tableName, $taskData );
 
-    return $this->writeReport( $databaseResponse, $stamp );
+    $taskType = 'get '. $this->tableName;
+    $report = $this->writeReport( $loggerResponse, $taskType );
+
+    return $report;
 
     }
 
   protected function logStudentInscription(){
     $tableName = 'studentInscriptionLog';
+    $studentId = $this->databaseAccessor->getLastInsertedId();
+
     $activity = [
-        'studentId' => $this->databaseAccessor->getLastInsertedId(),
-        'date' => date('Y/m/d')
+
+        'studentId' => $studentId,
+        'date' => date( 'Y/m/d' )
+
     ];
 
     ActivityLogger::logActivity ( $tableName, $activity );

@@ -7,31 +7,42 @@
 class ClassPackagesAdministrator extends Administrator {
 
   public function __construct() {
+
     parent::__construct( 'packages' );
+
   }
   protected function doSpecificTask( $taskType, $taskData ){
+
+    $report = null;
     switch ( $taskType ) {
       case 'getPackageByID' :
         $report = $this->getPackageByID( $taskData );
         break;
     }
+
+    return $report;
+
   }
 
   public function getPackageByID( $taskData ) {
 
     $this->accessDatabase();
-    $attributes = ["*" => "*"];
     $rowFilters = "id=".$taskData['id'];
 
-    $isTaskSuccessful = $this->databaseAccessor->selectRows( $attributes, $rowFilters );
-    $stamp = 'get '. $this->tableName;
-    $isTaskSuccessful = $isTaskSuccessful[0];
+    $isTaskSuccessful = $this->databaseAccessor->selectRows( null, $rowFilters );
+    $taskType = 'get '. $this->tableName;
+    $databaseResponse = $isTaskSuccessful[ self::UNIQUE ];
 
-    return $this->writeReport( $isTaskSuccessful, $stamp );
+    return $this->writeReport( $databaseResponse, $taskType );
 
   }
 
-    protected  function logActivity( $report, $stamp ) {
+    protected  function logActivity( $activityData, $activityType ) {
+
+      if( $activityType === 'add packages'){
+
+
+      }
 
     }
 

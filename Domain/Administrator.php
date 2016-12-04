@@ -16,6 +16,7 @@ abstract class Administrator {
   const DATABASE_NAME = 'astrosalsa';
   const DATABASE_USER = 'root';
   const DATABASE_PASS = 'root';
+  const UNIQUE = 0;
 
   /**
   * @var DatabaseAccessor
@@ -78,10 +79,13 @@ abstract class Administrator {
 
     $this->accessDatabase();
     $databaseResponse = $this->databaseAccessor->insertRow( $taskData );
+    $administratorResponse = $databaseResponse;
     $taskType = 'add ' . $this->tableName;
 
-    $report = $this->writeReport( $databaseResponse, $taskType );
+    $report = $this->writeReport( $administratorResponse, $taskType );
+
     return $report;
+
   }
 
   /**
@@ -94,9 +98,10 @@ abstract class Administrator {
     $attributes = $taskData['attributes'];
     $rowFilters = $taskData['filter'];
     $databaseResponse = $this->databaseAccessor->updateRow( $attributes, $rowFilters );
+    $administratorResponse = $databaseResponse;
     $taskType = 'update ' . $this->tableName;
 
-    $report = $this->writeReport( $databaseResponse, $taskType );
+    $report = $this->writeReport( $administratorResponse, $taskType );
     return $report;
 
   }
@@ -110,9 +115,10 @@ abstract class Administrator {
     $this->accessDatabase();
     $rowFilters = $taskData['filter'];
     $databaseResponse = $this->databaseAccessor->deleteRow( $rowFilters );
+    $administratorResponse = $databaseResponse;
     $taskType = 'delete ' . $this->tableName;
 
-    $report = $this->writeReport( $databaseResponse, $taskType );
+    $report = $this->writeReport( $administratorResponse, $taskType );
     return $report;
   }
 
@@ -124,28 +130,29 @@ abstract class Administrator {
 
     $this->accessDatabase();
     $databaseResponse = $this->databaseAccessor->selectRows( $taskData );
+    $administratorResponse = $databaseResponse;
     $taskType = 'get ' . $this->tableName;
 
-    $report = $this->writeReport( $databaseResponse, $taskType );
+    $report = $this->writeReport( $administratorResponse, $taskType );
     return $report;
 
   }
 
   /**
-   * @param mixed $databaseResponse
+   * @param mixed $administratorResponse
    * @param $taskType
    * @return Report $report
    */
-  protected function writeReport( $databaseResponse, $taskType ) {
+  protected function writeReport( $administratorResponse, $taskType ) {
 
-    if ( $databaseResponse ) {
+    if ( $administratorResponse ) {
 
       $reportType = 'data';
-      $reportContent = $databaseResponse;
+      $reportContent = $administratorResponse;
       $report = new Report( $reportType, $reportContent );
 
       $activityType = $taskType;
-      $activityData = $databaseResponse;
+      $activityData = $administratorResponse;
       $this->logActivity( $activityData, $activityType );
 
     } else {
@@ -168,8 +175,8 @@ abstract class Administrator {
   */
   protected function accessDatabase() {
 
-    $this->databaseAccessor = new DatabaseAccessor( DATABASE_NAME , $this->tableName );
-    $isAccessSuccessful = $this->databaseAccessor->connect( DATABASE_USER, DATABASE_PASS );
+    $this->databaseAccessor = new DatabaseAccessor( self::DATABASE_NAME , $this->tableName );
+    $isAccessSuccessful = $this->databaseAccessor->connect( self::DATABASE_USER, self::DATABASE_PASS );
     return $isAccessSuccessful;
 
   }
