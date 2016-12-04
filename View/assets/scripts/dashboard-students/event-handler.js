@@ -131,12 +131,12 @@ $(function() {
       $.ajax({
         data : {
           target : 'subscriptionsAdministrator',
-          type : 'getSubscriptionByStudentID',
+          type : 'getSubscriptionByStudentId',
           data : {
             studentId: studentId
           },
-          success: function() {
-
+          success: function( response ) {
+            console.log( response );
           }
         }
       });
