@@ -39,7 +39,7 @@
       </div>
     </div>
 
-    <div class='popup-window add-student-window' id='add-student-form'>
+    <div class='popup-window add-student-window'>
       <div class='form'>
         <span class='title'>Agregar alumno</span>
         <input type='text' name='first-name' placeholder='Nombre' />
@@ -51,7 +51,28 @@
       </div>
     </div>
 
-    <div class='popup-window edit-student-window' id='edit-student-form'>
+    <div class='popup-window subscription-window'>
+
+      <div class='form renew-subscription-form'>
+        <span class='title'>Renovar subscripción</span>
+        <input type='text' name='name' placeholder='Nombre' disabled='disabled' />
+        <select name='package'>
+          <option value='0'>No hay paquetes disponibles</option>
+        </select>
+        <select name='payment-day'>
+          <option value='15'>Pagar día 15</option>
+          <option value='30'>Pagar día 30</option>
+        </select>
+
+        <div class='form-buttons'>
+          <span class='button button-ok'>Renovar</span>
+          <span class='button button-cancel'>Cancelar</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class='popup-window edit-student-window'>
       <div class='form'>
         <span class='title'>Editar alumno</span>
         <input type='text' name='id' placeholder='ID' disabled='disabled' />

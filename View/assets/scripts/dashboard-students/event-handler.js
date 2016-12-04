@@ -4,15 +4,15 @@ $(function() {
     beforeSend: function() {
       console.log( 'About to send an AJAX request.' );
     },
+    complete: function( response ) {
+      console.log( 'AJAX request server response:' );
+      console.log( response );
+    },
     success: function() {
       showSuccessMessage();
     },
     error: function() {
       showFailMessage();
-    },
-    complete: function( response ) {
-      console.log( 'AJAX request server response:' );
-      console.log( response );
     }
   });
 
@@ -64,18 +64,9 @@ $(function() {
     $('.popup-window.fail-message')
       .css('display', 'block');
 
-    waitAndReloadWindow( 1000 );
+    waitAndReloadWindow( 500 );
 
   }
-
-
-  $( 'body' ).on('click', '.button-subscription', function( event ) {
-
-    var studentId = getStudentId( this );
-
-    console.log( studentId );
-
-  });
 
 
   $( '.button-cancel' ).on('click', function( event ) {
@@ -87,7 +78,58 @@ $(function() {
   });
 
 
+  /* Subscription POPUP listeners */
+
+  $( 'body' ).on('click', '.button-subscription', function( event ) {
+
+    var studentId = getStudentId( this );
+    var studentName = getStudentName( this );
+
+    $( '.subscription-window' )
+      .css( 'display', 'block' )
+      .find( 'form' )
+        .css( 'display', 'block' );
+
+    $( '.subscription-window' )
+      .find( 'input:text[name="name"]' )
+        .val( '('+ studentId +') ' + studentName );
+
+
+    $.ajax({
+
+      data: {
+        target: 'packagesAdministrator',
+        type: 'getList',
+        data: {
+          '*' : '*'
+        }
+      },
+      success: function( response ) {
+
+        var classPackages = response.content;
+        var optionsHtml = '';
+
+        $.each( classPackages, function( index, classPackage ) {
+
+          optionsHtml +=
+            "<option value='"+ classPackage.id +"'>" +
+              "("+ classPackage.id +") " + classPackage.name +
+            "</option>";
+
+        });
+
+        $( '.subscription-window' )
+          .find( 'select[name="package"]' ).html( optionsHtml );
+
+      }
+
+    });
+
+  });
+
+
   /* Edit student POPUP listeners */
+
 
   $( 'body' ).on('click', '.button-edit', function( event ) {
 

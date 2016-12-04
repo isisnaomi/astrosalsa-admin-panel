@@ -43,20 +43,27 @@
   border-radius: 2px;
 }
 
-.popup-window .form input[type="text"]:disabled {
-  color: #aaa;
+.popup-window .form select {
+  display: block;
+  width: 80%;
+  margin: 0px auto 10px;
+  padding: 12px 16px;
+  font-size: 22px;
+  border-radius: 2px;
 }
 
-.popup-window .form input[type="text"]:last-of-type {
-  margin-bottom: 60px;
+.popup-window .form input[type="text"]:disabled {
+  color: #aaa;
 }
 
 .popup-window .form .form-buttons {
   display: block;
   text-align: center;
+  margin-top: 50px;
 }
 
 .popup-window .form-buttons .button {
+  display: inline-block;
   margin-right: 10px;
   padding: 14px 22px;
   font-size: 20px;
