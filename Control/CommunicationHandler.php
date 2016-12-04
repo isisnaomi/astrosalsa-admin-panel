@@ -126,7 +126,7 @@ class CommunicationHandler {
         $this->administratorWatching = new StudentsAdministrator();
         break;
 
-      case 'packagesAdministrator' :
+      case 'classPackagesAdministrator' :
         $this->administratorWatching = new ClassPackagesAdministrator();
         break;
 

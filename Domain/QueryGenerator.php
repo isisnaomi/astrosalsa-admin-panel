@@ -15,25 +15,35 @@ class QueryGenerator {
    * @param  string $rowFilters
    * @return string $query
    */
-  public static function generateSelectRowsQuery( $tableName, $attributes, $rowFilters = null ) {
+  public static function generateSelectRowsQuery( $tableName, $attributes = NULL, $rowFilters = null )
+  {
 
     $query = 'SELECT';
     $query .= ' ';
 
     $indexAttributes = 0;
 
-    foreach ( $attributes as $attribute ) {
+    if( $attributes ) {
 
-      if ( $indexAttributes > 0 ) {
+      foreach ($attributes as $attribute) {
 
-        $query .= ', ';
+        if ($indexAttributes > 0) {
+
+          $query .= ', ';
+
+        }
+
+        $query .= $attribute;
+        $indexAttributes++;
 
       }
 
-      $query .= $attribute;
-      $indexAttributes++;
+    } else {
+
+      $query .= '*';
 
     }
+
 
     $query .= ' ';
 

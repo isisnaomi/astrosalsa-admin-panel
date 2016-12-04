@@ -21,105 +21,188 @@ class SubscriptionsAdministrator extends Administrator {
     $this->academiesLocations = array();
 
   }
+  protected function doSpecificTask( $taskType, $taskData ){
+
+    $report = null;
+    switch ( $taskType ) {
+      case 'getSubscriptionByPackageID' :
+        $report = $this->getSubscriptionByPackageID($taskData);
+        break;
+      case 'getSubscriptionByStudentID' :
+        $report = $this->getSubscriptionByStudentID($taskData);
+        break;
+      case 'getAssistanceLog' :
+        $report = $this->getAssistanceLog($taskData);
+        break;
+      case 'getPaymentsLog' :
+        $report = $this->getPaymentsLog($taskData);
+        break;
+      case 'checkIn' :
+        $report = $this->decrementClassesRemaining($taskData);
+        break;
+      case 'payment' :
+        $report = $this->renewSubscription($taskData);
+        break;
+    }
+    return $report;
+  }
 
   protected function getSubscriptionByStudentID( $taskData ) {
+
     $this->accessDatabase();
-    $attributes = ["*"];
-    $rowFilters = "studentId=".$taskData['studentId'];
 
-    $isTaskSuccessful = $this->databaseAccessor->selectRows( $attributes, $rowFilters );
-    $stamp = 'get '. $this->tableName;
+    $rowFilters = "studentId=".$taskData[ 'studentId' ];
 
-    return $this->writeReport( $isTaskSuccessful, $stamp );
+    $databaseResponse = $this->databaseAccessor->selectRows( null, $rowFilters );
+    $taskType = 'get ' . $this->tableName;
+    $administratorResponse = $databaseResponse;
+
+    if( $databaseResponse ){
+
+      $administratorResponse = $databaseResponse[ self::UNIQUE ];
+
+    }
+
+    return $this->writeReport( $administratorResponse, $taskType );
+
   }
 
   protected function getSubscriptionByPackageID( $taskData ) {
+
     $this->accessDatabase();
-    $attributes = ["*"];
-    $rowFilters = "packageId=".$taskData['packageId'];
+    $rowFilters = "packageId=".$taskData[ 'packageId' ];
 
-    $isTaskSuccessful = $this->databaseAccessor->selectRows( $attributes, $rowFilters );
-    $stamp = 'get '. $this->tableName;
+    $databaseResponse = $this->databaseAccessor->selectRows( null, $rowFilters );
+    $taskType = 'get ' . $this->tableName;
+    $administratorResponse = $databaseResponse;
 
-    return $this->writeReport( $isTaskSuccessful, $stamp );
+    if( $databaseResponse ){
+
+      $administratorResponse = $databaseResponse[ self::UNIQUE ];
+
+    }
+
+    return $this->writeReport( $administratorResponse, $taskType );
+
   }
 
 
   protected function decrementClassesRemaining( $taskData ) {
 
       $this->accessDatabase();
+
       $attributes = [
+
           'classesRemaining' => 'classesRemaining-1'
+
       ];
       $rowFilters = 'studentId = '. $taskData['id'];
 
-      $isTaskSuccessful = $this->databaseAccessor->updateRow( $attributes, $rowFilters );
+      $databaseResponse = $this->databaseAccessor->updateRow( $attributes, $rowFilters );
+      $administratorResponse = $databaseResponse;
 
-      $isTaskSuccessful = [
-        'studentId' => $taskData['id']
-      ]; /* TODO: Agregar comprobación de taskData */
+      if( $databaseResponse ){
 
-      $stamp = 'decrement '. $this->tableName;
-      return $this->writeReport( $isTaskSuccessful, $stamp );
+        $administratorResponse = [
+
+            'studentId' => $taskData[ 'id' ]
+
+        ];
+
+      }
+
+      $taskType = 'decrement '. $this->tableName;
+
+      return $this->writeReport( $administratorResponse, $taskType );
 
   }
 
   protected function renewSubscription( $taskData ){
+
       $packageId = [
-          'id' => $taskData['packageId']
+
+          'id' => $taskData[ 'packageId' ]
+
       ];
-      $studentId = $taskData['studentId'];
+
       $packageAdmin = new ClassPackagesAdministrator();
       $packageReport = DataTranslator::translateReport( $packageAdmin->getPackageByID( $packageId ) );
-      $packageClasses = $packageReport['content']['classesIncluded'];
-      $this->accessDatabase();
+
+      $packageClasses = $packageReport[ 'content' ][ 'classesIncluded' ];
+
       $attributes = [
+
           'classesRemaining' => $packageClasses
+
       ];
+
+      $studentId = $taskData[ 'studentId' ];
       $rowFilters = 'studentId = '. $studentId;
-      $isTaskSuccessful = $this->databaseAccessor->updateRow( $attributes, $rowFilters );
-      $ticket  = $this->getTicket($packageReport, $studentId);
-      /* TODO: Organizar esta maraña */
-      $isTaskSuccessful = [
-          'ticket' => $ticket,
-          'studentId' => $studentId,
-          'packageId' => $taskData['packageId']
-      ];
-      $stamp = 'renew '. $this->tableName;
-      return $this->writeReport( $isTaskSuccessful, $stamp );
+
+      $this->accessDatabase();
+      $databaseResponse = $this->databaseAccessor->updateRow( $attributes, $rowFilters );
+      $administratorResponse = $databaseResponse;
+
+      if( $databaseResponse ){
+
+        $ticket  = $this->getTicket( $packageReport, $studentId );
+
+        $administratorResponse = [
+
+            'ticket' => $ticket,
+            'studentId' => $studentId,
+            'packageId' => $taskData['packageId']
+
+        ];
+
+      }
+
+      $taskType = 'renew '. $this->tableName;
+      return $this->writeReport( $administratorResponse, $taskType );
 
   }
 
 
-  protected  function logActivity( $activityData, $stamp ) {
+  protected  function logActivity( $activityData, $activityType ) {
 
-        if ( $stamp === 'decrement subscriptions') {
+        if ( $activityType === 'decrement subscriptions') {
+
             $this->logAssistance( $activityData );
-        } else if ( $stamp === 'renew subscriptions') {
+
+        } else if ( $activityType === 'renew subscriptions') {
+
             $this->logRenewSubscription( $activityData );
+
         }
 
   }
 
   protected function logAssistance( $activityData ) {
+
       $tableName = 'assistanceLog';
 
       $activity = [
-          'studentId' => $activityData['studentId'],
-          'date' => date('Y/m/d'),
-          'time' => date('H:i:s')
+
+          'studentId' => $activityData[ 'studentId' ],
+          'date' => date( 'Y/m/d' ),
+          'time' => date( 'H:i:s ')
+
       ];
 
       ActivityLogger::logActivity ( $tableName, $activity );
+
   }
 
   protected function logRenewSubscription( $activityData ) {
+
       $tableName = 'paymentsLog';
 
       $activity = [
-          'studentId' => $activityData['studentId'],
-          'packageId' => $activityData['packageId'],
-          'date' => date('Y/m/d')
+
+          'studentId' => $activityData[ 'studentId' ],
+          'packageId' => $activityData[ 'packageId' ],
+          'date' => date( 'Y/m/d' )
+
       ];
 
       ActivityLogger::logActivity ( $tableName, $activity );
@@ -129,13 +212,11 @@ class SubscriptionsAdministrator extends Administrator {
 
   protected function getAssistanceLog( $taskData ){
 
-    $tableName = 'assistanceLog';
-    $databaseResponse = ActivityLogger::getActivityLog( $tableName, $taskData );
-    $stamp = 'get '. $this->tableName;
+      $tableName = 'assistanceLog';
+      $databaseResponse = ActivityLogger::getActivityLog( $tableName, $taskData );
+      $stamp = 'get '. $this->tableName;
 
-    return $this->writeReport( $databaseResponse, $stamp );
-
-    /* TODO: Copypaste en los demás loggers (: */
+      return $this->writeReport( $databaseResponse, $stamp );
 
   }
 
@@ -151,25 +232,28 @@ class SubscriptionsAdministrator extends Administrator {
 
   private function getTicket( $packageInfo, $studentId ) {
 
-    $packagePrice = $packageInfo[ 'content' ][ 'price' ];
-    $packageName = $packageInfo[ 'content' ][ 'name' ];
-    $packageClasses = $packageInfo[ 'content' ][ 'classesIncluded' ];
+      $packagePrice = $packageInfo[ 'content' ][ 'price' ];
+      $packageName = $packageInfo[ 'content' ][ 'name' ];
+      $packageClasses = $packageInfo[ 'content' ][ 'classesIncluded' ];
 
-    $studentAdmin = new StudentsAdministrator();
-    $studentId = [ 'id' => $studentId ];
-    $studentInfo = DataTranslator::translateReport( $studentAdmin->getStudentByID( $studentId ) );
-    $studentName = $studentInfo[ 'content' ][ 'name' ];
+      $studentAdmin = new StudentsAdministrator();
+      $studentId = [ 'id' => $studentId ];
+      $studentInfo = DataTranslator::translateReport( $studentAdmin->getStudentByID( $studentId ) );
+      $studentName = $studentInfo[ 'content' ][ 'name' ];
 
-    $ticketData = [
-      'studentName' => $studentName,
-      'classesIncluded' => $packageClasses,
-      'price' => $packagePrice,
-      'packageName' => $packageName
-    ];
+      $ticketData = [
 
-    $generatedTicket = TicketGenerator::generateTicket( $ticketData );
+        'studentName' => $studentName,
+        'classesIncluded' => $packageClasses,
+        'price' => $packagePrice,
+        'packageName' => $packageName
 
-    return $generatedTicket;
+      ];
+
+      $generatedTicket = TicketGenerator::generateTicket( $ticketData );
+
+      return $generatedTicket;
+
   }
 
 }
