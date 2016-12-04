@@ -1,38 +1,39 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
-    <!-- jQuery -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
-    <!-- Bootstrap Core JavaScript -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-  integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src='http://localhost/libs/jquery.min.js'></script>
+    <link rel='stylesheet' href='http://localhost/libs/bootstrap.min.css'>
 
-    <!-- DataTables JavaScript -->
-    <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
-    <link href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
+    <script src='https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js'></script>
+    <link href='https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css'>
 
-    </head>
+  </head>
+  <body>
 
-<div class="row">
-    </div>
-    <div class="row panel panel-default">
-        <div class="panel-heading">
+    <div class='row'></div>
+
+    <div class='row panel panel-default'>
+
+        <div class='panel-heading'>
             Lista de alumnos
         </div>
-        <div class="panel-body">
-        <table id="dtStudents" class="table display" cellspacing="0" width="100%">
-            <thead>
-                <tr>
-                <th>ID</th>
-                <th>Nombre</th>
-                <th>Editar</th>
-                <th>Eliminar</th>
-                </tr>
-            </thead>
-        </table>
+
+        <div class='panel-body'>
+          <table id='dtStudents' class='table display' cellspacing='0' width='100%'>
+              <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Editar</th>
+                    <th>Eliminar</th>
+                  </tr>
+              </thead>
+          </table>
         </div>
+
     </div>
+  </body>
 
     <script>
       $(function(){
@@ -55,35 +56,41 @@
                   }
                 }
               },
-              "columns": [
-                  {data: 'id'},
-                  {data: 'name'}
-              ],
-              "columnDefs":
-              [
+
+              'columns': [
                   {
-                      "targets": 2,
-                      "searchable": false,
-                      "data": null,
-                      "defaultContent": "<button action='edit' type='button' class='btn btn-success btn-xs' title='Editar dispositivo'>" +
+                    data: 'id'
+                  },
+                  {
+                    data: 'name'
+                  }
+              ],
+
+              'columnDefs': [
+                  {
+                      'targets': 2,
+                      'searchable': false,
+                      'data': null,
+                      'defaultContent':
+                          "<button action='edit' type='button' class='btn btn-success btn-xs' title='Editar dispositivo'>" +
                           "<span class='glyphicon glyphicon-edit' aria-hidden='true'></span> " +
                           "</button>"
                   },
                   {
-                      "targets": 3,
-                      "searchable": false,
-                      "data": null,
-                      "defaultContent": "<button action='delete' type='button' class='btn btn-danger btn-xs' " +
-                      "data-toggle='modal' title='Eliminar dispositivo' data-target='#modal-confirm'>" +
-                      "<span class='glyphicon glyphicon-trash' aria-hidden='true'></span> " +
-                      "</button>"
+                      'targets': 3,
+                      'searchable': false,
+                      'data': null,
+                      'defaultContent':
+                        "<button action='delete' type='button' class='btn btn-danger btn-xs' " +
+                        "data-toggle='modal' title='Eliminar dispositivo' data-target='#modal-confirm'>" +
+                        "<span class='glyphicon glyphicon-trash' aria-hidden='true'></span> " +
+                        "</button>"
                   }
               ]
 
-            }); //end of dt definition
+            }); // $('#students-data-table').dataTable();
 
-      }); //end doc ready
+      }); // $.function();
 
     </script>
-
 </html>

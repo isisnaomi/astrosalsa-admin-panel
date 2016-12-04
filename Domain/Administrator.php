@@ -74,9 +74,12 @@ abstract class Administrator {
       case 'getAssistanceLog' :
           $report = $this->getAssistanceLog( $taskData );
           break;
-      case 'getPaymentLog' :
-          $report = $this->getPaymentLog( $taskData );
+      case 'getPaymentsLog' :
+          $report = $this->getPaymentsLog( $taskData );
           break;
+      case 'getInscriptionsLog' :
+        $report = $this->getInscriptionsLog( $taskData );
+        break;
       case 'checkIn' :
           $report = $this->decrementClassesRemaining( $taskData );
           break;
@@ -164,6 +167,8 @@ abstract class Administrator {
       $this->logActivity( $reportContent, $stamp );
 
     } else {
+
+      /* TODO: Esto no va a funcionar si no esta inicializada la databse. REVISAR (: */
 
       $reportType = 'error';
       $errorDescription = $this->databaseAccessor->getErrorMessage();

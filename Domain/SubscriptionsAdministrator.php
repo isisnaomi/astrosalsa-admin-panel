@@ -3,6 +3,7 @@ require_once '../Domain/Administrator.php';
 require_once '../Domain/ClassPackagesAdministrator.php';
 require_once '../Domain/Report.php';
 require_once '../Control/DataTranslator.php';
+require_once '../Domain/TicketGenerator.php';
 /**
  * SubscriptionAdministrator
  * Administrates the subscriptions
@@ -51,7 +52,13 @@ class SubscriptionsAdministrator extends Administrator {
           'classesRemaining' => 'classesRemaining-1'
       ];
       $rowFilters = 'studentId = '. $taskData['id'];
+
       $isTaskSuccessful = $this->databaseAccessor->updateRow( $attributes, $rowFilters );
+
+      $isTaskSuccessful = [
+        'studentId' => $taskData['id']
+      ]; /* TODO: Agregar comprobación de taskData */
+
       $stamp = 'decrement '. $this->tableName;
       return $this->writeReport( $isTaskSuccessful, $stamp );
 
@@ -64,14 +71,17 @@ class SubscriptionsAdministrator extends Administrator {
       $studentId = $taskData['studentId'];
       $packageAdmin = new ClassPackagesAdministrator();
       $packageReport = DataTranslator::translateReport( $packageAdmin->getPackageByID( $packageId ) );
-      $packageClasses = $packageReport['content'];
+      $packageClasses = $packageReport['content']['classesIncluded'];
       $this->accessDatabase();
       $attributes = [
           'classesRemaining' => $packageClasses
       ];
       $rowFilters = 'studentId = '. $studentId;
       $isTaskSuccessful = $this->databaseAccessor->updateRow( $attributes, $rowFilters );
+      $ticket  = $this->getTicket($packageReport, $studentId);
+      /* TODO: Organizar esta maraña */
       $isTaskSuccessful = [
+          'ticket' => $ticket,
           'studentId' => $studentId,
           'packageId' => $taskData['packageId']
       ];
@@ -84,7 +94,7 @@ class SubscriptionsAdministrator extends Administrator {
   protected  function logActivity( $activityData, $stamp ) {
 
         if ( $stamp === 'decrement subscriptions') {
-            $this->logAssistance( $$activityData );
+            $this->logAssistance( $activityData );
         } else if ( $stamp === 'renew subscriptions') {
             $this->logRenewSubscription( $activityData );
         }
@@ -93,8 +103,9 @@ class SubscriptionsAdministrator extends Administrator {
 
   protected function logAssistance( $activityData ) {
       $tableName = 'assistanceLog';
+
       $activity = [
-          'studentId' => $activityData,
+          'studentId' => $activityData['studentId'],
           'date' => date('Y/m/d'),
           'time' => date('H:i:s')
       ];
@@ -103,8 +114,8 @@ class SubscriptionsAdministrator extends Administrator {
   }
 
   protected function logRenewSubscription( $activityData ) {
-      $tableName = 'paymentLog';
-      echo('logrenewsubscription');
+      $tableName = 'paymentsLog';
+
       $activity = [
           'studentId' => $activityData['studentId'],
           'packageId' => $activityData['packageId'],
@@ -118,15 +129,47 @@ class SubscriptionsAdministrator extends Administrator {
 
   protected function getAssistanceLog( $taskData ){
 
-      $tableName = 'assistanceLog';
-      ActivityLogger::getActivityLog( $tableName, $taskData );
+    $tableName = 'assistanceLog';
+    $databaseResponse = ActivityLogger::getActivityLog( $tableName, $taskData );
+    $stamp = 'get '. $this->tableName;
+
+    return $this->writeReport( $databaseResponse, $stamp );
+
+    /* TODO: Copypaste en los demás loggers (: */
 
   }
-  protected function getPaymentLog( $taskData ){
 
-      $tableName = 'paymentLog';
-      ActivityLogger::getActivityLog( $tableName, $taskData );
+  protected function getPaymentsLog($taskData ) {
 
+      $tableName = 'paymentsLog';
+      $databaseResponse = ActivityLogger::getActivityLog( $tableName, $taskData );
+      $stamp = 'get '. $this->tableName;
+
+      return $this->writeReport( $databaseResponse, $stamp );
+
+  }
+
+  private function getTicket( $packageInfo, $studentId ) {
+
+    $packagePrice = $packageInfo[ 'content' ][ 'price' ];
+    $packageName = $packageInfo[ 'content' ][ 'name' ];
+    $packageClasses = $packageInfo[ 'content' ][ 'classesIncluded' ];
+
+    $studentAdmin = new StudentsAdministrator();
+    $studentId = [ 'id' => $studentId ];
+    $studentInfo = DataTranslator::translateReport( $studentAdmin->getStudentByID( $studentId ) );
+    $studentName = $studentInfo[ 'content' ][ 'name' ];
+
+    $ticketData = [
+      'studentName' => $studentName,
+      'classesIncluded' => $packageClasses,
+      'price' => $packagePrice,
+      'packageName' => $packageName
+    ];
+
+    $generatedTicket = TicketGenerator::generateTicket( $ticketData );
+
+    return $generatedTicket;
   }
 
 }

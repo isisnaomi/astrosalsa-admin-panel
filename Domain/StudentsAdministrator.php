@@ -12,7 +12,7 @@ class StudentsAdministrator extends Administrator {
 
   }
 
-  protected function getStudentByName( $taskData ) {
+  public function getStudentByName( $taskData ) {
       $this->accessDatabase();
       $attributes = ["*" => "*"];
       $rowFilters = "name=".$taskData['name'];
@@ -23,7 +23,7 @@ class StudentsAdministrator extends Administrator {
       return $this->writeReport( $isTaskSuccessful, $stamp );
   }
 
-  protected function getStudentByID( $taskData ) {
+  public function getStudentByID( $taskData ) {
 
       $this->accessDatabase();
       $attributes = ["*" => "*"];
@@ -31,9 +31,9 @@ class StudentsAdministrator extends Administrator {
 
       $isTaskSuccessful = $this->databaseAccessor->selectRows( $attributes, $rowFilters );
       $stamp = 'get ' . $this->tableName;
+      $isTaskSuccessful = $isTaskSuccessful[0];
 
       return $this->writeReport( $isTaskSuccessful, $stamp );
-
   }
 
   protected function logStudentInscription(){
@@ -57,9 +57,12 @@ class StudentsAdministrator extends Administrator {
   }
 
   protected function getInscriptionsLog( $taskData ){
-      $tableName = 'studentInscriptionLog';
 
-      ActivityLogger::getActivityLog( $tableName, $taskData );
+    $tableName = 'studentInscriptionLog';
+    $databaseResponse = ActivityLogger::getActivityLog( $tableName, $taskData );
+    $stamp = 'get '. $this->tableName;
+
+    return $this->writeReport( $databaseResponse, $stamp );
 
     }
 }
