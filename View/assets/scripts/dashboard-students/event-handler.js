@@ -98,10 +98,9 @@ $(function() {
     $.ajax({
 
       data: {
-        target: 'packagesAdministrator',
+        target: 'classPackagesAdministrator',
         type: 'getList',
         data: {
-          '*' : '*'
         }
       },
       success: function( response ) {
@@ -121,9 +120,27 @@ $(function() {
         $( '.subscription-window' )
           .find( 'select[name="package"]' ).html( optionsHtml );
 
+
+        selectActiveItems();
+
       }
 
     });
+
+    function selectActiveItems() {
+      $.ajax({
+        data : {
+          target : 'subscriptionsAdministrator',
+          type : 'getSubscriptionByStudentID',
+          data : {
+            studentId: studentId
+          },
+          success: function() {
+
+          }
+        }
+      });
+    }
 
   });
 
