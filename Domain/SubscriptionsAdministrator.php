@@ -140,9 +140,14 @@ class SubscriptionsAdministrator extends Administrator {
 
       $packageClasses = $packageReport[ 'content' ][ 'classesIncluded' ];
 
+      $packageId = $taskData[ 'packageId' ];
+      $subscriptionPaymentDay = $taskData[ 'paymentDay' ];
+
       $attributes = [
 
-          'classesRemaining' => $packageClasses
+          'classesRemaining' => $packageClasses,
+          'packageId' => $packageId,
+          'paymentDay' => $subscriptionPaymentDay
 
       ];
 
