@@ -117,7 +117,7 @@ abstract class Administrator {
 
     $this->accessDatabase();
     $attributes = $taskData['attributes'];
-    $rowFilters = $taskData['rowFilters'];
+    $rowFilters = $taskData['filter'];
     $isTaskSuccessful = $this->databaseAccessor->updateRow( $attributes, $rowFilters );
     $stamp = 'update ' . $this->tableName;
 
@@ -132,7 +132,8 @@ abstract class Administrator {
   protected function delete( $taskData ) {
 
     $this->accessDatabase();
-    $isTaskSuccessful = $this->databaseAccessor->deleteRow( $taskData );
+    $rowFilters = $taskData['filter'];
+    $isTaskSuccessful = $this->databaseAccessor->deleteRow( $rowFilters );
     $stamp = 'delete ' . $this->tableName;
 
     return $this->writeReport( $isTaskSuccessful, $stamp );

@@ -128,7 +128,12 @@ class QueryGenerator {
       if ( $indexAttributes > 0 )
         $query .= ', ';
 
-      $query .= "$attribute=$attributeValue"; //'' removed//
+      /* TODO: Ocultar esto o hacerlo menos horrible... */
+      if ( strpos( $attributeValue, '-' ) ) {
+        $query .= "$attribute=$attributeValue"; //'' removed//
+      } else {
+        $query .= "$attribute='$attributeValue'";
+      }
 
       $indexAttributes++;
     }

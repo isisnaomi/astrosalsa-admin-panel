@@ -1,32 +1,83 @@
 <!doctype html>
-<html>
+<html class='astrosalsa'>
   <head>
 
-    <script src='http://localhost/libs/jquery.min.js'></script>
-    <link rel='stylesheet' href='http://localhost/libs/bootstrap.min.css'>
+    <meta charset='utf-8'>
+    <title>Students dashboard</title>
 
-    <script src='https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js'></script>
-    <link href='https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css'>
+    <!-- Dashboard libraries: Scripts -->
+    <script src='http://localhost/libs/jquery.min.js'></script>
+    <script src='http://localhost/libs/jquery.dataTables.min.js'></script>
+
+    <!-- Students dashboard script -->
+    <script src='assets/scripts/ajax-setup.js'></script>
+    <script src='assets/scripts/dashboard-students/event-handler.js'></script>
+    <script src='assets/scripts/dashboard-students/table-definition.js'></script>
+
+    <!-- Dashboard libraries: Stylesheets -->
+    <link rel='stylesheet' href='http://localhost/libs/bootstrap.min.css'>
+    <link rel='stylesheet' href='http://localhost/libs/jquery.dataTables.min.css'>
+
+    <!-- Students Dashboard styles -->
+    <link rel='stylesheet' href='assets/stylesheets/dashboard-students/layout.css'>
+    <link rel='stylesheet' href='assets/stylesheets/dashboard-students/popup-window.css'>
 
   </head>
   <body>
 
-    <div class='row'></div>
+    <div class='popup-window success-message'>
+      <div class='frame'>
+        La operación se ha realizado correctamente.<br />
+        Se recargará la lista.
+      </div>
+    </div>
+
+    <div class='popup-window fail-message'>
+      <div class='frame'>
+        Ha ocurrido un error inesperado.<br />
+        Se recargará la lista.
+      </div>
+    </div>
+
+    <div class='popup-window add-student-window' id='add-student-form'>
+      <div class='form'>
+        <span class='title'>Agregar alumno</span>
+        <input type='text' name='first-name' placeholder='Nombre' />
+        <input type='text' name='last-name' placeholder='Apellido' />
+        <div class='form-buttons'>
+          <span class='button button-ok'>Agregar</span>
+          <span class='button button-cancel'>Cancelar</span>
+        </div>
+      </div>
+    </div>
+
+    <div class='popup-window edit-student-window' id='edit-student-form'>
+      <div class='form'>
+        <span class='title'>Editar alumno</span>
+        <input type='text' name='id' placeholder='ID' disabled='disabled' />
+        <input type='text' name='name' placeholder='Nombre' />
+        <div class='form-buttons'>
+          <span class='button button-ok'>Editar</span>
+          <span class='button button-delete'>Eliminar</span>
+          <span class='button button-cancel'>Cancelar</span>
+        </div>
+      </div>
+    </div>
 
     <div class='row panel panel-default'>
 
         <div class='panel-heading'>
-            Lista de alumnos
+          <span class='title'>Alumnos</span>
+          <span class='button button-add-student'>Agregar alumno</span>
         </div>
 
         <div class='panel-body'>
-          <table id='dtStudents' class='table display' cellspacing='0' width='100%'>
+          <table id='students-list' class='table display' cellspacing='0' width='100%'>
               <thead>
                   <tr>
                     <th>ID</th>
                     <th>Nombre</th>
-                    <th>Editar</th>
-                    <th>Eliminar</th>
+                    <th></th>
                   </tr>
               </thead>
           </table>
@@ -34,63 +85,4 @@
 
     </div>
   </body>
-
-    <script>
-      $(function(){
-
-          $('#dtStudents').DataTable(
-            {
-              "processing": true,
-              "ajax": {
-                "method": "POST",
-                "url": "../Control/CommunicationHandler.php", // cambiar por CommunicationHandler
-                "dataType": "json",
-                "dataSrc" : function( response ) {
-                  return response.content;
-                },
-                "data": {
-                  target: "studentsAdministrator",
-                  type: "getList",
-                  data: {
-                    "*":"*"
-                  }
-                }
-              },
-
-              'columns': [
-                  {
-                    data: 'id'
-                  },
-                  {
-                    data: 'name'
-                  }
-              ],
-
-              'columnDefs': [
-                  {
-                      'targets': 2,
-                      'searchable': false,
-                      'data': null,
-                      'defaultContent':
-                          "<button action='edit' type='button' class='btn btn-success btn-xs' title='Editar dispositivo'>" +
-                          "<span class='glyphicon glyphicon-edit' aria-hidden='true'></span> " +
-                          "</button>"
-                  },
-                  {
-                      'targets': 3,
-                      'searchable': false,
-                      'data': null,
-                      'defaultContent':
-                        "<button action='delete' type='button' class='btn btn-danger btn-xs' " +
-                        "data-toggle='modal' title='Eliminar dispositivo' data-target='#modal-confirm'>" +
-                        "<span class='glyphicon glyphicon-trash' aria-hidden='true'></span> " +
-                        "</button>"
-                  }
-              ]
-
-            }); // $('#students-data-table').dataTable();
-
-      }); // $.function();
-
-    </script>
 </html>

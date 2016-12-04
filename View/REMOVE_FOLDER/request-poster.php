@@ -35,10 +35,25 @@
             //  finalDate: '20170101'
             //}
 
-            'target' : 'subscriptionsAdministrator',
-            'type' : 'checkIn',
-            'data' : {
-              'id': 7
+            // 'target' : 'subscriptionsAdministrator',
+            // 'type' : 'checkIn',
+            // 'data' : {
+            //   'id': 7
+            // }
+
+            // 'target' : 'studentsAdministrator',
+            // 'type' : 'update',
+            // 'data' : {
+            //  attributes: {
+            //    name: 'modificado'
+            //  },
+            //  filter: "id=" + 8
+            // }
+
+            target: 'studentsAdministrator',
+            type: 'delete',
+            data: {
+              filter: 'id=8'
             }
 
           };
@@ -57,7 +72,7 @@
 
             dataType: 'JSON',
 
-            url: '../Control/CommunicationHandler.php',
+            url: '../../Control/CommunicationHandler.php',
 
             beforeSend: function() {
               console.log('BeforeSend');

@@ -171,7 +171,7 @@ class DatabaseAccessor {
   /**
    * @param string[] $attributes
    * @param string $rowFilters
-   * @return bool
+   * @return bool|resource
    */
   public function updateRow( $attributes, $rowFilters ) {
 
@@ -180,7 +180,7 @@ class DatabaseAccessor {
     $isRowUpdated = mysql_query( $query );
 
     if ( $isRowUpdated ) {
-      return $isRowUpdated; //true removed
+      return $isRowUpdated;
     } else {
       return false;
     }

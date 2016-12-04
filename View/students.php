@@ -1,3 +1,4 @@
+<?php require 'segments/session-validator.php'; ?>
 <!doctype html>
 <html>
   <head>
@@ -7,7 +8,7 @@
 
     <!-- Stylesheet links -->
     <?php include 'layout/layout-stylesheets-links.php'; ?>
-    <link rel='stylesheet' href='assets/stylesheets/students/styles.css' />
+    <link rel='stylesheet' href='assets/stylesheets/students/layout.css' />
 
   </head>
   <body>
