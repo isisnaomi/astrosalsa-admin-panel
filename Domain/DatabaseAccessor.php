@@ -140,7 +140,7 @@ class DatabaseAccessor {
 
   /**
    * @param  [ attribute => attributeValue ][]  $row
-   * @return bool $isRowInserted
+   * @return bool|resource
    */
   public function insertRow( $row ) {
 
@@ -148,8 +148,11 @@ class DatabaseAccessor {
 
     $isRowInserted = mysql_query( $query, $this->connection );
 
-    if ( $isRowInserted ) return true;
-    else return false;
+    if ( $isRowInserted ) {
+      return $this->getLastInsertedId();
+    } else {
+      return false;
+    }
 
   }
 
@@ -187,7 +190,7 @@ class DatabaseAccessor {
 
   }
 
-  public function getLastInsertedId(){
+  public function getLastInsertedId() {
       $lastId = mysql_insert_id();
       return $lastId;
   }
