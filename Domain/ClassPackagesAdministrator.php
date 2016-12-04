@@ -9,6 +9,13 @@ class ClassPackagesAdministrator extends Administrator {
   public function __construct() {
     parent::__construct( 'packages' );
   }
+  protected function doSpecificTask( $taskType, $taskData ){
+    switch ( $taskType ) {
+      case 'getPackageByID' :
+        $report = $this->getPackageByID( $taskData );
+        break;
+    }
+  }
 
   public function getPackageByID( $taskData ) {
 

@@ -111,7 +111,7 @@ class DatabaseAccessor {
    * @return array|bool
    * ] | false
    */
-  public function selectRows( $attributes, $rowFilters = null ) {
+  public function selectRows( $attributes= NULL, $rowFilters = NULL ) {
 
   	$query = QueryGenerator::generateSelectRowsQuery( $this->tableName, $attributes, $rowFilters );
 

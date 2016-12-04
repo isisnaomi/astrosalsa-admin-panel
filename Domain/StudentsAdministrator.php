@@ -11,13 +11,26 @@ class StudentsAdministrator extends Administrator {
     parent::__construct( 'students' );
 
   }
+  protected function doSpecificTask( $taskType, $taskData ){
+    switch ( $taskType ) {
+      case 'getStudentByName' :
+        $report = $this->getStudentByName( $taskData );
+        break;
+      case 'getStudentByID' :
+        $report = $this->getStudentByID( $taskData );
+        break;
+      case 'getInscriptionsLog' :
+        $report = $this->getInscriptionsLog( $taskData );
+        break;
+    }
+    return $report;
+
+  }
 
   public function getStudentByName( $taskData ) {
       $this->accessDatabase();
-      $attributes = ["*" => "*"];
       $rowFilters = "name=".$taskData['name'];
-
-      $isTaskSuccessful = $this->databaseAccessor->selectRows( $attributes, $rowFilters );
+      $isTaskSuccessful = $this->databaseAccessor->selectRows( null, $rowFilters );
       $stamp = 'get ' . $this->tableName;
 
       return $this->writeReport( $isTaskSuccessful, $stamp );
@@ -26,7 +39,6 @@ class StudentsAdministrator extends Administrator {
   public function getStudentByID( $taskData ) {
 
       $this->accessDatabase();
-      $attributes = ["*" => "*"];
       $rowFilters = "id=".$taskData['id'];
 
       $isTaskSuccessful = $this->databaseAccessor->selectRows( $attributes, $rowFilters );
@@ -34,26 +46,6 @@ class StudentsAdministrator extends Administrator {
       $isTaskSuccessful = $isTaskSuccessful[0];
 
       return $this->writeReport( $isTaskSuccessful, $stamp );
-  }
-
-  protected function logStudentInscription(){
-      $tableName = 'studentInscriptionLog';
-      $activity = [
-          'studentId' => $this->databaseAccessor->getLastInsertedId(),
-          'date' => date('Y/m/d')
-      ];
-
-      ActivityLogger::logActivity ( $tableName, $activity );
-
-  }
-
-  protected  function logActivity( $activityData, $stamp ){
-
-      if( $stamp === 'add students'){
-
-          $this->logStudentInscription();
-
-      }
   }
 
   protected function getInscriptionsLog( $taskData ){
@@ -65,4 +57,24 @@ class StudentsAdministrator extends Administrator {
     return $this->writeReport( $databaseResponse, $stamp );
 
     }
+
+  protected function logStudentInscription(){
+    $tableName = 'studentInscriptionLog';
+    $activity = [
+        'studentId' => $this->databaseAccessor->getLastInsertedId(),
+        'date' => date('Y/m/d')
+    ];
+
+    ActivityLogger::logActivity ( $tableName, $activity );
+
+  }
+
+  protected  function logActivity( $activityData, $activityType ){
+
+    if( $activityType === 'add students'){
+
+      $this->logStudentInscription();
+
+    }
+  }
 }

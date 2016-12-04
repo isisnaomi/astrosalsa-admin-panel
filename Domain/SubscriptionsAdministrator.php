@@ -21,6 +21,29 @@ class SubscriptionsAdministrator extends Administrator {
     $this->academiesLocations = array();
 
   }
+  protected function doSpecificTask( $taskType, $taskData ){
+    switch ( $taskType ) {
+      case 'getSubscriptionByPackageID' :
+        $report = $this->getSubscriptionByPackageID($taskData);
+        break;
+      case 'getSubscriptionByStudentID' :
+        $report = $this->getSubscriptionByStudentID($taskData);
+        break;
+      case 'getAssistanceLog' :
+        $report = $this->getAssistanceLog($taskData);
+        break;
+      case 'getPaymentsLog' :
+        $report = $this->getPaymentsLog($taskData);
+        break;
+      case 'checkIn' :
+        $report = $this->decrementClassesRemaining($taskData);
+        break;
+      case 'payment' :
+        $report = $this->renewSubscription($taskData);
+        break;
+    }
+    return $report;
+  }
 
   protected function getSubscriptionByStudentID( $taskData ) {
     $this->accessDatabase();
@@ -91,11 +114,11 @@ class SubscriptionsAdministrator extends Administrator {
   }
 
 
-  protected  function logActivity( $activityData, $stamp ) {
+  protected  function logActivity( $activityData, $activityType ) {
 
-        if ( $stamp === 'decrement subscriptions') {
+        if ( $activityType === 'decrement subscriptions') {
             $this->logAssistance( $activityData );
-        } else if ( $stamp === 'renew subscriptions') {
+        } else if ( $activityType === 'renew subscriptions') {
             $this->logRenewSubscription( $activityData );
         }
 
