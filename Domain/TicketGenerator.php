@@ -6,12 +6,13 @@
 */
 class TicketGenerator{
 
-    public static function generateTicket($ticketData){
+    public static function generateTicket( $ticketData ){
+
         $packageName = $ticketData[ 'packageName' ];
         $packageClasses = $ticketData[ 'classesIncluded' ];
         $packagePrice = $ticketData[ 'price' ];
         $studentName = $ticketData[ 'studentName' ];
-        $today = date("d/m/y");
+        $today = date( "d/m/y" );
 
         $ticket =  "<div align='center'>".
                     "<h2><b>Astro Salsa</b></h2>".

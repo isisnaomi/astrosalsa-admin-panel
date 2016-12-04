@@ -29,9 +29,6 @@ class Request {
    */
   public function __construct( $properties ) {
 
-    /* TODO: Check for valid $properties */
-    /* TODO: $properties is not a very good variable name */
-
     $this->target = $properties['target'];
     $this->type = $properties['type'];
     $this->data = $properties['data'];

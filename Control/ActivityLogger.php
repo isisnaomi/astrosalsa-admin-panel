@@ -14,7 +14,6 @@ class ActivityLogger {
    */
   private static $databaseAccessor;
 
-
   /**
    * ActivityLogger constructor.
    */

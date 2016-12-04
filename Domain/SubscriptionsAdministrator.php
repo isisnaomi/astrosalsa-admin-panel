@@ -24,34 +24,44 @@ class SubscriptionsAdministrator extends Administrator {
   protected function doSpecificTask( $taskType, $taskData ){
 
     $report = null;
+
     switch ( $taskType ) {
+
       case 'getSubscriptionByPackageId' :
         $report = $this->getSubscriptionByPackageID($taskData);
         break;
+
       case 'getSubscriptionByStudentId' :
         $report = $this->getSubscriptionByStudentID($taskData);
         break;
+
       case 'getAssistanceLog' :
         $report = $this->getAssistanceLog($taskData);
         break;
+
       case 'getPaymentsLog' :
         $report = $this->getPaymentsLog($taskData);
         break;
+
       case 'checkIn' :
         $report = $this->decrementClassesRemaining($taskData);
         break;
+
       case 'payment' :
         $report = $this->renewSubscription($taskData);
         break;
+
     }
+
     return $report;
+
   }
 
   protected function getSubscriptionByStudentID( $taskData ) {
 
-    $this->accessDatabase();
-
     $rowFilters = "studentId=".$taskData[ 'studentId' ];
+
+    $this->accessDatabase();
 
     $databaseResponse = $this->databaseAccessor->selectRows( null, $rowFilters );
     $taskType = 'get ' . $this->tableName;
@@ -145,8 +155,8 @@ class SubscriptionsAdministrator extends Administrator {
 
       if( $databaseResponse ){
 
-        $ticketInfo  = $this->prepareTicketInfo( $packageReport, $studentId );
-        $ticket = TicketGenerator::generateTicket( $ticketInfo );
+        $subscriptionInfo  = $this->getSubscriptionInfo( $packageReport, $studentId );
+        $ticket = TicketGenerator::generateTicket( $subscriptionInfo );
 
         $administratorResponse = [
 
@@ -159,7 +169,9 @@ class SubscriptionsAdministrator extends Administrator {
       }
 
       $taskType = 'renew '. $this->tableName;
-      return $this->writeReport( $administratorResponse, $taskType );
+      $report = $this->writeReport( $administratorResponse, $taskType );
+
+      return $report;
 
   }
 
@@ -215,9 +227,11 @@ class SubscriptionsAdministrator extends Administrator {
 
       $tableName = 'assistanceLog';
       $databaseResponse = ActivityLogger::getActivityLog( $tableName, $taskData );
-      $stamp = 'get '. $this->tableName;
+      $taskType = 'get '. $this->tableName;
 
-      return $this->writeReport( $databaseResponse, $stamp );
+      $report = $this->writeReport( $databaseResponse, $taskType );
+
+      return $report;
 
   }
 
@@ -225,13 +239,15 @@ class SubscriptionsAdministrator extends Administrator {
 
       $tableName = 'paymentsLog';
       $databaseResponse = ActivityLogger::getActivityLog( $tableName, $taskData );
-      $stamp = 'get '. $this->tableName;
+      $taskType = 'get '. $this->tableName;
 
-      return $this->writeReport( $databaseResponse, $stamp );
+      $report = $this->writeReport( $databaseResponse, $taskType );
+
+      return $report;
 
   }
 
-  private function prepareTicketInfo( $packageInfo, $studentId ) {
+  private function getSubscriptionInfo( $packageInfo, $studentId ) {
 
       $packagePrice = $packageInfo[ 'content' ][ 'price' ];
       $packageName = $packageInfo[ 'content' ][ 'name' ];
@@ -242,7 +258,7 @@ class SubscriptionsAdministrator extends Administrator {
       $studentInfo = DataTranslator::translateReport( $studentAdmin->getStudentByID( $studentId ) );
       $studentName = $studentInfo[ 'content' ][ 'name' ];
 
-      $ticketInfo = [
+      $subscriptionInfo = [
 
         'studentName' => $studentName,
         'classesIncluded' => $packageClasses,
@@ -251,7 +267,7 @@ class SubscriptionsAdministrator extends Administrator {
 
       ];
 
-      return $ticketInfo;
+      return $subscriptionInfo;
 
   }
 

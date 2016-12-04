@@ -12,20 +12,26 @@ class StudentsAdministrator extends Administrator {
     parent::__construct( 'students' );
 
   }
+
   protected function doSpecificTask( $taskType, $taskData ){
 
     $report = null;
     switch ( $taskType ) {
+
       case 'getStudentByName' :
         $report = $this->getStudentByName( $taskData );
         break;
-      case 'getStudentByID' :
+
+      case 'getStudentById' :
         $report = $this->getStudentByID( $taskData );
         break;
+
       case 'getInscriptionsLog' :
         $report = $this->getInscriptionsLog( $taskData );
         break;
+
     }
+
     return $report;
 
   }
@@ -33,13 +39,14 @@ class StudentsAdministrator extends Administrator {
   public function getStudentByName( $taskData ) {
 
       $this->accessDatabase();
-      $rowFilters = "name=".$taskData['name'];
+      $rowFilters = "name=".$taskData[ 'name' ];
       $databaseResponse = $this->databaseAccessor->selectRows( null, $rowFilters );
       $administratorResponse = $databaseResponse;
       $taskType = 'get ' . $this->tableName;
 
       $report = $this->writeReport( $administratorResponse, $taskType );
       return $report;
+
   }
 
   public function getStudentByID( $taskData ) {
