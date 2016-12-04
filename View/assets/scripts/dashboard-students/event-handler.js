@@ -92,7 +92,8 @@ $(function() {
 
     $( '.subscription-window' )
       .find( 'input:text[name="name"]' )
-        .val( '('+ studentId +') ' + studentName );
+        .val( '('+ studentId +') ' + studentName )
+        .attr( 'id', studentId );
 
 
     $.ajax({
@@ -100,8 +101,7 @@ $(function() {
       data: {
         target: 'classPackagesAdministrator',
         type: 'getList',
-        data: {
-        }
+        data: {}
       },
       success: function( response ) {
 
@@ -120,29 +120,44 @@ $(function() {
         $( '.subscription-window' )
           .find( 'select[name="package"]' ).html( optionsHtml );
 
-
-        selectActiveItems();
-
       }
 
     });
 
-    function selectActiveItems() {
+  });
+
+
+  $( '.subscription-window' )
+    .find( '.button-ok' ).on('click', function( event ) {
+
+      var studentId =
+        $( '.subscription-window' )
+          .find( 'input:text[name="name"]' )
+          .attr( 'id' );
+
+      var packageId =
+        $( '.subscription-window' )
+          .find( 'select[name="package"]' )
+          .val();
+
+      var paymentDay =
+        $( '.subscription-window' )
+          .find( 'select[name="paymentDay"]' )
+          .val();
+
       $.ajax({
-        data : {
-          target : 'subscriptionsAdministrator',
-          type : 'getSubscriptionByStudentId',
-          data : {
-            studentId: studentId
-          },
-          success: function( response ) {
-            console.log( response );
+        data: {
+          target: 'subscriptionsAdministrator',
+          type: 'payment',
+          data: {
+            studentId: studentId,
+            packageId: packageId,
+            paymentDay: paymentDay
           }
         }
       });
-    }
 
-  });
+    });
 
 
   /* Edit student POPUP listeners */
@@ -229,6 +244,30 @@ $(function() {
         data : {
           name : name
         }
+      },
+      success: function( response ) {
+
+        var studentId = response.content;
+
+        console.log( studentId );
+
+        $.ajax({
+
+          data: {
+            target: 'subscriptionsAdministrator',
+            type: 'add',
+            data: {
+              'studentId': studentId,
+              'packageId': '0',
+              'classesRemaining': '0',
+              'paymentDay': '15'
+            }
+          }
+
+          /* Default success and error */
+
+        });
+
       }
     });
 

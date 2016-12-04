@@ -59,7 +59,7 @@
         <select name='package'>
           <option value='0'>No hay paquetes disponibles</option>
         </select>
-        <select name='payment-day'>
+        <select name='paymentDay'>
           <option value='15'>Pagar día 15</option>
           <option value='30'>Pagar día 30</option>
         </select>
