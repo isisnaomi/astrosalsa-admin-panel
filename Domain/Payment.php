@@ -94,17 +94,5 @@ class Payment {
   /**
    * @return String[] $this->ticket
    */
-  public function generateTicket() {
-
-    $this->ticket = 'Astrosalsa \n' .
-      "Folio: $this->paymentId\n" .
-      "Fecha: $this->date\n" .
-      "Pago la cantidad: $this->amount \n" .
-      "Para el paquete: $this->packageName\n" .
-      $this->location;
-
-    return $this->ticket;
-
-  }
 
 }

@@ -10,6 +10,7 @@ require_once '../Domain/QueryGenerator.php';
  */
 class DatabaseAccessor {
 
+  const DEFAULT_SERVER = '127.0.0.1:8889';
   /**
    * @var
    */
@@ -38,7 +39,7 @@ class DatabaseAccessor {
    * @param $tableName
    * @param string $serverName
    */
-  public function __construct( $dataBaseName, $tableName, $serverName = '127.0.0.1:8889' ) {
+  public function __construct( $dataBaseName, $tableName, $serverName = self::DEFAULT_SERVER ) {
 
     $this->name = $dataBaseName;
     $this->tableName = $tableName;
@@ -85,10 +86,14 @@ class DatabaseAccessor {
     }
 
     if ( $this->connection ) {
+
       mysql_select_db( $this->name, $this->connection );
       $isConnectionEstablished = true;
+
     } else {
+
       $isConnectionEstablished = false;
+
     }
 
     return $isConnectionEstablished;
@@ -101,6 +106,7 @@ class DatabaseAccessor {
   public function disconnect() {
 
     $isDisconnected = mysql_close( $this->connection );
+
     return $isDisconnected;
 
   }
@@ -148,10 +154,14 @@ class DatabaseAccessor {
 
     $isRowInserted = mysql_query( $query, $this->connection );
 
-    if ( $isRowInserted ) {
+    if ( $isRowInserted ){
+
       return $this->getLastInsertedId();
+
     } else {
+
       return false;
+
     }
 
   }
@@ -166,8 +176,15 @@ class DatabaseAccessor {
 
     $isRowDeleted = mysql_query( $query, $this->connection );
 
-    if ( $isRowDeleted ) return true;
-    else return false;
+    if ( $isRowDeleted ){
+
+      return true;
+
+    } else {
+
+      return false;
+
+    }
 
   }
 
@@ -183,16 +200,24 @@ class DatabaseAccessor {
     $isRowUpdated = mysql_query( $query );
 
     if ( $isRowUpdated ) {
+
       return $isRowUpdated;
+
     } else {
+
       return false;
+
     }
 
   }
 
+
   public function getLastInsertedId() {
+
       $lastId = mysql_insert_id();
+
       return $lastId;
+
   }
 
 }

@@ -15,8 +15,7 @@ class QueryGenerator {
    * @param  string $rowFilters
    * @return string $query
    */
-  public static function generateSelectRowsQuery( $tableName, $attributes = NULL, $rowFilters = null )
-  {
+  public static function generateSelectRowsQuery( $tableName, $attributes = NULL, $rowFilters = null ) {
 
     $query = 'SELECT';
     $query .= ' ';
@@ -25,9 +24,9 @@ class QueryGenerator {
 
     if( $attributes ) {
 
-      foreach ($attributes as $attribute) {
+      foreach ( $attributes as $attribute ) {
 
-        if ($indexAttributes > 0) {
+        if ( $indexAttributes > 0 ) {
 
           $query .= ', ';
 
@@ -44,9 +43,7 @@ class QueryGenerator {
 
     }
 
-
     $query .= ' ';
-
 
     if( $rowFilters === null ){
 
@@ -135,21 +132,29 @@ class QueryGenerator {
 
     foreach ( $attributes as $attribute => $attributeValue ) {
 
-      if ( $indexAttributes > 0 )
+      if ( $indexAttributes > 0 ) {
         $query .= ', ';
+      }
 
-      /* TODO: Ocultar esto o hacerlo menos horrible... */
-      if ( strpos( $attributeValue, '-' ) ) {
-        $query .= "$attribute=$attributeValue"; //'' removed//
+      $isOperatorsRequired = strpos( $attributeValue, '-' );
+
+      if ( $isOperatorsRequired ) {
+
+        $query .= "$attribute=$attributeValue";
+
       } else {
+
         $query .= "$attribute='$attributeValue'";
+
       }
 
       $indexAttributes++;
+
     }
 
     $query .= " WHERE $rowFilters";
     return $query;
+
   }
 
 

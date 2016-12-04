@@ -18,8 +18,6 @@ class Report {
   */
   private $content;
 
-
-
   /**
    * @param string $type
    * @param string[][] $content
