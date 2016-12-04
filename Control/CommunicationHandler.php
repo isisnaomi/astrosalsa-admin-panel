@@ -58,8 +58,7 @@ class CommunicationHandler {
 
     $parameters = [
       'target',
-      'type',
-      'data'
+      'type'
     ];
 
     foreach ( $parameters as $parameter ) {
