@@ -155,6 +155,8 @@ $(function() {
             paymentDay: paymentDay
           }
         }
+
+        // Default success and error callbacks
       });
 
     });
