@@ -25,10 +25,10 @@ class SubscriptionsAdministrator extends Administrator {
 
     $report = null;
     switch ( $taskType ) {
-      case 'getSubscriptionByPackageID' :
+      case 'getSubscriptionByPackageId' :
         $report = $this->getSubscriptionByPackageID($taskData);
         break;
-      case 'getSubscriptionByStudentID' :
+      case 'getSubscriptionByStudentId' :
         $report = $this->getSubscriptionByStudentID($taskData);
         break;
       case 'getAssistanceLog' :
@@ -145,7 +145,8 @@ class SubscriptionsAdministrator extends Administrator {
 
       if( $databaseResponse ){
 
-        $ticket  = $this->getTicket( $packageReport, $studentId );
+        $ticketInfo  = $this->prepareTicketInfo( $packageReport, $studentId );
+        $ticket = TicketGenerator::generateTicket( $ticketInfo );
 
         $administratorResponse = [
 
@@ -230,7 +231,7 @@ class SubscriptionsAdministrator extends Administrator {
 
   }
 
-  private function getTicket( $packageInfo, $studentId ) {
+  private function prepareTicketInfo( $packageInfo, $studentId ) {
 
       $packagePrice = $packageInfo[ 'content' ][ 'price' ];
       $packageName = $packageInfo[ 'content' ][ 'name' ];
@@ -241,7 +242,7 @@ class SubscriptionsAdministrator extends Administrator {
       $studentInfo = DataTranslator::translateReport( $studentAdmin->getStudentByID( $studentId ) );
       $studentName = $studentInfo[ 'content' ][ 'name' ];
 
-      $ticketData = [
+      $ticketInfo = [
 
         'studentName' => $studentName,
         'classesIncluded' => $packageClasses,
@@ -250,9 +251,7 @@ class SubscriptionsAdministrator extends Administrator {
 
       ];
 
-      $generatedTicket = TicketGenerator::generateTicket( $ticketData );
-
-      return $generatedTicket;
+      return $ticketInfo;
 
   }
 
