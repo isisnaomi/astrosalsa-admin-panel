@@ -11,19 +11,15 @@ require_once '../Domain/QueryGenerator.php';
 class ActivityLogger {
 
   const DATABASE_NAME = 'astrosalsa';
+
   const DATABASE_USER = 'root';
+
   const DATABASE_PASS = 'root';
+
   /**
    * @var DatabaseAccessor
    */
   private static $databaseAccessor;
-
-  /**
-   * ActivityLogger constructor.
-   */
-  public function __construct() {
-
-  }
 
   /**
    * @param $tableName
@@ -50,6 +46,11 @@ class ActivityLogger {
 
   }
 
+  /**
+   * @param $tableName
+   * @param $logFilter
+   * @return array|bool
+   */
   public  static function getActivityLog ( $tableName, $logFilter ) {
 
     $initDate = $logFilter[ 'initDate' ];

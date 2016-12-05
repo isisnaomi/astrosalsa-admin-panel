@@ -4,6 +4,7 @@ require_once '../Domain/ClassPackagesAdministrator.php';
 require_once '../Domain/Report.php';
 require_once '../Control/DataTranslator.php';
 require_once '../Domain/TicketGenerator.php';
+
 /**
  * SubscriptionAdministrator
  * Administrates the subscriptions
@@ -15,12 +16,21 @@ class SubscriptionsAdministrator extends Administrator {
    */
   private $academiesLocations;
 
+  /**
+   * SubscriptionsAdministrator constructor.
+   */
   public function __construct() {
 
     parent::__construct( 'subscriptions' );
     $this->academiesLocations = array();
 
   }
+
+  /**
+   * @param $taskType
+   * @param $taskData
+   * @return null|Report
+   */
   protected function doSpecificTask( $taskType, $taskData ){
 
     $report = null;
@@ -57,6 +67,10 @@ class SubscriptionsAdministrator extends Administrator {
 
   }
 
+  /**
+   * @param $taskData
+   * @return Report
+   */
   protected function getSubscriptionByStudentID( $taskData ) {
 
     $rowFilters = "studentId=".$taskData[ 'studentId' ];
@@ -77,6 +91,10 @@ class SubscriptionsAdministrator extends Administrator {
 
   }
 
+  /**
+   * @param $taskData
+   * @return Report
+   */
   protected function getSubscriptionByPackageID( $taskData ) {
 
     $this->accessDatabase();
@@ -96,7 +114,10 @@ class SubscriptionsAdministrator extends Administrator {
 
   }
 
-
+  /**
+   * @param $taskData
+   * @return Report
+   */
   protected function decrementClassesRemaining( $taskData ) {
 
       $this->accessDatabase();
@@ -106,7 +127,7 @@ class SubscriptionsAdministrator extends Administrator {
           'classesRemaining' => 'classesRemaining-1'
 
       ];
-      $rowFilters = 'studentId = '. $taskData['id'];
+      $rowFilters = 'studentId = '. $taskData[ 'id' ];
 
       $databaseResponse = $this->databaseAccessor->updateRow( $attributes, $rowFilters );
       $administratorResponse = $databaseResponse;
@@ -127,6 +148,10 @@ class SubscriptionsAdministrator extends Administrator {
 
   }
 
+  /**
+   * @param $taskData
+   * @return Report
+   */
   protected function renewSubscription( $taskData ){
 
       $packageId = [
@@ -181,6 +206,11 @@ class SubscriptionsAdministrator extends Administrator {
   }
 
 
+  /**
+   * @param $activityData
+   * @param $activityType
+   * @return mixed|void
+   */
   protected  function logActivity( $activityData, $activityType ) {
 
         if ( $activityType === 'decrement subscriptions') {
@@ -195,6 +225,9 @@ class SubscriptionsAdministrator extends Administrator {
 
   }
 
+  /**
+   * @param $activityData
+   */
   protected function logAssistance( $activityData ) {
 
       $tableName = 'assistanceLog';
@@ -211,6 +244,9 @@ class SubscriptionsAdministrator extends Administrator {
 
   }
 
+  /**
+   * @param $activityData
+   */
   protected function logRenewSubscription( $activityData ) {
 
       $tableName = 'paymentsLog';
@@ -225,9 +261,12 @@ class SubscriptionsAdministrator extends Administrator {
 
       ActivityLogger::logActivity ( $tableName, $activity );
 
-
   }
 
+  /**
+   * @param $taskData
+   * @return Report
+   */
   protected function getAssistanceLog( $taskData ){
 
       $tableName = 'assistanceLog';
@@ -240,7 +279,11 @@ class SubscriptionsAdministrator extends Administrator {
 
   }
 
-  protected function getPaymentsLog($taskData ) {
+  /**
+   * @param $taskData
+   * @return Report
+   */
+  protected function getPaymentsLog( $taskData ) {
 
       $tableName = 'paymentsLog';
       $loggerResponse = ActivityLogger::getActivityLog( $tableName, $taskData );
@@ -252,6 +295,11 @@ class SubscriptionsAdministrator extends Administrator {
 
   }
 
+  /**
+   * @param $packageInfo
+   * @param $studentId
+   * @return array
+   */
   private function getSubscriptionInfo( $packageInfo, $studentId ) {
 
       $packagePrice = $packageInfo[ 'content' ][ 'price' ];

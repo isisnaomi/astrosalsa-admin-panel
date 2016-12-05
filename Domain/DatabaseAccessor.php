@@ -11,6 +11,7 @@ require_once '../Domain/QueryGenerator.php';
 class DatabaseAccessor {
 
   const DEFAULT_SERVER = '127.0.0.1:8889';
+
   /**
    * @var
    */
@@ -211,7 +212,9 @@ class DatabaseAccessor {
 
   }
 
-
+  /**
+   * @return int
+   */
   public function getLastInsertedId() {
 
       $lastId = mysql_insert_id();
