@@ -7,7 +7,7 @@
   width: 100%;
   padding-left: 220px;
   padding-right: 20px;
-  
+
   text-align: right;
   line-height: 40px;
   font-size: 14px;
@@ -17,6 +17,7 @@
 }
 
 .top-bar .toggle-menu-button {
+  display: none;
   float: left;
   margin: 10px 0 0 40px;
 
