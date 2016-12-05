@@ -24,19 +24,20 @@
       <header>
         <h1>Estadísticas</h1>
         <nav>
-          <span class='assistance'>Asistencia</span>
-          <span class='payments'>Pagos</span>
-          <span class='studentInscriptions'>Inscripciones</span>
+          <span id='assistance' class='assistance'>Asistencia</span>
+          <span id='payments' class='payments'>Pagos</span>
+          <span id='studentInscriptions' class='studentInscriptions'>Inscripciones</span>
         </nav>
       </header>
 
-      <iframe src='statistics/assistance.php'></iframe>
+      <iframe id='graph' src='statistics/assistance.php'></iframe>
     </div>
 
     <!-- Libs -->
     <script src='vendor/libs/jquery.min.js'></script>
 
     <!-- Sidebar script -->
+    <script src='assets/scripts/dashboard-statistics/event-handler.js'></script>
     <script>
       $(function() {
         $('.main-menu')
