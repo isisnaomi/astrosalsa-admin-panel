@@ -27,6 +27,7 @@
 
   cursor: pointer;
 }
-.activated{
+
+.statistics.main-container header nav .activated {
   background-color: brown !important;
 }
