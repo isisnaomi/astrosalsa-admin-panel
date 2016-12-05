@@ -6,15 +6,15 @@
     <title>Reporte de asistencia</title>
 
     <!-- Javascript libraries -->
-    <script src='http://localhost/libs/jquery.min.js'></script>
-    <script src='http://localhost/libs/jquery-ui.js'></script>
-    <script src='http://localhost/libs/jquery.dataTables.min.js'></script>
-    <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+    <script src='../vendor/libs/jquery.min.js'></script>
+    <script src='../vendor/libs/jquery-ui.js'></script>
+    <script src='../vendor/libs/jquery.dataTables.min.js'></script>
+    <script src='../vendor/libs/plotly-latest.min.js'></script>
 
     <!-- CSS libraries -->
-    <link rel='stylesheet' href='http://localhost/libs/bootstrap.min.css'>
-    <link rel='stylesheet' href='http://localhost/libs/jquery.dataTables.min.css'>
-    <link rel='stylesheet' href='http://localhost/libs/jquery-ui.css'>
+    <link rel='stylesheet' href='../vendor/libs/bootstrap.min.css'>
+    <link rel='stylesheet' href='../vendor/libs/jquery.dataTables.min.css'>
+    <link rel='stylesheet' href='../vendor/libs/jquery-ui.css'>
 
     <!-- Statistics scripts -->
     <script src='../assets/scripts/statistics-assistance/graphic-definition.js'></script>

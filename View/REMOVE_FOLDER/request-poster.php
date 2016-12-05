@@ -17,7 +17,7 @@
 
     </textarea>
 
-    <script src='http://localhost/libs/jquery.min.js'></script>
+    <script src='vendor/libs/jquery.min.js'></script>
 
     <script>
       $(function() {

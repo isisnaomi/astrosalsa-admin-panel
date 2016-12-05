@@ -6,8 +6,8 @@
     <title>Packages dashboard</title>
 
     <!-- Dashboard libraries: Scripts -->
-    <script src='http://localhost/libs/jquery.min.js'></script>
-    <script src='http://localhost/libs/jquery.dataTables.min.js'></script>
+    <script src='vendor/libs/jquery.min.js'></script>
+    <script src='vendor/libs/jquery.dataTables.min.js'></script>
 
     <!-- Students dashboard script -->
     <script src='assets/scripts/ajax-setup.js'></script>
@@ -15,8 +15,8 @@
     <script src='assets/scripts/dashboard-packages/table-definition.js'></script>
 
     <!-- Dashboard libraries: Stylesheets -->
-    <link rel='stylesheet' href='http://localhost/libs/bootstrap.min.css'>
-    <link rel='stylesheet' href='http://localhost/libs/jquery.dataTables.min.css'>
+    <link rel='stylesheet' href='vendor/libs/bootstrap.min.css'>
+    <link rel='stylesheet' href='vendor/libs/jquery.dataTables.min.css'>
 
     <!-- Students Dashboard styles -->
     <link rel='stylesheet' href='assets/stylesheets/dashboard-packages/layout.css'>
@@ -45,7 +45,7 @@
         <input type='text' name='name' placeholder='Nombre de paquete' />
         <input type='text' name='classesIncluded' placeholder='Número de clases' />
         <input type='text' name='price' placeholder='Precio' />
-        
+
         <div class='form-buttons'>
           <span class='button button-ok'>Agregar</span>
           <span class='button button-cancel'>Cancelar</span>
