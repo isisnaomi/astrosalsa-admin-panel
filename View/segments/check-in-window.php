@@ -18,7 +18,7 @@
     </div>
 
     <div class='confirmation-buttons'>
-      <div class='confirm'></div>
+      <div class='confirm' click='this.style.display="none"'></div>
       <div class='cancel'></div>
     </div>
 

@@ -6,7 +6,7 @@
   display: flex;
 
   -webkit-flex-flow: row wrap;
-  justify-content: space-around;
+  justify-content: flex-start;
 }
 
 .dashboard .section-title {
@@ -180,4 +180,3 @@
   left: 33.5px;
 
 }
-

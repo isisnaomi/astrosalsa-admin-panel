@@ -26,7 +26,7 @@
   height: 100px;
 
   background-color: transparent;
-  background-image: url('../icons/astro-logo.svg');
+  background-image: url('../../icons/astro-logo.svg');
   background-repeat: no-repeat;
   background-position: center center;
   background-size: 160px auto;
@@ -48,7 +48,12 @@
   color: #3c3c7c;
 }
 
+#check-in-form input[type="password"]:disabled {
+  background-color: #ddd;
+}
+
 .identified-student {
+  display: none;
   position: relative;
   width: 550px;
   height: 200px;
@@ -70,8 +75,13 @@
 
 .identified-student .name {
   display: block;
+  max-width: 270px;
   margin-bottom: 10px;
   font-size: 2.5em;
+}
+
+.identified-student.success .classes-left {
+  color: #62a161;
 }
 
 .identified-student .classes-left {
@@ -96,11 +106,11 @@
 }
 
 .confirm {
-  background-image: url(../icons/confirm.svg);
+  background-image: url(../../icons/confirm.svg);
 }
 
 .cancel {
-  background-image: url(../icons/cancel.svg);
+  background-image: url(../../icons/cancel.svg);
 }
 
 .close {
@@ -112,6 +122,6 @@
   background-repeat: no-repeat;
   background-position: center center;
   background-size: 100% 100%;
-  background-image: url(../icons/close.svg);
+  background-image: url(../../icons/close.svg);
   cursor: pointer;
 }

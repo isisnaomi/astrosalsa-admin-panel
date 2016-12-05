@@ -67,11 +67,10 @@
             // }
 
             target: 'subscriptionsAdministrator',
-            type: 'getAssistanceLog',
+            type: 'checkIn',
             data: {
-              initDate: '20150101',
-              finalDate: '20170201'
-           }
+                'id' : '35'
+             }
 
 
           };

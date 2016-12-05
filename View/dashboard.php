@@ -50,6 +50,9 @@
   <!-- Libs -->
   <script src='vendor/libs/jquery.min.js'></script>
 
+  <script src='assets/scripts/ajax-setup.js'></script>
+  <script src='assets/scripts/dashboard/event-handler.js'></script>
+
   <!-- Sidebar script -->
   <script>
     $(function() {
