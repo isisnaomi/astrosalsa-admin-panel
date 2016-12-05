@@ -1,27 +1,24 @@
 $(function() {
 
-  var table = $('#dtAssistance').DataTable({
+  var table = $( '#dtAssistance' ).DataTable({
 
-      "processing": true,
+      'processing': true,
 
-      "ajax": {
-          "method": "POST",
-          "url": "../../Control/CommunicationHandler.php", //cambiar por CommunicationHandler
-          "dataType": "json",
-          "dataSrc": function( response ) {
+      'ajax': {
+
+          'method': 'POST',
+
+          'url': '../../Control/CommunicationHandler.php',
+
+          'dataType': 'JSON',
+
+          'dataSrc': function( response ) {
             return response.content;
           },
-          //data: {
-          //  'target' : 'subscriptionsAdministrator',
-          //  'type' : 'getPaymentLog',
-          //  'data' : {
-          //    initDate: '20150101',
-          //    finalDate: '20170101'
-          //  }
-          //}
-          "data": {
-              target: "subscriptionsAdministrator",
-              type: "getAssistanceLog",
+
+          'data': {
+              target: 'subscriptionsAdministrator',
+              type: 'getAssistanceLog',
               data: {
                 initDate: '20150101',
                 finalDate: '20170101'
@@ -29,23 +26,24 @@ $(function() {
           }
       },
 
-      "columns": [
-          {data: "studentId"},
-          {data: "date"},
-          {data: "time"}
+      'columns': [
+          { data: 'studentId' },
+          { data: 'date' },
+          { data: 'time' }
       ],
-      "order": [0, "des"],
-      "lengthMenu": [[5, 10, 20, -1], [5, 10, 20, 'All']],
+
+      'order': [0, 'des'],
+
+      'lengthMenu': [
+        [5, 10, 20, -1],
+        [5, 10, 20, 'All']
+      ]
 
   });
 
   var refreshGraphic = function () {
+
       var allDates = table.columns(1).data().toArray();
-      // var allTimes = table.columns(2).data().toArray();
-      //
-      // $.each(allDates, function( index, date ) {
-      //   date += allTimes[index];
-      // });
 
       var datesForTheGraph = [];
       var assistance = [];
@@ -53,7 +51,7 @@ $(function() {
 
       $.each( allDates[0], function ( index, date ) {
 
-          var matchIndex = $.inArray( date, datesForTheGraph ); //Return -1 when doesnt find coincidences
+          var matchIndex = $.inArray( date, datesForTheGraph );
 
           if ( matchIndex > -1 ) {
 
@@ -71,21 +69,28 @@ $(function() {
 
       });
 
-      assistance.reverse();
-      datesForTheGraph.reverse();
+      // assistance.reverse();
+      // datesForTheGraph.reverse();
 
       var data = [
-          {
-              x: datesForTheGraph,
-              y: assistance,
-              type: ['bar', 'scatter'],
-              marker: {
-                  color: 'rgb(76, 175, 80)'
-              }
-          }
+        {
+            x: datesForTheGraph,
+            y: assistance,
+
+            type: 'scatter',
+
+            marker: {
+                color: 'rgb(76, 175, 80)'
+            }
+
+        }
       ];
 
-      Plotly.newPlot('bar-table', data);
+      var layout = {
+        xaxis: {type: 'category'},
+      };
+
+      Plotly.newPlot('bar-table', data, layout);
   };
 
 
