@@ -22,11 +22,7 @@ $(function() {
 
             'type' : 'getList',
 
-            data : {
-
-              '*' : '*'
-
-            }
+            data : {}
 
           }
 
