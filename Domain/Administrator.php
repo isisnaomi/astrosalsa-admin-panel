@@ -14,7 +14,9 @@ require_once '../Control/ActivityLogger.php';
 abstract class Administrator {
 
   const DATABASE_NAME = 'astrosalsa';
+
   const DATABASE_USER = 'root';
+
   const DATABASE_PASS = 'root';
 
   const UNIQUE_ELEMENT = 0;
@@ -27,7 +29,7 @@ abstract class Administrator {
   /**
   * @var string
   */
-  protected $tableName; /* was static */
+  protected $tableName;
 
 
   /**
@@ -96,13 +98,14 @@ abstract class Administrator {
   protected function update( $taskData ) {
 
     $this->accessDatabase();
-    $attributes = $taskData['attributes'];
-    $rowFilters = $taskData['filter'];
+    $attributes = $taskData[ 'attributes' ];
+    $rowFilters = $taskData[ 'filter' ];
     $databaseResponse = $this->databaseAccessor->updateRow( $attributes, $rowFilters );
     $administratorResponse = $databaseResponse;
     $taskType = 'update ' . $this->tableName;
 
     $report = $this->writeReport( $administratorResponse, $taskType );
+
     return $report;
 
   }
@@ -114,7 +117,7 @@ abstract class Administrator {
   protected function delete( $taskData ) {
 
     $this->accessDatabase();
-    $rowFilters = $taskData['filter'];
+    $rowFilters = $taskData[ 'filter' ];
     $databaseResponse = $this->databaseAccessor->deleteRow( $rowFilters );
     $administratorResponse = $databaseResponse;
     $taskType = 'delete ' . $this->tableName;
@@ -135,6 +138,7 @@ abstract class Administrator {
     $taskType = 'get ' . $this->tableName;
 
     $report = $this->writeReport( $administratorResponse, $taskType );
+
     return $report;
 
   }
@@ -169,6 +173,11 @@ abstract class Administrator {
 
   }
 
+  /**
+   * @param $activityData
+   * @param $activityType
+   * @return mixed
+   */
   protected abstract function logActivity( $activityData, $activityType );
 
   /**
@@ -178,6 +187,7 @@ abstract class Administrator {
 
     $this->databaseAccessor = new DatabaseAccessor( self::DATABASE_NAME , $this->tableName );
     $isAccessSuccessful = $this->databaseAccessor->connect( self::DATABASE_USER, self::DATABASE_PASS );
+
     return $isAccessSuccessful;
 
   }

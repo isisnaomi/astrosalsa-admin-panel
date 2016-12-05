@@ -6,13 +6,20 @@ require_once '../Domain/Administrator.php';
 */
 class StudentsAdministrator extends Administrator {
 
-
+  /**
+   * StudentsAdministrator constructor.
+   */
   public function __construct() {
 
     parent::__construct( 'students' );
 
   }
 
+  /**
+   * @param $taskType
+   * @param $taskData
+   * @return null|Report
+   */
   protected function doSpecificTask( $taskType, $taskData ){
 
     $report = null;
@@ -36,9 +43,14 @@ class StudentsAdministrator extends Administrator {
 
   }
 
+  /**
+   * @param $taskData
+   * @return Report
+   */
   public function getStudentByName( $taskData ) {
 
       $this->accessDatabase();
+
       $rowFilters = "name=".$taskData[ 'name' ];
       $databaseResponse = $this->databaseAccessor->selectRows( null, $rowFilters );
       $administratorResponse = $databaseResponse;
@@ -49,6 +61,10 @@ class StudentsAdministrator extends Administrator {
 
   }
 
+  /**
+   * @param $taskData
+   * @return Report
+   */
   public function getStudentByID( $taskData ) {
 
       $this->accessDatabase();
@@ -70,6 +86,10 @@ class StudentsAdministrator extends Administrator {
 
   }
 
+  /**
+   * @param $taskData
+   * @return Report
+   */
   protected function getInscriptionsLog( $taskData ){
 
     $tableName = 'studentInscriptionLog';
@@ -82,7 +102,11 @@ class StudentsAdministrator extends Administrator {
 
     }
 
+  /**
+   *
+   */
   protected function logStudentInscription(){
+
     $tableName = 'studentInscriptionLog';
     $studentId = $this->databaseAccessor->getLastInsertedId();
 
@@ -97,12 +121,19 @@ class StudentsAdministrator extends Administrator {
 
   }
 
+  /**
+   * @param $activityData
+   * @param $activityType
+   * @return mixed|void
+   */
   protected  function logActivity( $activityData, $activityType ){
 
-    if( $activityType === 'add students'){
+    if( $activityType === 'add students' ){
 
       $this->logStudentInscription();
 
     }
+
   }
+
 }

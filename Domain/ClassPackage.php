@@ -1,4 +1,5 @@
 <?php
+
 /**
 * ClassPackage
 * Contains the information of a class package

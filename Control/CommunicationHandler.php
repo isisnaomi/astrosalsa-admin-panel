@@ -34,19 +34,19 @@ class CommunicationHandler {
    * If there are enough parameters to proceed check if they're valid.
    * If all of them are valid saves them as a Request in $this->request.
    *
-   * @param $method
+   * @param $request
    */
-  public function receiveRequest( $method ) {
+  public function receiveRequest( $request ) {
 
-    $isRequestValid = $this->isRequestValid ( $method );
+    $isRequestValid = $this->isRequestValid ( $request );
 
     if ( $isRequestValid ) {
 
       $requestAsArray = [
 
-        'target' => $method[ 'target' ],
-        'type' => $method[ 'type' ],
-        'data' => $method[ 'data' ]
+        'target' => $request[ 'target' ],
+        'type' => $request[ 'type' ],
+        'data' => $request[ 'data' ]
 
       ];
 
@@ -68,10 +68,10 @@ class CommunicationHandler {
    * Each Administrator should check if the received request matches
    * their business rules.
    *
-   * @param $method
+   * @param $request
    * @return bool
    */
-  private function isRequestValid ( $method ) {
+  private function isRequestValid ( $request ) {
 
     $isThereAValidRequest = true;
 
@@ -84,8 +84,8 @@ class CommunicationHandler {
 
     foreach ( $parameters as $parameter ) {
 
-      $isParameterNotSet = ! isset( $method[ $parameter ] );
-      $isParameterEmpty = $method[ $parameter ] == '';
+      $isParameterNotSet = ! isset( $request[ $parameter ] );
+      $isParameterEmpty = $request[ $parameter ] == '';
 
       $isParameterNotValid = $isParameterNotSet || $isParameterEmpty;
 
@@ -152,7 +152,6 @@ class CommunicationHandler {
 
     $reportAsArray = DataTranslator::translateReport( $this->report );
     $reportAsJsonEncodedArray = json_encode( $reportAsArray );
-    
 
     print ( $reportAsJsonEncodedArray );
 

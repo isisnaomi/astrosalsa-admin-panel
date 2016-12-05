@@ -133,7 +133,9 @@ class QueryGenerator {
     foreach ( $attributes as $attribute => $attributeValue ) {
 
       if ( $indexAttributes > 0 ) {
+
         $query .= ', ';
+
       }
 
       $isOperatorsRequired = strpos( $attributeValue, '-' );
@@ -153,10 +155,17 @@ class QueryGenerator {
     }
 
     $query .= " WHERE $rowFilters";
+
     return $query;
 
   }
 
+  /**
+   * @param $field
+   * @param $from
+   * @param $to
+   * @return string
+   */
   public static function generateRangeRowFilter ( $field, $from, $to ) {
 
     $query = $field.' BETWEEN '.$from.' AND '.$to;
@@ -164,7 +173,5 @@ class QueryGenerator {
     return $query;
 
   }
-
-
 
 }

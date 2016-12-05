@@ -8,6 +8,7 @@ require_once 'AdminSessionAdministrator.php';
 class AdminAuthenticator {
 
   const DEFAULT_USERNAME = 'admin';
+
   const DEFAULT_PASSWORD = '21232f297a57a5a743894a0e4a801fc3';
 
 /**
@@ -20,6 +21,9 @@ class AdminAuthenticator {
  */
   public $admin;
 
+  /**
+   * AdminAuthenticator constructor.
+   */
   public function __construct() {
 
     if ( session_status() == PHP_SESSION_NONE ) {

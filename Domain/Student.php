@@ -16,7 +16,6 @@ class Student {
    */
   private $name;
 
-
   /**
    * @param int $studentId
    * @param string $name

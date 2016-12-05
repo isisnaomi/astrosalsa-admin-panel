@@ -15,9 +15,11 @@ class ClassPackagesAdministrator extends Administrator {
 
     $report = null;
     switch ( $taskType ) {
+
       case 'getPackageById' :
         $report = $this->getPackageByID( $taskData );
         break;
+
     }
 
     return $report;
@@ -27,7 +29,7 @@ class ClassPackagesAdministrator extends Administrator {
   public function getPackageByID( $taskData ) {
 
     $this->accessDatabase();
-    $rowFilters = "id=".$taskData['id'];
+    $rowFilters = "id=".$taskData[ 'id' ];
 
     $isTaskSuccessful = $this->databaseAccessor->selectRows( null, $rowFilters );
     $taskType = 'get '. $this->tableName;
@@ -41,11 +43,6 @@ class ClassPackagesAdministrator extends Administrator {
   }
 
     protected  function logActivity( $activityData, $activityType ) {
-
-      if( $activityType === 'add packages'){
-
-
-      }
 
     }
 

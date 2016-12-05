@@ -7,11 +7,6 @@
 class Payment {
 
   /**
-   * @var string
-   */
-  private $ticket;
-
-  /**
    * @var int
    */
   private $paymentId;
@@ -22,8 +17,7 @@ class Payment {
   private $packageName;
 
   /**
-   * TODO: Define var type
-   * @var
+   * @var string
    */
   private $date;
 
@@ -90,9 +84,5 @@ class Payment {
     return $this->location;
 
   }
-
-  /**
-   * @return String[] $this->ticket
-   */
 
 }
