@@ -192,7 +192,7 @@ class SubscriptionsAdministrator extends Administrator {
 
             'ticket' => $ticket,
             'studentId' => $studentId,
-            'packageId' => $taskData['packageId']
+            'packageId' => $taskData[ 'packageId' ]
 
         ];
 

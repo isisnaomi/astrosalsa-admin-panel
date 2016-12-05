@@ -154,9 +154,25 @@ $(function() {
             packageId: packageId,
             paymentDay: paymentDay
           }
+        },
+        success: function( paymentResponse ) {
+
+          var isPaymentRequestSuccessful = paymentResponse.type !== 'error';
+
+          if ( isPaymentRequestSuccessful ) {
+
+            window.open( 'ticket.php?content=' + paymentResponse.content.ticket );
+            showSuccessMessage();
+
+          } else {
+
+            showFailMessage();
+
+          }
+
         }
 
-        // Default success and error callbacks
+        // Default error callback
       });
 
     });
