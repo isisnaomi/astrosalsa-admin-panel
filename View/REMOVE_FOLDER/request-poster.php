@@ -50,11 +50,22 @@
             //  filter: "id=" + 8
             // }
 
-            target: 'studentsAdministrator',
-            type: 'delete',
+            // target: 'subscriptionsAdministrator',
+            // type: 'getSubscriptionByStudentId',
+            // data: {
+            //   'studentId' : '11'
+            // }
+
+
+            target: 'subscriptionsAdministrator',
+            type: 'add',
             data: {
-              filter: 'id=8'
+              'studentId': '11',
+              'packageId': '0',
+              'classesRemaining': '0',
+              'paymentDay': 15
             }
+
 
           };
 

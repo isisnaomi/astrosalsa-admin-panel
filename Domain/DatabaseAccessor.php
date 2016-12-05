@@ -146,7 +146,7 @@ class DatabaseAccessor {
 
   /**
    * @param  [ attribute => attributeValue ][]  $row
-   * @return bool $isRowInserted
+   * @return bool|resource
    */
   public function insertRow( $row ) {
 
@@ -211,7 +211,8 @@ class DatabaseAccessor {
 
   }
 
-  public function getLastInsertedId(){
+
+  public function getLastInsertedId() {
 
       $lastId = mysql_insert_id();
 

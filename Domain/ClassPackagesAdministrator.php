@@ -15,7 +15,7 @@ class ClassPackagesAdministrator extends Administrator {
 
     $report = null;
     switch ( $taskType ) {
-      case 'getPackageByID' :
+      case 'getPackageById' :
         $report = $this->getPackageByID( $taskData );
         break;
     }
