@@ -117,6 +117,7 @@
 
             });
 
+            assistance.reverse();
             datesForTheGraph.reverse();
 
             var data = [
