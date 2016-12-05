@@ -40,7 +40,7 @@
 
     <div class='social-media-links'>
       <h2>Redes sociales</h2>
-      <a class='facebook social-icon' href='http://facebook.com/' target='_blank' title='Página de Facebook'></a>
+      <div class='facebook social-icon' href='http://facebook.com/' target='_blank' title='Página de Facebook'></div>
       <a class='youtube social-icon' href='http://youtube.com/' target='_blank' title='Página de YouTube'></a>
       <a class='instagram social-icon' href='http://instagram.com/' target='_blank' title='Página de Instagram'></a>
     </div>

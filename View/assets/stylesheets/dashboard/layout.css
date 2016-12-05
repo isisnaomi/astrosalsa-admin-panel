@@ -133,14 +133,51 @@
   transform: scale(1.05);
 }
 
-.facebook.social-icon {
-  background-image: url(../icons/facebook.svg);
+.facebook.social-icon{
+  background-color: #3b5999!important;
+  position:relative;
+
+}
+.facebook.social-icon:before{
+  content: "\f09a";
+  font-family: FontAwesome;
+  font-size: 50px;
+  color: white;
+  position: absolute;
+  display: inline-block;
+  top: 30px;
+  left: 40px;
+
 }
 
 .youtube.social-icon {
-  background-image: url(../icons/youtube.svg);
+  background-color: #cd201f !important;
+  position:relative;
+}
+.youtube.social-icon:before{
+  content: "\f167";
+  font-family: FontAwesome;
+  font-size: 50px;
+  color: white;
+  position: absolute;
+  display: inline-block;
+  top: 30px;
+  left: 33.55px;
+
+}
+.instagram.social-icon {
+  background-color: #e4405f !important;
+  position:relative;
+}
+.instagram.social-icon:before{
+  content: "\f16d";
+  font-family: FontAwesome;
+  font-size: 50px;
+  color: white;
+  position: absolute;
+  display: inline-block;
+  top: 30px;
+  left: 33.5px;
+
 }
 
-.instagram.social-icon {
-  background-image: url(../icons/instagram.svg);
-}
