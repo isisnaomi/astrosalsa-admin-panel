@@ -1,5 +1,24 @@
 $(function() {
 
+  var getSQLDate = function( date ) {
+
+    if ( ! date )
+      return false;
+
+    var splitedDate = date.split('/');
+
+    var day = splitedDate[0];
+    var month = splitedDate[1];
+    var year = splitedDate[2];
+
+    var SQLDate = year + month + day;
+
+    alert( SQLDate );
+
+    return SQLDate;
+
+  }
+
   var table = $( '#dtAssistance' ).DataTable({
 
       'processing': true,
@@ -16,12 +35,16 @@ $(function() {
             return response.content;
           },
 
+          error: function() {
+            window.location.href = '';
+          },
+
           'data': {
               target: 'subscriptionsAdministrator',
               type: 'getAssistanceLog',
               data: {
-                initDate: '20150101',
-                finalDate: '20170101'
+                initDate: '20050101',
+                finalDate: '20770201'
              }
           }
       },
@@ -69,9 +92,6 @@ $(function() {
 
       });
 
-      // assistance.reverse();
-      // datesForTheGraph.reverse();
-
       var data = [
         {
             x: datesForTheGraph,
@@ -94,15 +114,8 @@ $(function() {
   };
 
 
-  var initDate = '20161201';
-  var finalDate = '20161230';
+  $( '#dtAssistance' )
+    .on('draw.dt length.dt processing.dt ajax.dt', refreshGraphic);
 
-  $("#btn-filtrar").click(function(){
-      //initDate = $("#dateDe").val();
-      //finalDate = $("#dateHasta").val();
-      table.ajax.reload();
-      refreshGraphic;
-  });
-  $('#dtAssistance').on('draw.dt length.dt processing.dt', refreshGraphic);
 
 });

@@ -115,7 +115,7 @@ class DatabaseAccessor {
   /**
    * @param  string[] $attributes
    * @param  string $rowFilters
-   * @return array|bool
+   * @return array|bool|resource
    * ] | false
    */
   public function selectRows( $attributes= NULL, $rowFilters = NULL ) {

@@ -28,7 +28,7 @@
     <div class='form'>
         Fecha inicio: <input type='text' id='initialDate' />
         Fecha final: <input type='text' id='finalDate' />
-        <input type='button' value='Filtrar' />
+        <input type='button' id='filter' value='Filtrar' />
     </div>
 
     <div id='bar-table' style='width: 100%; height: 600px;'></div>
@@ -48,12 +48,12 @@
       </div>
     </div>
 
-  <script>
-    $(function() {
-        $('#initialDate').datepicker();
-        $('#finalDate').datepicker();
-    });
-  </script>
+    <script>
+      $(function() {
+          $('#initialDate').datepicker();
+          $('#finalDate').datepicker();
+      });
+    </script>
 
   </body>
 </html>

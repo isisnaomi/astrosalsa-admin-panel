@@ -17,7 +17,7 @@
 
     </textarea>
 
-    <script src='vendor/libs/jquery.min.js'></script>
+    <script src='../vendor/libs/jquery.min.js'></script>
 
     <script>
       $(function() {
@@ -66,13 +66,12 @@
             //   'paymentDay': 15
             // }
 
-            arget: "suscriptionsAdministrator",
-            type: "getPaymentsLog",
+            target: 'subscriptionsAdministrator',
+            type: 'getAssistanceLog',
             data: {
-                "initDate": '20020101',
-                "finalDate": '20210101',
-
-            }
+              initDate: '20150101',
+              finalDate: '20170201'
+           }
 
 
           };
