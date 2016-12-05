@@ -16,7 +16,8 @@ abstract class Administrator {
   const DATABASE_NAME = 'astrosalsa';
   const DATABASE_USER = 'root';
   const DATABASE_PASS = 'root';
-  const UNIQUE = 0;
+
+  const UNIQUE_ELEMENT = 0;
 
   /**
   * @var DatabaseAccessor

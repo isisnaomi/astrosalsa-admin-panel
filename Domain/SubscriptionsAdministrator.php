@@ -69,7 +69,7 @@ class SubscriptionsAdministrator extends Administrator {
 
     if( $databaseResponse ){
 
-      $administratorResponse = $databaseResponse[ self::UNIQUE ];
+      $administratorResponse = $databaseResponse[ self::UNIQUE_ELEMENT ];
 
     }
 
@@ -88,7 +88,7 @@ class SubscriptionsAdministrator extends Administrator {
 
     if( $databaseResponse ){
 
-      $administratorResponse = $databaseResponse[ self::UNIQUE ];
+      $administratorResponse = $databaseResponse[ self::UNIQUE_ELEMENT ];
 
     }
 

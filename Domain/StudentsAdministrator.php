@@ -61,7 +61,7 @@ class StudentsAdministrator extends Administrator {
 
       if( $databaseResponse ){
 
-          $administratorResponse = $databaseResponse[ self::UNIQUE ];
+          $administratorResponse = $databaseResponse[ self::UNIQUE_ELEMENT ];
 
       }
 
