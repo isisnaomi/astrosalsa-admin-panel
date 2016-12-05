@@ -25,22 +25,9 @@ class CommunicationHandler {
   private $request;
 
   /**
-  * @var Administrator
+  * @var Report
   */
-  private $administratorWatching;
-
-
-  public function __construct() {
-
-    $this->lookForARequest( $_POST );
-
-    /* TODO: Awaiting implementation of isRequestValid() */
-    /* $this->isRequestValid(); */
-
-    $report = $this->delegateRequest();
-    $this->sendReport( $report );
-
-  }
+  private $report;
 
   /**
    * Procedure
@@ -50,49 +37,25 @@ class CommunicationHandler {
    *
    * @param $method
    */
-  private function lookForARequest( $method ) {
+  public function receiveRequest( $method ) {
 
-    /* TODO: Validate method parameter */
+    $isRequestValid = $this->isRequestValid ( $method );
 
-    $isThereAValidRequest = true;
-
-    $parameters = [
-      'target',
-      'type'
-    ];
-
-    foreach ( $parameters as $parameter ) {
-
-      $isParameterNotSet = ! isset( $method[ $parameter ] );
-      $isParameterEmpty = $method[ $parameter ] == '';
-
-      $isParameterNotValid = $isParameterNotSet || $isParameterEmpty;
-
-      if ( $isParameterNotValid ) {
-        $isThereAValidRequest = false;
-        break;
-      }
-
-    }
-
-    if ( $isThereAValidRequest ) {
+    if ( $isRequestValid ) {
 
       $requestAsArray = [
-        'target' => $method['target'],
-        'type' => $method['type'],
-        'data' => $method['data']
+
+        'target' => $method[ 'target' ],
+        'type' => $method[ 'type' ],
+        'data' => $method[ 'data' ]
+
       ];
 
-      $request = DataTranslator::translateRequest( $requestAsArray );
-
-      $this->request = $request;
+      $this->request = DataTranslator::translateRequest( $requestAsArray );
 
     } else {
 
       die( 'There is no valid request.' );
-
-      /* Do nothing? */
-      /* TODO: Throw exception if there's no valid request? */
 
     }
 
@@ -106,9 +69,35 @@ class CommunicationHandler {
    * Each Administrator should check if the received request matches
    * their business rules.
    */
-  private function isRequestValid() {
+  private function isRequestValid ( $method ) {
 
-    /* TODO */
+    $isThereAValidRequest = true;
+
+    $parameters = [
+
+        'target',
+        'type'
+
+    ];
+
+    foreach ( $parameters as $parameter ) {
+
+      $isParameterNotSet = ! isset( $method[ $parameter ] );
+      $isParameterEmpty = $method[ $parameter ] == '';
+
+      $isParameterNotValid = $isParameterNotSet || $isParameterEmpty;
+
+      if ( $isParameterNotValid ) {
+
+        $isThereAValidRequest = false;
+
+        break;
+
+      }
+
+    }
+
+    return $isThereAValidRequest;
 
   }
 
@@ -119,28 +108,34 @@ class CommunicationHandler {
   */
   public function delegateRequest() {
 
-    switch ( $this->request->getTarget() ) {
+    $targetAdministrator = $this->request->getTarget();
+    $administratorInCharge = null;
+
+    switch ( $targetAdministrator ) {
 
       case 'studentsAdministrator' :
-        $this->administratorWatching = new StudentsAdministrator();
+        $administratorInCharge = new StudentsAdministrator();
         break;
 
       case 'classPackagesAdministrator' :
-        $this->administratorWatching = new ClassPackagesAdministrator();
+        $administratorInCharge = new ClassPackagesAdministrator();
         break;
 
       case 'subscriptionsAdministrator' :
-        $this->administratorWatching = new SubscriptionsAdministrator();
+        $administratorInCharge = new SubscriptionsAdministrator();
         break;
 
-      /* TODO: Throw exception if invalid target */
+      default :
+        die ( 'Target administrator is not valid' );
 
     }
 
     $requestType = $this->request->getType();
     $requestData = $this->request->getData();
 
-    return $this->administratorWatching->doTask( $requestType, $requestData );
+    $administratorReport = $administratorInCharge->doTask( $requestType, $requestData );
+
+    $this->report = $administratorReport;
 
   }
 
@@ -161,6 +156,12 @@ class CommunicationHandler {
 
   }
 
+  public function getReport (){
+
+    return $this->report;
+
+  }
+
 }
 
 
@@ -169,7 +170,10 @@ class CommunicationHandler {
  */
 function Main() {
 
-  new CommunicationHandler();
+  $communicationHandler = new CommunicationHandler();
+  $communicationHandler->receiveRequest( $_POST );
+  $report = $communicationHandler->getReport();
+  $this->sendReport( $report );
 
 }
 

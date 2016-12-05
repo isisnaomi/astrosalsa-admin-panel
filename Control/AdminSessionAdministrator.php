@@ -6,19 +6,28 @@
 class AdminSessionAdministrator {
 
   public function __construct() {
+
     if (session_status() == PHP_SESSION_NONE) {
+
       session_start();
+
     }
+
   }
 
   /**
    * @return boolean
    */
-  public function existSession( ) {
+  public function existSession() {
 
-    if ( isset( $_SESSION['login_user'] ) ) {
+    $isSessionSet = isset( $_SESSION[ 'login_user' ] );
+
+    if ( $isSessionSet ) {
+
       return true;
+
     }
+
     return false;
 
   }
@@ -28,19 +37,20 @@ class AdminSessionAdministrator {
    */
   public function startSession( $username ) {
 
-    session_start(); // Starting Session
-    $_SESSION['login_user'] = $username; // Initializing Session
+    session_start();
+    $_SESSION[ 'login_user' ] = $username;
 
   }
 
   /**
    * @return boolean
    */
-  public function terminateSession( ) {
+  public function terminateSession() {
 
     session_start();
+    $isSessionDestroyed = session_destroy();
 
-    if( session_destroy() ) { // Destroying All Sessions
+    if( $isSessionDestroyed ) {
 
       return true;
 

@@ -32,8 +32,9 @@ class ClassPackagesAdministrator extends Administrator {
     $isTaskSuccessful = $this->databaseAccessor->selectRows( null, $rowFilters );
     $taskType = 'get '. $this->tableName;
     $databaseResponse = $isTaskSuccessful[ self::UNIQUE ];
+    $administratorResponse = $databaseResponse;
 
-    $report =  $this->writeReport( $databaseResponse, $taskType );
+    $report =  $this->writeReport( $administratorResponse, $taskType );
 
     return $report;
 

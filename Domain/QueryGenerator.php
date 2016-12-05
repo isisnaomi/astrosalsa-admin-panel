@@ -157,5 +157,14 @@ class QueryGenerator {
 
   }
 
+  public static function generateRangeRowFilter ( $field, $from, $to ) {
+
+    $query = $field.' BETWEEN '.$from.' AND '.$to;
+
+    return $query;
+
+  }
+
+
 
 }
