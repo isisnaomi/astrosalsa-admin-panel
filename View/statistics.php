@@ -24,7 +24,7 @@
       <header>
         <h1>Estadísticas</h1>
         <nav>
-          <span id='assistance' class='assistance'>Asistencia</span>
+          <span id='assistance' class='assistance activated'>Asistencia</span>
           <span id='payments' class='payments'>Pagos</span>
           <span id='studentInscriptions' class='studentInscriptions'>Inscripciones</span>
         </nav>
@@ -37,7 +37,7 @@
     <script src='vendor/libs/jquery.min.js'></script>
 
     <!-- Sidebar script -->
-    <script src='assets/scripts/dashboard-statistics/event-handler.js'></script>
+    <script src='assets/scripts/statistics/event-handler.js'></script>
     <script>
       $(function() {
         $('.main-menu')
