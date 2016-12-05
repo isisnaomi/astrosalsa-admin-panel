@@ -1,0 +1,15 @@
+
+body {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 20px;
+  background-color: transparent;
+}
+
+.form {
+  margin-bottom: 20px;
+}
+
+#bar-table {
+  margin-bottom: 20px;
+}

@@ -1,0 +1,29 @@
+.statistics.main-container {
+  height: 100%;
+}
+
+.statistics.main-container header {
+  height: 100px;
+}
+
+.statistics.main-container iframe {
+  border: 0;
+  width: 100%;
+  height: calc( 100% - 100px );
+}
+
+.statistics.main-container header h1 {
+  margin-bottom: 20px;
+}
+
+.statistics.main-container header nav span {
+  margin-right: 20px;
+  padding: 5px 15px;
+  text-transform: uppercase;
+
+  border-radius: 2px;
+  background-color: tomato;
+  color: white;
+
+  cursor: pointer;
+}

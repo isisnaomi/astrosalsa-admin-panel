@@ -10,6 +10,7 @@
   <?php include 'layout/layout-stylesheets-links.php'; ?>
   <link rel='stylesheet' href='assets/stylesheets/dashboard/layout.css' />
   <link rel='stylesheet' href='assets/stylesheets/dashboard/check-in.layout.css' />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 </head>
 <body>

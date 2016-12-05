@@ -57,13 +57,21 @@
             // }
 
 
-            target: 'subscriptionsAdministrator',
-            type: 'add',
+            // target: 'subscriptionsAdministrator',
+            // type: 'add',
+            // data: {
+            //   'studentId': '11',
+            //   'packageId': '0',
+            //   'classesRemaining': '0',
+            //   'paymentDay': 15
+            // }
+
+            arget: "suscriptionsAdministrator",
+            type: "getPaymentsLog",
             data: {
-              'studentId': '11',
-              'packageId': '0',
-              'classesRemaining': '0',
-              'paymentDay': 15
+                "initDate": '20020101',
+                "finalDate": '20210101',
+
             }
 
 
