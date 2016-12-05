@@ -75,7 +75,7 @@ $(function() {
     miliseconds = miliseconds || 0;
 
     setTimeout(function() {
-      window.location.href = '';
+      window.location.href = 'dashboard-students.php';
     }, miliseconds);
 
   }
@@ -326,9 +326,12 @@ $(function() {
               'classesRemaining': '0',
               'paymentDay': '15'
             }
+          },
+          success: function() {
+            showSuccessMessage();
+          }, error: function() {
+            showFailMessage();
           }
-
-          /* Default success and error */
 
         });
 

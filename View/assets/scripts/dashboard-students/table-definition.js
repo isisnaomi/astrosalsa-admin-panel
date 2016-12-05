@@ -69,7 +69,7 @@ $(function() {
                 'searchable': false,
                 'data': null,
                 'defaultContent':
-                  "<img class='student-photo' src='' alt='profile-image' width='32px' height='32px' onerror=\"this.src='photos/0.jpg'\" />"
+                  "<img class='student-photo' src='' alt='profile-image' width='32px' height='32px' onerror=\"this.src='photos/0.jpg'\" style='border-radius: 50%;' />"
             },
             {
                 'targets': 3,

@@ -55,6 +55,13 @@ $(function() {
           { data: 'time' }
       ],
 
+      'columnDefs' : [
+        {
+          target: 2,
+          searchable: false
+        }
+      ],
+
       'order': [0, 'des'],
 
       'lengthMenu': [

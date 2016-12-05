@@ -101,6 +101,7 @@
 }
 
 .social-media-links {
+  width: 100%;
   /*width: calc(45% - 20px);*/
   min-width: 453px;
   min-height: 98%;
