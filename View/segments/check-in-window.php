@@ -10,7 +10,7 @@
 
   <div class='identified-student'>
 
-    <img class='photo' src='assets/icons/student-photo.png' />
+    <img class='photo' src='assets/icons/student-photo.png' onerror='this.src="photos/0.jpg"' />
 
     <div class='data'>
       <span class='name'>Jenny Doe</span>
