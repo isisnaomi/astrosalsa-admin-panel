@@ -8,7 +8,6 @@ require_once '../Domain/SubscriptionsAdministrator.php';
 
 require_once '../Control/DataTranslator.php';
 
-
 /**
  * CommunicationHandler
  * Class
@@ -68,6 +67,9 @@ class CommunicationHandler {
    * try to filter malicious data.
    * Each Administrator should check if the received request matches
    * their business rules.
+   *
+   * @param $method
+   * @return bool
    */
   private function isRequestValid ( $method ) {
 
@@ -127,6 +129,7 @@ class CommunicationHandler {
 
       default :
         die ( 'Target administrator is not valid' );
+        break;
 
     }
 
@@ -144,21 +147,14 @@ class CommunicationHandler {
    * Asks the $this->watchingAdministrator for its Report,
    * and sends it back to the petitioner.
    *
-   * @param $report
    */
-  public function sendReport( $report ) {
+  public function sendReport() {
 
-    $reportAsArray = DataTranslator::translateReport( $report );
+    $reportAsArray = DataTranslator::translateReport( $this->report );
     $reportAsJsonEncodedArray = json_encode( $reportAsArray );
     
 
     print ( $reportAsJsonEncodedArray );
-
-  }
-
-  public function getReport (){
-
-    return $this->report;
 
   }
 
@@ -172,8 +168,8 @@ function Main() {
 
   $communicationHandler = new CommunicationHandler();
   $communicationHandler->receiveRequest( $_POST );
-  $report = $communicationHandler->getReport();
-  $this->sendReport( $report );
+  $communicationHandler->delegateRequest();
+  $communicationHandler->sendReport();
 
 }
 
