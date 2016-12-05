@@ -46,7 +46,16 @@ $(function() {
                   "<span class='button button-subscription'>subscripción</span>"
             }
 
-        ]
+        ],
+
+        'lengthMenu': [
+          [5, 10, 20, -1],
+          [5, 10, 20, 'All']
+        ],
+
+        'iDisplayLength': 10,
+
+        'order': [0, 'des']
 
 
       }); // $('#students-data-table').dataTable();
