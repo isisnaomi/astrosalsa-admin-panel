@@ -1,0 +1,74 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: transparent;
+  padding: 0 15px;
+  line-height: 1;
+  color: #555;
+}
+
+input[type="search"],
+input[type="text"] {
+  outline: 0;
+  border: 1px solid #ccc;
+}
+
+input[type="search"] {
+  padding: 0 4px;
+  outline: 0;
+  border-radius: 2px;
+}
+
+.astrosalsa .panel-heading .title {
+  font-size: 36px;
+}
+
+.astrosalsa .panel-heading .button-add-student {
+  display: inline-block;
+  float: right;
+  padding: 8px 12px;
+  font-size: 20px;
+  border-radius: 2px;
+  background-color: #009688;
+  color: white;
+  cursor: pointer;
+}
+
+.astrosalsa .dataTables_length {
+  margin-bottom: 20px;
+}
+
+.astrosalsa table.dataTable {
+  margin-bottom: 20px;
+}
+
+.astrosalsa .dataTable {
+  font-size: 20px;
+}
+
+.astrosalsa .dataTable th,
+.astrosalsa .dataTable td {
+  text-align: center;
+}
+
+.astrosalsa .dataTable .button {
+  float: right;
+  margin-right: 10px;
+  padding: 3px 6px;
+  border-radius: 2px;
+  font-size: 16px;
+  color: white;
+  cursor: pointer;
+}
+
+.astrosalsa .dataTable .button-subscription {
+  background-color: #5C6BC0;
+}
+
+.dataTable .button-edit {
+  background-color: #009688;
+}

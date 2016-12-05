@@ -20,7 +20,7 @@
     <?php include 'layout/top-bar.php'; ?>
 
     <!-- Students view -->
-    <div class='students main-container'>
+    <div class='packages main-container'>
       <iframe id='students-table-frame'
         src='dashboard-packages.php'></iframe>
     </div>
