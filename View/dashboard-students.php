@@ -53,10 +53,9 @@
 
     <div class='popup-window edit-student-photo-window'>
       <div class='form'>
-        <span class='title'>Modificar foto de alumno</span>
         <input type='text' name='id' placeholder='ID' disabled='disabled' />
         <input type='text' name='name' placeholder='Nombre' disabled='disabled' />
-        <div id='webcam' style="width:320px; height:240px;"></div>
+        <div id='webcam' style="margin: 0 auto;"></div>
         <div class='form-buttons'>
           <span class='button button-ok'>Capturar</span>
           <span class='button button-cancel'>Cancelar</span>

@@ -315,8 +315,6 @@ $(function() {
 
         var studentId = response.content;
 
-        console.log( studentId );
-
         $.ajax({
 
           data: {
@@ -354,8 +352,8 @@ $(function() {
     }
 
     Webcam.set({
-      width: 320,
-      height: 240
+      width: 480,
+      height: 360
     });
 
     Webcam.attach( '#webcam' );
@@ -380,7 +378,6 @@ $(function() {
           .find( 'input[name="id"]' )
             .val();
         takeSnapshot( studentId );
-        console.log( studentId );
       });
 
   function takeSnapshot( studentId ) {
@@ -390,8 +387,6 @@ $(function() {
 
         $('#studentId').val(  studentId );
         $('#rawImageData').val( raw_image_data );
-
-        console.log( $('#rawImageData')[0] );
 
         $('#upload-photo-form').submit();
 

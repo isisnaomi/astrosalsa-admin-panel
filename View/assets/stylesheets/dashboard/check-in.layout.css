@@ -77,9 +77,9 @@
 
 .identified-student .name {
   display: block;
-  max-width: 270px;
+  max-width: 290px;
   margin-bottom: 10px;
-  font-size: 2.5em;
+  font-size: 42px;
 }
 
 .identified-student.success .classes-left {
@@ -87,7 +87,7 @@
 }
 
 .identified-student .classes-left {
-  font-size: 2em;
+  font-size: 26px;
   color: #3c3c7c;
 }
 

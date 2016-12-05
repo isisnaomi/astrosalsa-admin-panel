@@ -93,6 +93,8 @@ $(function() {
           $('#student-id')
             .css('border', '0');
 
+            $( '.photo' ).attr( 'src', 'photos/' + studentId + '.jpg' );
+
           $.ajax({
             data: {
               target: 'subscriptionsAdministrator',
@@ -115,7 +117,6 @@ $(function() {
                   .css( 'display', 'block' );
 
                 $( '#student-id' ).attr( 'disabled', 'disabled' );
-                $( '.photo' ).attr( 'src', 'photos/'+studentId+'.jpg' );
 
                 if ( classesRemaining < 1 ) {
                   $( '.identified-student' )
