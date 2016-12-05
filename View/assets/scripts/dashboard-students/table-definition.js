@@ -28,8 +28,7 @@ $(function() {
 
           complete: function( response ) {
 
-            setTimeout(function() {
-
+            var setPhotos = function() {
               $( 'tr' ).each(function( indexTr, tr ) {
 
                 var id = 0;
@@ -47,7 +46,10 @@ $(function() {
                 });
 
               });
-            }, 2000);
+            }
+
+            setTimeout(setPhotos, 800);
+            setTimeout(setPhotos, 8000);
 
           }
 
@@ -67,7 +69,7 @@ $(function() {
                 'searchable': false,
                 'data': null,
                 'defaultContent':
-                  "<img class='student-photo' src='' alt='profile-image' width='32px' height='32px' />"
+                  "<img class='student-photo' src='' alt='profile-image' width='32px' height='32px' onerror=\"this.src='photos/0.jpg'\" />"
             },
             {
                 'targets': 3,
