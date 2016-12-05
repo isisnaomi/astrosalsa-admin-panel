@@ -180,18 +180,26 @@ $(function() {
   });
 
 
-  $( '.edit-student-window' ).find( '.button-delete' ).on('click', function() {
+  $( '.edit-package-window' ).find( '.button-delete' ).on('click', function() {
 
-    var name = $( '.edit-student-window' ).find( 'input[name="name"]' ).val();
-    var id = $( '.edit-student-window' ).find( 'input[name="id"]' ).val();
+    var id =
+      $( '.edit-package-window' )
+        .find( 'input[name="id"]' )
+          .val();
 
-    var hasDeleteConfirmation = confirm("¿Eliminar al alumno: ("+ id +") "+ name +"?");
+    var name =
+      $( '.edit-package-window' )
+        .find( 'input[name="name"]' )
+          .val();
+
+    var hasDeleteConfirmation =
+      confirm("¿Eliminar el paquete: ("+ id +") "+ name +"?");
 
     if ( hasDeleteConfirmation ) {
 
       $.ajax({
         data: {
-          target: 'studentsAdministrator',
+          target: 'classPackagesAdministrator',
           type: 'delete',
           data: {
             filter: 'id=' + id
