@@ -33,9 +33,10 @@
     <div class='quick-access-button charge'>Cobrar</div>
     <div class='quick-access-button add-student'>+ Alumno</div>
     <div class='quick-access-button add-package'>+ Paquete</div>
-
     <div class='quick-access-report'>
-      <h2>Asistencia</h2>
+        <h2>Asistencia</h2>
+        <iframe id='graph' src='statistics/assistance.php'></iframe>
+
     </div>
 
     <div class='social-media-links'>

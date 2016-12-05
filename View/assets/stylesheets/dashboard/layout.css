@@ -92,8 +92,8 @@
 
 .quick-access-report {
   width: calc(55% - 20px);
-  min-width: 500px;
-  height: 250px;
+  min-width: 98.5%;
+  height: 400px;
   padding-top: 20px;
   flex-grow: 0;
   text-align: center;
@@ -101,9 +101,9 @@
 }
 
 .social-media-links {
-  width: calc(45% - 20px);
-  min-width: 440px;
-  min-height: 200px;
+  /*width: calc(45% - 20px);*/
+  min-width: 453px;
+  min-height: 98%;
   padding: 20px;
   flex-grow: 0;
   text-align: center;
@@ -178,5 +178,11 @@
   display: inline-block;
   top: 30px;
   left: 33.5px;
+
+}
+iframe{
+  border: none;
+  height: 80%;
+  width: 60%;
 
 }
