@@ -31,7 +31,7 @@
   font-size: 26px;
 
   background-color: white;
-  cursor: pointer;
+  cursor: pointer !important;
 
   transition: flex-grow 1000ms linear;
 }

@@ -30,9 +30,12 @@
     <h1 class='section-title'>Dashboard</h1>
 
     <div class='quick-access-button check-in'>Ingreso</div>
-    <div class='quick-access-button charge'>Cobrar</div>
-    <div class='quick-access-button add-student'>+ Alumno</div>
-    <div class='quick-access-button add-package'>+ Paquete</div>
+    <div class='quick-access-button charge'
+          onClick='window.location.href="students.php"'>Cobrar</div>
+    <div class='quick-access-button add-student'
+          onClick='window.location.href="students.php?action=addStudent"'>+ Alumno</div>
+    <div class='quick-access-button add-package'
+          onClick='window.location.href="packages.php?action=addPackage"'>+ Paquete</div>
     <div class='quick-access-report'>
         <h2>Asistencia</h2>
         <iframe id='graph' src='statistics/assistance.php'></iframe>
