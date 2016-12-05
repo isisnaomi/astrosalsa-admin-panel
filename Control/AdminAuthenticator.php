@@ -1,27 +1,31 @@
 <?php
 require_once 'AdminSessionAdministrator.php';
 
-define("default_username", "admin");
-define("default_password", "21232f297a57a5a743894a0e4a801fc3");
 /**
-* Admin Authenticator
-* Authorizes account access
-*/
+ * Admin Authenticator
+ * Authorizes account access
+ */
 class AdminAuthenticator {
-  /**
-   * @var String
-   */
-  public $error = ' '; // Variable To Store Error Message
-  /**
-   * @var AdminSessionAdministrator
-   */
-  public $admin;
 
+  const DEFAULT_USERNAME = 'admin';
+  const DEFAULT_PASSWORD = '21232f297a57a5a743894a0e4a801fc3';
+
+/**
+ * @var String
+ */
+  public $errorMessage = ' ';
+
+/**
+ * @var AdminSessionAdministrator
+ */
+  public $admin;
 
   public function __construct() {
 
-    if (session_status() == PHP_SESSION_NONE) {
+    if ( session_status() == PHP_SESSION_NONE ) {
+
       session_start();
+
     }
 
   }
@@ -33,7 +37,7 @@ class AdminAuthenticator {
    */
   public function authenticate($username, $password) {
 
-    if (default_username == $username && default_password == $password) {
+    if ( self::DEFAULT_USERNAME == $username && self::DEFAULT_PASSWORD == $password ) {
 
       $admin = new AdminSessionAdministrator();
       $admin->startSession( $username );
@@ -43,6 +47,8 @@ class AdminAuthenticator {
     } else {
 
       return false;
+
     }
+
   }
 }

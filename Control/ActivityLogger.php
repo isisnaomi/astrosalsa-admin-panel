@@ -1,6 +1,7 @@
 <?php
 
 require_once '../Domain/DatabaseAccessor.php';
+require_once '../Domain/QueryGenerator.php';
 
 /**
  * ActivityLogger
@@ -9,6 +10,9 @@ require_once '../Domain/DatabaseAccessor.php';
  */
 class ActivityLogger {
 
+  const DATABASE_NAME = 'astrosalsa';
+  const DATABASE_USER = 'root';
+  const DATABASE_PASS = 'root';
   /**
    * @var DatabaseAccessor
    */
@@ -27,10 +31,11 @@ class ActivityLogger {
    */
   private static function accessDatabase( $tableName ) {
 
-      self::$databaseAccessor = new DatabaseAccessor( 'astrosalsa', $tableName );
-      $isAccessSuccessful = self::$databaseAccessor->connect( 'root', 'root' );
+    self::$databaseAccessor = new DatabaseAccessor( self::DATABASE_NAME, $tableName );
+    $isAccessSuccessful = self::$databaseAccessor->connect( self::DATABASE_USER, self::DATABASE_PASS );
 
-      return $isAccessSuccessful;
+    return $isAccessSuccessful;
+
   }
 
   /**
@@ -40,20 +45,24 @@ class ActivityLogger {
    */
   public static function logActivity ( $tableName, $activityReport ) {
 
-      self::accessDatabase( $tableName );
-      self::$databaseAccessor->insertRow( $activityReport );
+    self::accessDatabase( $tableName );
+    self::$databaseAccessor->insertRow( $activityReport );
 
   }
 
-  public  static function getActivityLog ( $tableName, $logFilter ){
-      $attributes = ["*" => "*"];
-      $rowFilter= 'date BETWEEN '.$logFilter['initDate'].' AND '.$logFilter['finalDate'];
+  public  static function getActivityLog ( $tableName, $logFilter ) {
 
-      self::accessDatabase( $tableName );
-      $isAccessSuccessful = self::$databaseAccessor->selectRows( $attributes, $rowFilter );
+    $initDate = $logFilter[ 'initDate' ];
+    $finalDate = $logFilter[ 'finalDate' ];
+    $activityFilter = 'date';
 
-      return $isAccessSuccessful;
+    $rowFilter = QueryGenerator::generateRangeRowFilter( $activityFilter, $initDate, $finalDate );
 
+    self::accessDatabase( $tableName );
+    $databaseResponse = self::$databaseAccessor->selectRows( null, $rowFilter );
+    $loggerResponse = $databaseResponse;
+
+    return $loggerResponse;
 
   }
 

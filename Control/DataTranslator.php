@@ -12,14 +12,14 @@ class DataTranslator{
    */
   public static function translateReport( $report ) {
 
-    /* TODO: Check for valid $report */
+    $reportAsArray = [
 
-    $array = [
       'type' => $report->getType(),
-      'content' => $report->getContent(),
+      'content' => $report->getContent()
+
     ];
 
-    return $array;
+    return $reportAsArray;
 
   }
 
@@ -31,18 +31,18 @@ class DataTranslator{
    */
   public static function translateRequest ( $requestAsArray ) {
 
-    /* TODO: Check for valid $array */
-
     $requestProperties = [
-      'target' => $requestAsArray['target'],
-      'type' => $requestAsArray['type'],
-      'data' => $requestAsArray['data']
+
+      'target' => $requestAsArray[ 'target' ],
+      'type' => $requestAsArray[ 'type' ],
+      'data' => $requestAsArray[ 'data' ]
+
     ];
 
     $request = new Request( $requestProperties );
+
     return $request;
 
   }
-
 
 }
