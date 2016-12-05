@@ -115,6 +115,7 @@ $(function() {
                   .css( 'display', 'block' );
 
                 $( '#student-id' ).attr( 'disabled', 'disabled' );
+                $( '.photo' ).attr( 'src', 'photos/'+studentId+'.jpeg' );
 
                 if ( classesRemaining < 1 ) {
                   $( '.identified-student' )
