@@ -33,7 +33,7 @@ input[type="search"] {
   padding: 8px 12px;
   font-size: 20px;
   border-radius: 2px;
-  background-color: #009688;
+  background-color: tomato;
   color: white;
   cursor: pointer;
 }
@@ -70,5 +70,5 @@ input[type="search"] {
 }
 
 .dataTable .button-edit {
-  background-color: #009688;
+  background-color: #4CAF50;
 }
