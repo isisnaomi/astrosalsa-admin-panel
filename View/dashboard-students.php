@@ -51,6 +51,19 @@
       </div>
     </div>
 
+    <div class='popup-window edit-student-photo-window'>
+      <div class='form'>
+        <span class='title'>Modificar foto de alumno</span>
+        <input type='text' name='id' placeholder='ID' disabled='disabled' />
+        <input type='text' name='name' placeholder='Nombre' disabled='disabled' />
+        <div id='webcam' style="width:320px; height:240px;"></div>
+        <div class='form-buttons'>
+          <span class='button button-ok'>Capturar</span>
+          <span class='button button-cancel'>Cancelar</span>
+        </div>
+      </div>
+    </div>
+
     <div class='popup-window subscription-window'>
 
       <div class='form renew-subscription-form'>
@@ -98,6 +111,7 @@
                   <tr>
                     <th>ID</th>
                     <th>Nombre</th>
+                    <th>Foto</th>
                     <th></th>
                   </tr>
               </thead>
@@ -105,5 +119,11 @@
         </div>
 
     </div>
+
+
+    <form id="upload-photo-form" method="post" action="http://localhost/MAMP/astrosalsa-admin-panel/View/upload-photo.php">
+      <input id="rawImageData" type="hidden" name="image" value="" />
+      <input id="studentId" type="hidden" name="studentId" value="" />
+    </form>
   </body>
 </html>

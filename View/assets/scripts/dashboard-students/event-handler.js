@@ -43,12 +43,6 @@ $(function() {
     complete: function( response ) {
       console.log( 'AJAX request server response:' );
       console.log( response );
-    },
-    success: function() {
-      showSuccessMessage();
-    },
-    error: function() {
-      showFailMessage();
     }
   });
 
@@ -156,6 +150,9 @@ $(function() {
         $( '.subscription-window' )
           .find( 'select[name="package"]' ).html( optionsHtml );
 
+      },
+      error: function() {
+        showFailMessage();
       }
 
     });
@@ -206,6 +203,9 @@ $(function() {
 
           }
 
+        },
+        error: function() {
+          showFailMessage();
         }
 
         // Default error callback
@@ -245,6 +245,12 @@ $(function() {
           },
           filter : 'id=' + id
         }
+      },
+      success: function() {
+        showSuccessMessage();
+      },
+      error: function() {
+        showFailMessage();
       }
     });
 
@@ -267,6 +273,12 @@ $(function() {
           data: {
             filter: 'id=' + id
           }
+        },
+        success: function() {
+          showSuccessMessage();
+        },
+        error: function() {
+          showFailMessage();
         }
       });
 
@@ -322,9 +334,68 @@ $(function() {
 
         });
 
+      },
+      error: function() {
+        showFailMessage();
       }
     });
 
   });
+
+  var areWebcamLibrariesAdded = false;
+
+  $( 'body' ).on( 'click', '.student-photo', function() {
+
+    $( '.edit-student-photo-window' ).css( 'display', 'block' );
+
+    if ( ! areWebcamLibrariesAdded ) {
+      $( 'head' ).append('<script src="vendor/libs/webcam.min.js"></script>');
+      areWebcamLibrariesAdded = true; //
+    }
+
+    Webcam.set({
+      width: 320,
+      height: 240
+    });
+
+    Webcam.attach( '#webcam' );
+
+    var studentId = getStudentId( this );
+    var studentName = getStudentName( this );
+
+    $( '.edit-student-photo-window' )
+      .find( 'input[name="id"]' )
+        .val( studentId );
+
+    $( '.edit-student-photo-window' )
+      .find( 'input[name="name"]' )
+        .val( studentName );
+
+  });
+
+  $( '.edit-student-photo-window' )
+    .find( '.button-ok' )
+      .on( 'click', function() {
+        var studentId = $( '.edit-student-photo-window' )
+          .find( 'input[name="id"]' )
+            .val();
+        takeSnapshot( studentId );
+        console.log( studentId );
+      });
+
+  function takeSnapshot( studentId ) {
+    Webcam.snap(function( data_uri ) {
+
+        var raw_image_data = data_uri.replace(/^data\:image\/\w+\;base64\,/, '');
+
+        $('#studentId').val(  studentId );
+        $('#rawImageData').val( raw_image_data );
+
+        console.log( $('#rawImageData')[0] );
+
+        $('#upload-photo-form').submit();
+
+    });
+  }
 
 });

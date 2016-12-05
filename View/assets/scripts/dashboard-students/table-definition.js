@@ -1,6 +1,6 @@
 $(function() {
 
-    $( '#students-list' ).DataTable({
+    var table = $( '#students-list' ).DataTable({
 
         'processing' : true,
 
@@ -24,6 +24,31 @@ $(function() {
 
             data : {}
 
+          },
+
+          complete: function( response ) {
+
+            setTimeout(function() {
+
+              $( 'tr' ).each(function( indexTr, tr ) {
+
+                var id = 0;
+
+                $( tr ).find( 'td' ).each(function( indexTd, td ) {
+
+                  if ( indexTd === 0 ) {
+                    id = $( this ).text();
+                  }
+
+                  if ( indexTd === 2 ) {
+                    $( this ).find('img').attr('src', 'photos/' + id + '.jpg' );
+                  }
+
+                });
+
+              });
+            }, 2000);
+
           }
 
         },
@@ -39,6 +64,13 @@ $(function() {
 
             {
                 'targets': 2,
+                'searchable': false,
+                'data': null,
+                'defaultContent':
+                  "<img class='student-photo' src='' alt='profile-image' width='32px' height='32px' />"
+            },
+            {
+                'targets': 3,
                 'searchable': false,
                 'data': null,
                 'defaultContent':
