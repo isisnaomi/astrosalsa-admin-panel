@@ -21,8 +21,7 @@
 
     <!-- Students view -->
     <div class='packages main-container'>
-      <iframe id='students-table-frame'
-        src='dashboard-packages.php'></iframe>
+      <iframe src='dashboard-packages.php'></iframe>
     </div>
 
     <!-- Libs -->
