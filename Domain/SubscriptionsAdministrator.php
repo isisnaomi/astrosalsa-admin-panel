@@ -231,10 +231,10 @@ class SubscriptionsAdministrator extends Administrator {
   protected function getAssistanceLog( $taskData ){
 
       $tableName = 'assistanceLog';
-      $databaseResponse = ActivityLogger::getActivityLog( $tableName, $taskData );
+      $loggerResponse = ActivityLogger::getActivityLog( $tableName, $taskData );
       $taskType = 'get '. $this->tableName;
 
-      $report = $this->writeReport( $databaseResponse, $taskType );
+      $report = $this->writeReport( $loggerResponse, $taskType );
 
       return $report;
 
@@ -243,10 +243,10 @@ class SubscriptionsAdministrator extends Administrator {
   protected function getPaymentsLog($taskData ) {
 
       $tableName = 'paymentsLog';
-      $databaseResponse = ActivityLogger::getActivityLog( $tableName, $taskData );
+      $loggerResponse = ActivityLogger::getActivityLog( $tableName, $taskData );
       $taskType = 'get '. $this->tableName;
 
-      $report = $this->writeReport( $databaseResponse, $taskType );
+      $report = $this->writeReport( $loggerResponse, $taskType );
 
       return $report;
 
