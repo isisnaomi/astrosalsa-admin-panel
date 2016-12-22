@@ -1,6 +1,6 @@
 <div class='sidebar'>
 
-  <div class='logo'></div>
+  <div class='logo' onclick='window.location.href="dashboard.php"'></div>
 
   <ul class='main-menu'>
     <li class='dashboard menu-item'><a href='dashboard.php'>Dashboard</a></li>

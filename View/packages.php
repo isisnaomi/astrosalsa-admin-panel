@@ -66,5 +66,14 @@
       });
     </script>
 
+    <script>
+      $(function() {
+        $( '.menu-item' ).on( 'click', function() {
+            window.location.href = $($( this ).children( 'a' )[0]).attr( 'href' );
+        });
+      });
+    </script>
+
+
   </body>
 </html>

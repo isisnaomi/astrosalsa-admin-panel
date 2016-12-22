@@ -27,7 +27,7 @@
   <!-- Dashboard view -->
   <div class='dashboard main-container'>
 
-    <h1 class='section-title'>Dashboard</h1>
+    <h1 class='section-title'>Dashboard <small>v1.0</small></h1>
 
     <div class='quick-access-button check-in'>Ingreso</div>
     <div class='quick-access-button charge'
@@ -65,6 +65,15 @@
         .addClass('active');
     });
   </script>
+
+  <script>
+    $(function() {
+      $( '.menu-item' ).on( 'click', function() {
+          window.location.href = $($( this ).children( 'a' )[0]).attr( 'href' );
+      });
+    });
+  </script>
+
 
 </body>
 </html>

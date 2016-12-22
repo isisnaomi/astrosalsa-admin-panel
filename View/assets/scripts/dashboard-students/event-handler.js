@@ -142,7 +142,7 @@ $(function() {
 
           optionsHtml +=
             "<option value='"+ classPackage.id +"'>" +
-              "("+ classPackage.id +") " + classPackage.name +
+              ""+ classPackage.name +" ("+ classPackage.classesIncluded +" clases, $"+ classPackage.price +")" +
             "</option>";
 
         });
